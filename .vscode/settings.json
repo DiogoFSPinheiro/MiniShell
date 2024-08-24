@@ -1,8 +1,8 @@
 {
     "files.associations": {
-        "array": "c",
-        "string": "c",
-        "string_view": "c",
-        "libft.h": "c"
+        "readline.h": "c",
+        "types.h": "c",
+        "dirent.h": "c",
+        "stat.h": "c"
     }
 }
