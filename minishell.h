@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/24 16:11:00 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/24 16:21:27 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef enum e_exit
 	ECHO,
 	CD,
 	PWD,
-	EXPORT,
+	EXPORT,teste
 	UNSET,
 	ENV,
 	EXIT,
