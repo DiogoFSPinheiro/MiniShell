@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/24 16:10:20 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/24 16:23:00 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	ft_create_env(char **envp, t_env **env)
 	}
 }
 
-//   (void)envp;
 int	main(int c, char **v, char **envp)
 {
 	char		*input;
@@ -94,7 +93,7 @@ int	main(int c, char **v, char **envp)
 		ft_free_env(env);
 	}
 	return (0);
-}
+}//random changes
 
 void	ft_init_token(t_token *token, char *data) // data
 {
