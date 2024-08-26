@@ -6,17 +6,59 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/24 15:35:34 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/26 16:52:39 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+// So estou a verificar ate ao penultimo porque o pipe nunca pode ser o ultimo
+// E isso ja tem a verificacao do parser
+int		ft_there_is_pipe(t_token *token)
+{
+	while (token->next)
+	{
+		if (token->next->type == PIPE)
+			return (1);
+		token = token->next;
+	}
+	return (0);
+}
+
+t_token		*ft_piper(t_token *token)
+{
+	t_token *temp;
+
+	temp = token;
+	while (temp && temp->next)
+	{
+		ft_printf("commands before pipe-> %s \n", temp->data);
+		temp = temp->next;
+		if (temp->type == PIPE)
+			break ;
+	}
+	temp = temp->next;
+	if (temp == NULL)	
+		return (temp);
+	else
+	{
+		ft_printf("im going here \n");
+		ft_piper(temp);
+	}
+	return temp;
+	//while (token)
+	//{
+	//		token = token->next;
+	//	}
+}
+
 void	ft_execute_in(t_token *token, t_env *env)
 {
 	int	forked;
-
+	
 	forked = 1;
+	if (ft_there_is_pipe(token)) // sempre que existe ha pelomenos 1 pipe
+		ft_piper(token);
 	// get FORKED MINIHELL    FIRST  -> prepare args and envs  <-
 	// Builtins that dont kill the program and affect it: Only if pipes 
 	//				CD, export, unset
