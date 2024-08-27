@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:12:22 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/16 17:32:28 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:54:44 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	ft_env(t_env *env, t_token *token)
 {
 	if (!env)
 		return;
+	if (env->content == NULL && env->title == NULL)
+	{
+		ft_printf_err("There are no envs left\n");
+		return ;
+	}
 	if (token->next != NULL && token->next->type == FLAG)
 	{
 		ft_built_err(token, flag_err);

@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:12:08 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/26 15:09:19 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:02:29 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,22 @@ void	ft_execute(t_token *token, char **args, char **envs, char *str, char *comma
 	(void)token;
 	if (execve(str, args, envs) == -1)
 	{ // caso eu nao consiga executar com o path(str) uso o commando diretamente caso nao de vou ver o porque de nao dar
-		if (execve(command, args, envs) == -1)
-		{ // Vou enviar para a funcao dos erros para melhor leitura
-			if (stat(str, &buffer) != 0 && !ft_strncmp(token->data, "./", 2))
-				ft_printf_err("minishell: %s: No such file or directory\n", command);
-			else if (stat(str, &buffer) != 0)
-				ft_printf_err("command '%s' not found\n", command);
-			else if (access(command, R_OK))
-				ft_printf_err("minishell: %s: Permission denied\n", command);
-			else if (S_ISDIR(buffer.st_mode))
-				ft_printf_err("minishell: %s: Is a directory\n", command);
-			else if ((buffer.st_mode))
-				ft_printf_err("minishell: %s: Permission denied\n", command);
-			//else if (!ft_strncmp(token->data, "./", 3))
-			//	ft_printf_err("command '%s' not found\n", command);
+		 // Vou enviar para a funcao dos erros para melhor leitura
+		if (stat(str, &buffer) != 0 && !ft_strncmp(token->data, "./", 2))
+			ft_printf_err("minishell: %s: No such file or directory\n", command);
+		else if (stat(str, &buffer) != 0)
+			ft_printf_err("command '%s' not found\n", command);
+		else if (access(command, R_OK))
+			ft_printf_err("minishell: %s: Permission denied\n", command);
+		else if (S_ISDIR(buffer.st_mode))
+			ft_printf_err("minishell: %s: Is a directory\n", command);
+		else if ((buffer.st_mode))
+			ft_printf_err("minishell: %s: Permission denied\n", command);
 			else
-				ft_printf_err("command '%s' No such file or directory\n", command);
-		}
+			ft_printf_err("command '%s' No such file or directory\n", command);
 	}
-}	
+}
+
 char	**ft_make_env_arr(t_env *env)
 {
 	t_env	*temp;
@@ -77,7 +74,7 @@ char	**ft_make_arg_arr(t_token *token)
 	if (!token)
 		return NULL;
 	temp = token;
-	while(temp)
+	while(temp && temp->type != PIPE)
 	{
 		temp = temp->next;
 		i++;
@@ -85,7 +82,7 @@ char	**ft_make_arg_arr(t_token *token)
 	args = ft_calloc(i + 1, sizeof(char *));
 	i = 0;
 	temp = token;
-	while(temp)
+	while(temp && temp->type != PIPE)
 	{
 		args[i] = ft_strdup(temp->data);
 		temp = temp->next;

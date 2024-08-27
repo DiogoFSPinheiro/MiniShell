@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/26 12:20:48 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:25:44 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ typedef struct s_token
 	char				*data;
 	t_type				type;
 	struct s_token		*next;
-	int					pipes_fd[2];
 }	t_token;
 
 typedef struct s_commands

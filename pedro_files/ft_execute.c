@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/26 16:52:39 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:53:33 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,31 +25,32 @@ int		ft_there_is_pipe(t_token *token)
 	return (0);
 }
 
-t_token		*ft_piper(t_token *token)
+void	ft_piper(t_token *token, t_env *env)
 {
 	t_token *temp;
+	int		i;
+//	int		pipes_fd[2];
 
+	
+	i = fork();
 	temp = token;
+	if (temp == NULL)
+		return ;
+	//pipe(token->pipes_fd[1]);
+	if (!ft_built_in(token, env))
+		ft_send_to_execve(token, env);
+	//if (i == 0)
+	//	exit ;
 	while (temp && temp->next)
 	{
-		ft_printf("commands before pipe-> %s \n", temp->data);
 		temp = temp->next;
 		if (temp->type == PIPE)
 			break ;
 	}
 	temp = temp->next;
-	if (temp == NULL)	
-		return (temp);
-	else
-	{
-		ft_printf("im going here \n");
-		ft_piper(temp);
-	}
-	return temp;
-	//while (token)
-	//{
-	//		token = token->next;
-	//	}
+	if (temp != NULL)
+		ft_piper(temp, env);
+	return ;
 }
 
 void	ft_execute_in(t_token *token, t_env *env)
@@ -58,7 +59,7 @@ void	ft_execute_in(t_token *token, t_env *env)
 	
 	forked = 1;
 	if (ft_there_is_pipe(token)) // sempre que existe ha pelomenos 1 pipe
-		ft_piper(token);
+		ft_piper(token, env);
 	// get FORKED MINIHELL    FIRST  -> prepare args and envs  <-
 	// Builtins that dont kill the program and affect it: Only if pipes 
 	//				CD, export, unset
@@ -123,8 +124,10 @@ char *ft_right_path(t_token *token, t_env *env)
 		paths = ft_split(ft_get_env(env, "PATH"), ':');
 		found = ft_path_to_executable(paths, token->data);
 	}
-	else
+	else if (access(token->data, R_OK))
 		found = ft_path();
+	else
+		return(token->data);
 	if (!ft_strnstr(token->data, "./", ft_strlen(token->data))) 
 	{
 		found = ft_strjoin(found, "/");
