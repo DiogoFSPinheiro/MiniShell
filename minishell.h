@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/27 15:25:44 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/29 10:12:27 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ typedef struct s_token
 typedef struct s_commands
 {
 	struct s_token		*tokens;
-	struct s_env		*env;
 	struct s_commands	*next;
 }	t_commands;
 
@@ -183,5 +182,6 @@ char	*ft_right_path(t_token *token, t_env *env);
 
 char	*ft_get_env(t_env *env, char *str);
 
+int		ft_redd_or_pipes(t_token *token);
 
 #endif

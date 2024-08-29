@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/27 16:53:33 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/29 10:20:14 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,68 @@
 
 // So estou a verificar ate ao penultimo porque o pipe nunca pode ser o ultimo
 // E isso ja tem a verificacao do parser
-int		ft_there_is_pipe(t_token *token)
+int		ft_redd_or_pipes(t_token *token)
 {
 	while (token->next)
 	{
 		if (token->next->type == PIPE)
-			return (1);
+			return (PIPE);
+		else if (token->next->type == R_IN)
+			return (R_IN);
+		else if (token->next->type == R_IN2)
+			return (R_IN2);
+		else if (token->next->type == R_OUT)
+			return (R_OUT);
+		else if (token->next->type == R_OUT2)
+			return (R_OUT2);
 		token = token->next;
 	}
 	return (0);
 }
 
+void	ft_separate_commands(t_token *token, t_token *splited)
+{
+    if (!token || token->type >= PIPE)
+	{
+		splited = NULL;
+        return ;
+	}
+    if (!splited)
+		return ;
+	splited->data = ft_strdup(token->data);
+    ft_data_type(splited);
+	if (token->next && token->next != NULL)
+	{
+		splited->next = malloc(sizeof(t_token));
+    	ft_separate_commands(token->next, splited->next);
+	}
+	else
+    	splited->next = NULL;
+}
+
 void	ft_piper(t_token *token, t_env *env)
 {
-	t_token *temp;
-	int		i;
-//	int		pipes_fd[2];
-
+	t_commands	*commands;
 	
-	i = fork();
-	temp = token;
-	if (temp == NULL)
-		return ;
-	//pipe(token->pipes_fd[1]);
-	if (!ft_built_in(token, env))
-		ft_send_to_execve(token, env);
-	//if (i == 0)
-	//	exit ;
-	while (temp && temp->next)
+	//int	cmd;
+	(void)env;
+	// faz me um filho bro
+	commands = malloc(sizeof(t_commands));
+	while (token)
 	{
-		temp = temp->next;
-		if (temp->type == PIPE)
-			break ;
+		if (token->type >= 5)
+			token = token->next;
+		//cmd = 0;
+ 		//splited = ft_separate_commands(token);
+		ft_separate_commands(token, commands->tokens);
+		ft_print_info(commands->tokens);
+		ft_printf("end of command \n");
+//		if (!ft_built_in(command, env))
+//			ft_send_to_execve(command, env);
+//		free_tokens(commands->tokens);
+		while (token && token->type < 5)
+			token = token->next;
 	}
-	temp = temp->next;
-	if (temp != NULL)
-		ft_piper(temp, env);
-	return ;
 }
 
 void	ft_execute_in(t_token *token, t_env *env)
@@ -58,7 +83,7 @@ void	ft_execute_in(t_token *token, t_env *env)
 	int	forked;
 	
 	forked = 1;
-	if (ft_there_is_pipe(token)) // sempre que existe ha pelomenos 1 pipe
+	if (ft_redd_or_pipes(token)) // sempre que existe ha pelomenos 1 pipe
 		ft_piper(token, env);
 	// get FORKED MINIHELL    FIRST  -> prepare args and envs  <-
 	// Builtins that dont kill the program and affect it: Only if pipes 
@@ -140,4 +165,28 @@ char *ft_right_path(t_token *token, t_env *env)
 	free_args(paths);
 	return (apended);
 }
+/*
+t_token *temp;
+	int		i;
+//	int		pipes_fd[2];
 
+	
+	i = fork();
+	temp = token;
+	if (temp == NULL)
+		return ;
+	//pipe(token->pipes_fd[1]);
+	if (!ft_built_in(token, env))
+		ft_send_to_execve(token, env);
+	//if (i == 0)
+	//	exit ;
+	while (temp && temp->next)
+	{
+		temp = temp->next;
+		if (temp->type == PIPE)
+			break ;
+	}
+	temp = temp->next;
+	if (temp != NULL)
+		ft_piper(temp, env);
+	return ;*/
