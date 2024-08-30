@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:34:55 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/30 10:31:20 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:36:05 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,6 @@ void	free_tokens(t_token *stack)
 	}
 	free(stack);
 	stack = NULL;
-}
-
-void	free_cmd_tokens(t_token *stack)
-{
-	t_token	*current;
-	t_token	*next;
-
-	if (NULL == stack)
-		return ;
-	current = stack;
-	while (current)
-	{
-		next = current->next;
-		if (current->data)
-			free(current->data);
-		free(current);  
-		current = next;    
-	}
 }
 
 void	free_cmd_tokens(t_token *stack)
