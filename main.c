@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/30 16:18:51 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:39:24 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ static void	client_handler(int sig)
 
 int	main(int c, char **v, char **envp)
 {
-	char		*input;
-	char		*clean_input;
-	t_token		*token;
-	t_env		*env;
-	//t_commands	*commands;
+	char			*input;
+	char			*clean_input;
+	t_token			*token;
+	t_env				*env;
 	struct sigaction	sa;
 
 	(void)c;

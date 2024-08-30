@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/30 16:18:24 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:27:16 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ char *ft_right_path(t_token *token, t_env *env)
 		return(token->data);
 	if (!ft_strnstr(token->data, "./", ft_strlen(token->data))) 
 	{
-		found = ft_strjoin(found, "/");
+		found = ft_strjoin_free(found, "/");
 		apended = ft_strjoin(found, token->data);
 	}
 	else

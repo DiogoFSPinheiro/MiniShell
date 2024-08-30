@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:08:36 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/24 15:13:23 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:05:42 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,14 @@ char	*ft_path(void)
 
 	buffer = getcwd(NULL, 0);
 	return (buffer);
+}
+
+char	*ft_strjoin_free(char *s1, char *s2)
+{
+	char *result;
+	
+	result = ft_strjoin(s1, s2);
+	if (s1)
+		free(s1);
+	return result;
 }

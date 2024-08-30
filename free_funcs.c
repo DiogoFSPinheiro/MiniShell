@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:34:55 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/30 10:36:05 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/30 11:47:00 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,18 @@ void	free_cmd_tokens(t_token *stack)
 
 void	ft_free_env(t_env *env)
 {
-	t_env	*current;
+	t_env	*tmp;
 
-	if (NULL == env)
-		return ;
-	current = env;
-	while (current)
+	while (env != NULL)
 	{
-		if (current->title)
-		{
-			free(current->title);
-			free(current->content);
-		}
-		current = current->next;
+		tmp = env;
+		env = env->next;
+		if (tmp->content != NULL)
+			free(tmp->content);
+		if (tmp->title != NULL)
+			free(tmp->title);
+		free(tmp);
 	}
-	free(env);
 }
 
 void	ft_free_cmd(t_commands *cmd)
