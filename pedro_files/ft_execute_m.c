@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:12:08 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/27 15:02:29 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:43:21 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_execute(t_token *token, char **args, char **envs, char *str, char *comma
 			ft_printf_err("minishell: %s: Is a directory\n", command);
 		else if ((buffer.st_mode))
 			ft_printf_err("minishell: %s: Permission denied\n", command);
-			else
+		else
 			ft_printf_err("command '%s' No such file or directory\n", command);
 	}
 }

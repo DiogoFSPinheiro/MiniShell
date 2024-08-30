@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/29 10:12:27 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/29 17:22:16 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,9 +152,10 @@ t_commands	*ft_build_commands(t_token *token, t_env *env);
 //---------------PEDRO-----------------
 
 //-----------------ft_execute_in.c------
-void	ft_execute_in(t_token *token, t_env *env);
-int		ft_built_in(t_token *token, t_env *env);
+void	ft_execute_in(t_token *token, t_env **env);
+int		ft_built_in(t_token *token, t_env **env);
 void	ft_send_to_execve(t_token *token, t_env *env);
+int		ft_redd_or_pipes(t_token *token);
 
 
 //-----------------ft_env.c-----------
@@ -167,7 +168,10 @@ void	ft_pwd(t_token *token);
 void	ft_echo(t_token *token);
 
 //-----------------ft_cd.c------------
-void	ft_cd(t_token *token, t_env *env);
+void	ft_cd(t_token *token, t_env **env);
+
+//-----------------ft_unset.c------------
+void	ft_unset(t_env **env, t_token *token);
 
 //---------------ft_built_err----------
 void	ft_built_err(t_token *token, t_builins nome);
@@ -179,9 +183,5 @@ char	*ft_get_env(t_env *env, char *str);
 
 char	*ft_right_path(t_token *token, t_env *env);
 
-
-char	*ft_get_env(t_env *env, char *str);
-
-int		ft_redd_or_pipes(t_token *token);
 
 #endif

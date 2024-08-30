@@ -14,7 +14,7 @@ SRCS = main.c tester.c syntax.c utils.c utils2.c utils3.c token_utils.c ft_quote
 	pedro_files/ft_built_in.c pedro_files/ft_cd.c\
 	pedro_files/ft_env.c pedro_files/ft_built_errors.c \
 	pedro_files/ft_execute_m.c pedro_files/ft_execute.c \
-	pedro_files/utils.c 
+	pedro_files/utils.c pedro_files/ft_unset.c
 
 
 LIBFT = ./libraries/libft/libft.a
@@ -63,7 +63,7 @@ $(NAME): $(OBJS)
 #	ar rc $(NAME) $(BONUS_OBJS) $(OBJS)  mete no clean -> $(BONUS_OBJS)
 
 valgrind: $(NAME)
-	valgrind --suppressions=readline.supp --leak-check=full ./minishell
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --leak-check=full ./minishell
 
 clean:
 	rm -rf $(OBJS) 

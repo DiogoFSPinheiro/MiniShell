@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/29 10:20:14 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/29 18:36:02 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,36 +55,34 @@ void	ft_separate_commands(t_token *token, t_token *splited)
 
 void	ft_piper(t_token *token, t_env *env)
 {
-	t_commands	*commands;
 	
 	//int	cmd;
 	(void)env;
 	// faz me um filho bro
-	commands = malloc(sizeof(t_commands));
+
 	while (token)
 	{
+
+		
 		if (token->type >= 5)
 			token = token->next;
-		//cmd = 0;
- 		//splited = ft_separate_commands(token);
-		ft_separate_commands(token, commands->tokens);
-		ft_print_info(commands->tokens);
+		
+			
 		ft_printf("end of command \n");
-//		if (!ft_built_in(command, env))
+//		if (!ft_built_in(command->token, env))
 //			ft_send_to_execve(command, env);
-//		free_tokens(commands->tokens);
 		while (token && token->type < 5)
 			token = token->next;
 	}
 }
 
-void	ft_execute_in(t_token *token, t_env *env)
+void	ft_execute_in(t_token *token, t_env **env)
 {
 	int	forked;
 	
 	forked = 1;
-	if (ft_redd_or_pipes(token)) // sempre que existe ha pelomenos 1 pipe
-		ft_piper(token, env);
+	//if (ft_redd_or_pipes(token)) // sempre que existe ha pelomenos 1 pipe
+	//	ft_piper(token, env);
 	// get FORKED MINIHELL    FIRST  -> prepare args and envs  <-
 	// Builtins that dont kill the program and affect it: Only if pipes 
 	//				CD, export, unset
@@ -99,11 +97,11 @@ void	ft_execute_in(t_token *token, t_env *env)
 		while (wait(NULL) > 0);
 	}
 	if (forked == 0 && ft_built_in(token, env) == 1)
-		ft_send_to_execve(token, env);
+		ft_send_to_execve(token, *env);
 	if (forked == 0)
 	{
 		free_tokens(token);
-		ft_free_env(env);
+		ft_free_env(*env);
 		exit(0);
 	}
 }

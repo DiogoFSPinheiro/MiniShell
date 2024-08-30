@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_funcs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:34:55 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/01 16:50:32 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/08/29 19:12:50 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	free_tokens(t_token *stack)
 		current = current->next;
 	}
 	free(stack);
+	stack = NULL;
 }
 
 void	ft_free_env(t_env *env)
@@ -38,7 +39,10 @@ void	ft_free_env(t_env *env)
 	while (current)
 	{
 		if (current->title)
+		{
 			free(current->title);
+			free(current->content);
+		}
 		current = current->next;
 	}
 	free(env);

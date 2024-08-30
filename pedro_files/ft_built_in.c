@@ -6,18 +6,18 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 15:06:43 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/24 15:12:26 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/29 17:26:03 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		ft_built_in(t_token *token, t_env *env)
+int		ft_built_in(t_token *token, t_env **env)
 {
 	if (!token)
 		return 0;
 	else if (ft_strcmp(token->data, "env") == SUCCESS)
-		ft_env(env, token);
+		ft_env(*env, token);
 	else if (ft_strcmp(token->data, "pwd") == SUCCESS)
 		ft_pwd(token);
 	else if (ft_strcmp(token->data, "echo") == SUCCESS)
@@ -27,7 +27,7 @@ int		ft_built_in(t_token *token, t_env *env)
 	else if (ft_strcmp(token->data, "export") == SUCCESS)
 		ft_printf("this will export soon\n"); // 6 
 	else if (ft_strcmp(token->data, "unset") == SUCCESS)
-		ft_printf("this will unset soon\n"); // 5
+		ft_unset(env, token); // 5
 	else
 		return 1;
 	return 0;

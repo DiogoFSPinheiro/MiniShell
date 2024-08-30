@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/26 15:59:06 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/29 19:35:41 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_create_env(char **envp, t_env **env)
 		cur = *env + c;
 		s = ft_see_equal(envp[c]);
 		cur->title = ft_fine_strdup(envp[c], 0, s - 1);
-		cur->content = envp[c] + s + 1;
+		cur->content = ft_strdup(envp[c] + s + 1);
 		if (envp[c + 1])
 			cur->next = cur + 1;
 		else
@@ -60,9 +60,9 @@ int	main(int c, char **v, char **envp)
 	(void)commands;
 	env = NULL;
 	token = NULL;
+	ft_create_env(envp, &env);
 	while (1)
 	{
-		ft_create_env(envp, &env);
 		input = readline("MiniHell$> ");
 		if (input == NULL || ft_strcmp(input, "exit") == SUCCESS)
 		{
@@ -83,15 +83,19 @@ int	main(int c, char **v, char **envp)
 				free(clean_input);
 				ft_init_token(token, input);
 				ft_find_expand(&token, env);
-				ft_execute_in(token, env);
+				ft_execute_in(token, &env);
 				//ft_print_info(token);
 				commands = ft_build_commands(token, env);
 				free_tokens(token);
+				if (env->title == NULL)
+					env = env->next;
+				//token = NULL;
 			}
 			free(input);
 		}
-		ft_free_env(env);
+		
 	}
+	//ft_free_env(env);
 	return (0);
 }//random changes
 
