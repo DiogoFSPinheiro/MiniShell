@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:30:09 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/20 10:30:12 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/08/30 14:04:29 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,9 @@ int	ft_get_full_size(char *str, t_env *env)
 		val.i++;
 	}
 	return (total_length);
+}
+
+void	set_up_sigaction(struct sigaction *sa)
+{
+	sigaction(SIGINT, sa, NULL);
 }

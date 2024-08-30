@@ -6,46 +6,34 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/30 14:59:15 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:24:04 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_see_equal(char *str)
-{
-	int	c;
-
-	c = 0;
-	while (str[c] != '=')
-		c++;
-	return (c);
-}
-
-void	ft_create_env(char **envp, t_env **env)
+static void	client_handler(int sig)
 {
 	int		c;
 	int		i;
-	t_env	*new_node;
 	t_env	*cur;
+	int		s;
 
-	i = 0;
-	*env = NULL;
-	while (envp[i])
+	c = 0;
+	i = ft_arraylen(envp);
+	*env = (t_env *)ft_calloc(sizeof(t_env), i);
+	cur = *env;
+	while (c < i)
 	{
-		new_node = malloc(sizeof(t_env));
-		if (!new_node)
-			return ;
-		c = ft_see_equal(envp[i]);
-		new_node->title = ft_fine_strdup(envp[i], 0, c -1);
-		new_node->content = ft_strdup(envp[i] + c + 1);
-		new_node->next = NULL;
-		if (*env == NULL)
-			*env = new_node;
+		cur = *env + c;
+		s = ft_see_equal(envp[c]);
+		cur->title = ft_fine_strdup(envp[c], 0, s - 1);
+		cur->content = ft_strdup(envp[c] + s + 1);
+		if (envp[c + 1])
+			cur->next = cur + 1;
 		else
-			cur->next = new_node;
-		cur = new_node;
-		i++;
+			cur->next = NULL;
+		c++;
 	}
 }
 
@@ -55,13 +43,17 @@ int	main(int c, char **v, char **envp)
 	char		*clean_input;
 	t_token		*token;
 	t_env		*env;
-	t_commands	*commands;
+	//t_commands	*commands;
+	struct sigaction	sa;
 
 	(void)c;
 	(void)v;
-	(void)commands;
 	env = NULL;
 	token = NULL;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = client_handler;
+	sa.sa_flags = SA_RESTART;
+	set_up_sigaction(&sa);
 	ft_create_env(envp, &env);
 	while (1)
 	{
@@ -70,6 +62,7 @@ int	main(int c, char **v, char **envp)
 		{
 			free(input);
 			ft_free_env(env);
+			ft_println("exit");
 			break ;
 		}
 		if (*input)
@@ -86,18 +79,17 @@ int	main(int c, char **v, char **envp)
 				ft_find_expand(&token, env);
 				ft_execute_in(token, &env);
 				//ft_print_info(token);
-				commands = ft_build_commands(token);
+				//commands = ft_build_commands(token);
 				//ft_print_cmd(commands);
 				free_tokens(token);
-				ft_free_cmd(commands);
+				//ft_free_cmd(commands);
 			}
 			free(input);
 		}
-		
 	}
 	//ft_free_env(env);
 	return (0);
-}//random changes
+}
 
 void	ft_init_token(t_token *token, char *data) // data
 {

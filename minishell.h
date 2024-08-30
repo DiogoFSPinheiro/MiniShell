@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/30 16:09:20 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:26:54 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 #include <sys/types.h>
 #include <dirent.h>
@@ -148,9 +149,13 @@ void	ft_space_helper(char *str, char **dst, int *c, int *i);
 //------------utils3.c -------
 t_env	*ft_get_content(t_env *env, char *title);
 int		ft_get_full_size(char *str, t_env *env);
+void	set_up_sigaction(struct sigaction *sa);
 
 //------------build_commands.c -------
 t_commands	*ft_build_commands(t_token *token);
+
+//------------create_env.c -------
+void	ft_create_env(char **envp, t_env **env);
 
 
 //---------------PEDRO-----------------
