@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/30 12:30:44 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:06:08 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,9 +180,14 @@ void	ft_unset(t_env **env, t_token *token);
 //---------------ft_built_err----------
 void	ft_built_err(t_token *token, t_builins err_type);
 char	*ft_path_to_executable(char **paths, char *command);
+
+//---------------ft_export.c-------------
+void    ft_export();
+
 //----------------- utils----------------
 char	*ft_path(void);
 char	*ft_get_env(t_env *env, char *str);
+char	*ft_strjoin_free(char *s1, char *s2);
 
 
 char	*ft_right_path(t_token *token, t_env *env);

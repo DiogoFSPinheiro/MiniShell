@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 15:06:43 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/29 17:26:03 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/30 14:33:29 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int		ft_built_in(t_token *token, t_env **env)
 	else if (ft_strcmp(token->data, "echo") == SUCCESS)
 		ft_echo(token);
 	else if (ft_strcmp(token->data, "cd") == SUCCESS)
-		ft_cd(token, env); // 
+		ft_cd(token, env);
 	else if (ft_strcmp(token->data, "export") == SUCCESS)
-		ft_printf("this will export soon\n"); // 6 
+		ft_export(); 
 	else if (ft_strcmp(token->data, "unset") == SUCCESS)
-		ft_unset(env, token); // 5
+		ft_unset(env, token);
 	else
 		return 1;
 	return 0;
