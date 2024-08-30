@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/30 16:24:04 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:39:24 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,23 @@
 
 static void	client_handler(int sig)
 {
-	int		c;
-	int		i;
-	t_env	*cur;
-	int		s;
-
-	c = 0;
-	i = ft_arraylen(envp);
-	*env = (t_env *)ft_calloc(sizeof(t_env), i);
-	cur = *env;
-	while (c < i)
+	if (sig == SIGINT)
 	{
-		cur = *env + c;
-		s = ft_see_equal(envp[c]);
-		cur->title = ft_fine_strdup(envp[c], 0, s - 1);
-		cur->content = ft_strdup(envp[c] + s + 1);
-		if (envp[c + 1])
-			cur->next = cur + 1;
-		else
-			cur->next = NULL;
-		c++;
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		ft_printf("\nMiniHell$> ");
 	}
+	if (sig == SIGQUIT)
+		ft_println("exit");
 }
 
 int	main(int c, char **v, char **envp)
 {
-	char		*input;
-	char		*clean_input;
-	t_token		*token;
-	t_env		*env;
-	//t_commands	*commands;
+	char			*input;
+	char			*clean_input;
+	t_token			*token;
+	t_env				*env;
 	struct sigaction	sa;
 
 	(void)c;

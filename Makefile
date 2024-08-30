@@ -2,7 +2,7 @@ MAKEFLAGS += -s
 
 CC = cc -g 
 
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror
 
 #CFLAGS += -fsanitize=thread
 #CFLAGS += -fsanitize=address
