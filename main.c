@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/30 10:40:39 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/30 11:39:31 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,26 @@ void	ft_create_env(char **envp, t_env **env)
 {
 	int		c;
 	int		i;
+	t_env	*new_node;
 	t_env	*cur;
-	int		s;
 
-	c = 0;
-	i = ft_arraylen(envp);
-	*env = (t_env *)ft_calloc(sizeof(t_env), i);
-	cur = *env;
-	while (c < i)
+	i = 0;
+	*env = NULL;
+	while (envp[i])
 	{
-		cur = *env + c;
-		s = ft_see_equal(envp[c]);
-		cur->title = ft_fine_strdup(envp[c], 0, s - 1);
-		cur->content = ft_strdup(envp[c] + s + 1);
-		if (envp[c + 1])
-			cur->next = cur + 1;
+		new_node = malloc(sizeof(t_env));
+		if (!new_node)
+			return ;
+		c = ft_see_equal(envp[i]);
+		new_node->title = ft_fine_strdup(envp[i], 0, c -1);
+		new_node->content = ft_strdup(envp[i] + c + 1);
+		new_node->next = NULL;
+		if (*env == NULL)
+			*env = new_node;
 		else
-			cur->next = NULL;
-		c++;
+			cur->next = new_node;
+		cur = new_node;
+		i++;
 	}
 }
 
