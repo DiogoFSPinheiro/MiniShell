@@ -182,3 +182,13 @@
 * Start looking up the binary tree;
 
 #
+
+### 📅 **29/08**
+
+* Agrouped all tokens to commands, divided by tipes
+
+✏️ ${{\color{lightgreen}{\textsf{TODO}}}}\$
+
+* Handle signals;
+
+#

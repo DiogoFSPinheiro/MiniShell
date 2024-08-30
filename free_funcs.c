@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:34:55 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/29 19:12:50 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:31:20 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,42 @@ void	free_tokens(t_token *stack)
 	stack = NULL;
 }
 
+void	free_cmd_tokens(t_token *stack)
+{
+	t_token	*current;
+	t_token	*next;
+
+	if (NULL == stack)
+		return ;
+	current = stack;
+	while (current)
+	{
+		next = current->next;
+		if (current->data)
+			free(current->data);
+		free(current);  
+		current = next;    
+	}
+}
+
+void	free_cmd_tokens(t_token *stack)
+{
+	t_token	*current;
+	t_token	*next;
+
+	if (NULL == stack)
+		return ;
+	current = stack;
+	while (current)
+	{
+		next = current->next;
+		if (current->data)
+			free(current->data);
+		free(current);  
+		current = next;    
+	}
+}
+
 void	ft_free_env(t_env *env)
 {
 	t_env	*current;
@@ -46,4 +82,19 @@ void	ft_free_env(t_env *env)
 		current = current->next;
 	}
 	free(env);
+}
+
+void	ft_free_cmd(t_commands *cmd)
+{
+	t_commands	*cur;
+
+	if (cmd == NULL)
+		return ;
+	cur = cmd;
+	while (cur)
+	{
+		free_cmd_tokens(cur->tokens);
+		cur = cur->next; 
+	}
+	free(cmd);
 }

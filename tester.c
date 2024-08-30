@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 10:45:00 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/20 14:08:42 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:31:01 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,23 @@ void	ft_print_info(t_token *token)
 		}
 		else
 			ft_println("the next node is: no next node");
+		print = print->next;
+	}
+	ft_println("-----------------------");
+}
+
+void	ft_print_cmd(t_commands *cmd)
+{
+	t_commands	*print;
+	int			c;
+
+	c = 0;
+	print = cmd;
+	ft_println("-----------------------");
+	while (print)
+	{
+		ft_println("cmd%d",++c);
+		ft_print_info(print->tokens);
 		print = print->next;
 	}
 	ft_println("-----------------------");
