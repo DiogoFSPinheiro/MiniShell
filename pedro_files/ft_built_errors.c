@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:18:01 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/16 15:47:57 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/24 15:48:37 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ void	ft_built_err(t_token *token, t_builins err_type)
 	if (err_type == no_file)
 		ft_printf_err("Minishell: %s: %s: "
 			"No such file or directory\n", token->data, token->next->data);
+	if (err_type == no_home)
+		ft_printf_err("Minishell: %s: HOME not set\n", token->data);
+	if (err_type == file_permissions)
+		ft_printf_err("Minishell: %s: Permission denied\n", token->data);
 }
+
  // flag errors exept env
 // ---------- ERRORS----------
 /*

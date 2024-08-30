@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/29 16:20:55 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:33:00 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_create_env(char **envp, t_env **env)
 		cur = *env + c;
 		s = ft_see_equal(envp[c]);
 		cur->title = ft_fine_strdup(envp[c], 0, s - 1);
-		cur->content = envp[c] + s + 1;
+		cur->content = ft_strdup(envp[c] + s + 1);
 		if (envp[c + 1])
 			cur->next = cur + 1;
 		else
@@ -47,7 +47,6 @@ void	ft_create_env(char **envp, t_env **env)
 	}
 }
 
-//   (void)envp;
 int	main(int c, char **v, char **envp)
 {
 	char		*input;
@@ -58,11 +57,12 @@ int	main(int c, char **v, char **envp)
 
 	(void)c;
 	(void)v;
+	(void)commands;
 	env = NULL;
 	token = NULL;
+	ft_create_env(envp, &env);
 	while (1)
 	{
-		ft_create_env(envp, &env);
 		input = readline("MiniHell$> ");
 		if (input == NULL || ft_strcmp(input, "exit") == SUCCESS)
 		{
@@ -91,10 +91,11 @@ int	main(int c, char **v, char **envp)
 			}
 			free(input);
 		}
-		ft_free_env(env);
+		
 	}
+	//ft_free_env(env);
 	return (0);
-}
+}//random changes
 
 void	ft_init_token(t_token *token, char *data) // data
 {

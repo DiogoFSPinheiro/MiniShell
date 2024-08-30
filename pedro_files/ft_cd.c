@@ -6,17 +6,24 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 11:59:46 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/16 17:18:51 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/29 17:27:20 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_cd(t_token *token)
+void	ft_cd(t_token *token, t_env **env)
 {
-	if (!token->next)
-		chdir(" ");
-	if (access(token->next->data, F_OK) == 0)
+	if (token->next == NULL)
+	{
+		if (ft_get_env(*env, "HOME") != NULL)
+			chdir(ft_get_env(*env, "HOME"));
+		else
+			ft_built_err(token, no_home);
+	}
+	else if (token->next && token->next->next)
+		ft_built_err(token, args_err);
+	else if (token->next && access(token->next->data, F_OK) == 0)
 	{
 		if (access(token->next->data, R_OK) == 0)
 			chdir(token->next->data);
@@ -24,11 +31,8 @@ void	ft_cd(t_token *token)
 			ft_built_err(token, file_permissions);
 	}
 	else
-			ft_built_err(token, no_file);
-	//else if (chdir(token->next->data) != 0) // sp ve se e 1 ou 0
-	//	ft_printf_err("Minishell: cd: %s: No such file or directory\n", token->next->data);
-}
-
+		ft_built_err(token, no_file);
+} // Falta actualizar o OLDPWD e o PWD
 
 /*
 bash: cd: pasta/: Permission denied       cd to a folder that has no permissions 

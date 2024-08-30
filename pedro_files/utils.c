@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/08 16:08:11 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/23 14:19:52 by pebarbos         ###   ########.fr       */
+/*   Created: 2024/08/24 15:08:36 by pebarbos          #+#    #+#             */
+/*   Updated: 2024/08/24 15:13:23 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_pwd(t_token *token)
+char	*ft_get_env(t_env *env, char *str)
 {
-	char	cwd[256];
-	
-	if (token->next && token->next->type == 4)
+	while (env->next != NULL)
 	{
-		ft_built_err(token, flag_err);
-		return ;
-	}
-	if (token)
-	{
-			if(getcwd(cwd, sizeof(cwd)) != NULL)
-			ft_printf("%s\n", cwd);
+		if (!env->title)
+			break ;
+		if (ft_strcmp(str, env->title) != 1)
+			env = env->next;
 		else
-			ft_printf_err("I dont know where i am, what did you do??\n");
+			break;
 	}
+	if (env->title && ft_strcmp(str, env->title) == 1)
+		return env->content;
+	if (env->next && ft_strcmp(str, env->next->title))
+		return env->next->title;
+	return NULL;
+}
+
+char	*ft_path(void)
+{
+	char	*buffer;
+
+	buffer = getcwd(NULL, 0);
+	return (buffer);
 }

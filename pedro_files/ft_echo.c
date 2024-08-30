@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:23:17 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/16 11:39:03 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/24 15:02:19 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static	char	*ft_print_no_dups(char *str, char c)
 	}
 	return str;
 }
-
 
 static void	ft_no_quotes(char *str)
 {
@@ -57,6 +56,6 @@ void	ft_echo(t_token *token)
 		if (temp->next)
 			write(1, " ", 1);
 	}
-	if (token->next->type != FLAG && ft_strcmp(token->next->data, "-n") != 1)
+	if (ft_strcmp(token->next->data, "-n") != 1)
 		write(1, "\n", 1); 
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/29 16:31:12 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:32:34 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 
 # include "libraries/libft/libft.h"
 # include "libraries/printf/ft_printf.h"
-
+# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
 #include <sys/types.h>
 #include <dirent.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <errno.h>
 
 typedef enum e_exit
@@ -35,7 +36,7 @@ typedef enum e_exit
 	ECHO,
 	CD,
 	PWD,
-	EXPORT,
+	EXPORT,teste
 	UNSET,
 	ENV,
 	EXIT,
@@ -68,7 +69,8 @@ typedef enum e_bultins
 	args_err,
 	no_file,
 	env_err_flag,
-	file_permissions
+	file_permissions,
+	no_home
 }	t_builins;
 
 typedef struct s_token
@@ -154,8 +156,11 @@ t_commands	*ft_build_commands(t_token *token);
 //---------------PEDRO-----------------
 
 //-----------------ft_execute_in.c------
-void	ft_execute_in(t_token *token, t_env *env);
-int		ft_built_in(t_token *token, t_env *env);
+void	ft_execute_in(t_token *token, t_env **env);
+int		ft_built_in(t_token *token, t_env **env);
+void	ft_send_to_execve(t_token *token, t_env *env);
+int		ft_redd_or_pipes(t_token *token);
+
 
 //-----------------ft_env.c-----------
 void	ft_env(t_env *env, t_token *token);
@@ -167,9 +172,20 @@ void	ft_pwd(t_token *token);
 void	ft_echo(t_token *token);
 
 //-----------------ft_cd.c------------
-void	ft_cd(t_token *token);
+void	ft_cd(t_token *token, t_env **env);
+
+//-----------------ft_unset.c------------
+void	ft_unset(t_env **env, t_token *token);
 
 //---------------ft_built_err----------
 void	ft_built_err(t_token *token, t_builins nome);
+char	*ft_path_to_executable(char **paths, char *command);
+//----------------- utils----------------
+char	*ft_path(void);
+char	*ft_get_env(t_env *env, char *str);
+
+
+char	*ft_right_path(t_token *token, t_env *env);
+
 
 #endif
