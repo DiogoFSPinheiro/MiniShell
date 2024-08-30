@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/29 18:36:02 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:18:24 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,14 @@ void	ft_execute_in(t_token *token, t_env **env)
 	int	forked;
 	
 	forked = 1;
-	//if (ft_redd_or_pipes(token)) // sempre que existe ha pelomenos 1 pipe
-	//	ft_piper(token, env);
+	t_commands *cmd = NULL;
+	cmd = ft_build_commands(token);
+	if (cmd->next)
+	{
+		ft_free_cmd(cmd);
+		return ;
+	}
+	ft_free_cmd(cmd);
 	// get FORKED MINIHELL    FIRST  -> prepare args and envs  <-
 	// Builtins that dont kill the program and affect it: Only if pipes 
 	//				CD, export, unset
