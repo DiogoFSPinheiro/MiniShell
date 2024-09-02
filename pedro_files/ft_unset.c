@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 11:52:30 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/30 14:11:41 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/02 16:55:08 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	ft_remove_env(t_env **env, char *command)
 	while(*env)
 	{
 		temp = *env;
+		if (ft_strcmp((*env)->title, "_"))
+			return ;
 		if (ft_strcmp((*env)->title, command))
 		{
 			*env = temp->next;

@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/30 16:26:54 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/02 18:26:44 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ t_commands	*ft_build_commands(t_token *token);
 
 //------------create_env.c -------
 void	ft_create_env(char **envp, t_env **env);
+int	ft_see_equal(char *str);
 
 
 //---------------PEDRO-----------------

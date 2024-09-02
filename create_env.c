@@ -6,18 +6,18 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 13:57:14 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/30 16:29:31 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/02 18:53:54 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
-static int	ft_see_equal(char *str)
+int	ft_see_equal(char *str)
 {
 	int	c;
 
 	c = 0;
-	while (str[c] != '=')
+	while (str[c] && str[c] != '=')
 		c++;
 	return (c);
 }
