@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/30 16:39:24 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/02 18:00:12 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,12 @@ int	main(int c, char **v, char **envp)
 				free(clean_input);
 				ft_init_token(token, input);
 				ft_find_expand(&token, env);
-				ft_execute_in(token, &env);
+				if (ft_see_redirect(token) == 8 || ft_see_redirect(token) == 9)
+					ft_redirect_out(token, &env);
+				else if (ft_see_redirect(token) == 6 || ft_see_redirect(token) == 7)
+					ft_redirect_in(token, &env);
+				else
+					ft_execute_in(token, &env);
 				//ft_print_info(token);
 				//commands = ft_build_commands(token);
 				//ft_print_cmd(commands);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:30:09 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/30 16:33:45 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:28:55 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,18 @@ int	ft_get_full_size(char *str, t_env *env)
 void	set_up_sigaction(struct sigaction *sa)
 {
 	sigaction(SIGINT, sa, NULL);
+}
+
+int	ft_token_counter_until_redd(t_token *token)
+{
+	int	i;
+
+	i = 0;
+	while (token && token->type != R_OUT && token->type != R_OUT2
+		&& token->type != R_IN && token->type != R_IN2)
+	{
+		i++;
+		token = token->next;
+	}
+	return (i);
 }

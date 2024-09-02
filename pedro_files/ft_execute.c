@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/30 16:48:06 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/02 17:21:18 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,30 @@
 
 // So estou a verificar ate ao penultimo porque o pipe nunca pode ser o ultimo
 // E isso ja tem a verificacao do parser
-int		ft_redd_or_pipes(t_token *token)
+int	ft_see_redirect(t_token *token)
 {
 	while (token->next)
 	{
-		if (token->next->type == PIPE)
-			return (PIPE);
-		else if (token->next->type == R_IN)
+		if (token->type == R_IN)
 			return (R_IN);
-		else if (token->next->type == R_IN2)
+		else if (token->type == R_IN2)
 			return (R_IN2);
-		else if (token->next->type == R_OUT)
+		else if (token->type == R_OUT)
 			return (R_OUT);
-		else if (token->next->type == R_OUT2)
+		else if (token->type == R_OUT2)
 			return (R_OUT2);
 		token = token->next;
 	}
-	return (0);
+	return (FAILURE);
 }
 
 void	ft_execute_in(t_token *token, t_env **env)
 {
-	int	forked;
-	
+	int			forked;
+	t_commands	*cmd;
+
 	forked = 1;
-	t_commands *cmd = NULL;
+	cmd = NULL;
 	cmd = ft_build_commands(token);
 	if (cmd->next)
 	{
