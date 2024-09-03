@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 14:31:09 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/02 19:05:40 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:40:25 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,14 +122,13 @@ void	ft_modify_env(t_env	*env, char *tit, char *cont, int i)
 	{
 		if (env->title && ft_strcmp(env->title, tit))
 		{
-			if (env->content && i == 0)
+			if (env->content && i == 1)
 			{
 				free(env->content);
 				env->content = cont;
 			}
-			else if (env->content && i == 1){
-				ft_strjoin_free(env->content, cont);
-				ft_printf("yau\n");}
+			else
+				env->content = ft_strjoin_free(env->content, cont);
 			return ;
 		}
 		if (env->next == NULL)
@@ -138,48 +137,49 @@ void	ft_modify_env(t_env	*env, char *tit, char *cont, int i)
 	}
 	new_node = malloc(sizeof(t_env));
 	new_node->title = ft_strdup(tit);
-	if (cont)
-		new_node->content = cont;
-	else
-		new_node->content = NULL;//ft_strdup(command + c + 1);
+	new_node->content = cont;
 	new_node->next = NULL;
 	env->next = new_node;
 }
 
-void	ft_add_env(t_env *env, char *command)
+void	ft_change_add_env(t_env *env, char *command)
 {
 	int		c;
 	char	*tit;
 	char	*cont;
 
 	cont = NULL;
+	c = ft_see_equal(command);
+	if ((int)ft_strlen(command) > c)
+		cont = ft_strjoin_free(cont, ft_strdup(command + c + 1));
 	if (ft_strnstr(command, "+=", ft_strlen(command)))
 	{
-		c = ft_see_equal(command);
 		tit = ft_fine_strdup(command, 0, c -2);
-		if ((int)ft_strlen(command) > c)
-			cont = ft_strdup(command + c + 1);
 		ft_modify_env(env, tit, cont, 0);
 	}
 	else if (ft_strnstr(command, "=", ft_strlen(command)))
 	{
-		c = ft_see_equal(command);
 		tit = ft_fine_strdup(command, 0, c -1);
-		if ((int)ft_strlen(command) > c)
-			cont = ft_strdup(command + c + 1);
 		ft_modify_env(env, tit, cont, 1);
 	}
 	else
 	{
 		tit = ft_strdup(command);
-		ft_modify_env(env, tit, cont, 0);
+		ft_modify_env(env, tit, NULL, 0);
 	}
 	free(tit);
+
 }
 	// find if command already exists
-	// find if command has += if so appends if not frees and allocs a duped version
+	// if command is _ Must do nothing
 	// find if command has "" or '' it creates and has a Null. or space
 	// if its a new env this folowing appens
+
+int		ft_valid_identifier(char *str)
+{
+	(void)str;
+	return 1;
+}
 
 void	ft_export(t_token *token, t_env **env)
 {
@@ -193,7 +193,10 @@ void	ft_export(t_token *token, t_env **env)
 	token = token->next;
 	while (token)
 	{
-		ft_add_env(*env, token->data);
+	//	if (ft_valid_identifier(token->data))
+			ft_change_add_env(*env, token->data);
+		//else
+	//		ft_built_err(token, invalid_identifier);
 		token = token->next;
 	}
 	return ;

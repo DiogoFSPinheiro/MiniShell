@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:18:01 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/30 12:21:31 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:22:58 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	ft_built_err(t_token *token, t_builins err_type)
 		ft_printf_err("Minishell: %s: HOME not set\n", token->data);
 	if (err_type == file_permissions)
 		ft_printf_err("Minishell: %s: Permission denied\n", token->data);
+	if (err_type == invalid_identifier)
+		ft_printf_err("Minishell: export: `%s': not a valid identifier\n", token->data); //err code 1
 }
 
  // flag errors exept env

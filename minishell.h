@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/02 18:26:44 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:20:26 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ typedef enum e_bultins
 	no_file,
 	env_err_flag,
 	file_permissions,
-	no_home
+	no_home,
+	invalid_identifier
 }	t_builins;
 
 typedef struct s_token
