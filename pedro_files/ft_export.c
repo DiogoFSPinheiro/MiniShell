@@ -37,8 +37,10 @@ void	ft_print_exported(t_env *env)
 		return;
 	while (env)
 	{
-		if (!ft_strcmp("_", env->title)) // this one env is not printed for some reason
+		if (!ft_strcmp("_", env->title) && env->content != NULL) // this one env is not printed for some reason
 			ft_printf("declare -x %s%s\"%s\"\n", env->title, "=", env->content);
+		else if (env->content == NULL)
+			ft_printf("declare -x %s\n", env->title);
 		if (!env->next)
 			return;
 		env = env->next;
@@ -56,7 +58,10 @@ void	ft_duplicate_envs(t_env *env, t_env **duped)
 		new_node = malloc(sizeof(t_env));
 		if (!new_node)
 			return ;
-		new_node->content = ft_strdup(env->content);
+		if (env->content == NULL)
+			new_node->content = NULL;
+		else
+			new_node->content = ft_strdup(env->content);
 		new_node->title = ft_strdup(env->title);
 		new_node->next = NULL;
 		if (*duped == NULL)
@@ -108,31 +113,68 @@ void	ft_sort_and_print(t_env *env)
 	ft_free_env(duplicated);
 }
 
-void	ft_modify_env(t_env	*env, char *command)
+void	ft_modify_env(t_env	*env, char *tit, char *cont, int i)
 {
-	(void)env;
-	(void)command;
+	t_env	*new_node;
+
+	new_node = NULL;
+	while (env)
+	{
+		if (env->title && ft_strcmp(env->title, tit))
+		{
+			if (env->content && i == 0)
+			{
+				free(env->content);
+				env->content = cont;
+			}
+			else if (env->content && i == 1){
+				ft_strjoin_free(env->content, cont);
+				ft_printf("yau\n");}
+			return ;
+		}
+		if (env->next == NULL)
+			break;
+		env = env->next;
+	}
+	new_node = malloc(sizeof(t_env));
+	new_node->title = ft_strdup(tit);
+	if (cont)
+		new_node->content = cont;
+	else
+		new_node->content = NULL;//ft_strdup(command + c + 1);
+	new_node->next = NULL;
+	env->next = new_node;
 }
 
 void	ft_add_env(t_env *env, char *command)
 {
-	t_env	*new_node;
 	int		c;
+	char	*tit;
+	char	*cont;
 
-	new_node = NULL;
-	if (ft_strchr(command, '='))
-		ft_modify_env(env, command);
+	cont = NULL;
+	if (ft_strnstr(command, "+=", ft_strlen(command)))
+	{
+		c = ft_see_equal(command);
+		tit = ft_fine_strdup(command, 0, c -2);
+		if ((int)ft_strlen(command) > c)
+			cont = ft_strdup(command + c + 1);
+		ft_modify_env(env, tit, cont, 0);
+	}
+	else if (ft_strnstr(command, "=", ft_strlen(command)))
+	{
+		c = ft_see_equal(command);
+		tit = ft_fine_strdup(command, 0, c -1);
+		if ((int)ft_strlen(command) > c)
+			cont = ft_strdup(command + c + 1);
+		ft_modify_env(env, tit, cont, 1);
+	}
 	else
 	{
-		while (env->next)
-			env = env->next;
-		new_node = malloc(sizeof(t_env));
-		c = ft_see_equal(command);
-		new_node->title = ft_fine_strdup(command, 0, c -1);
-		new_node->content = ft_strdup(command + c + 1);
-		new_node->next = NULL;
-		(env)->next = new_node;
+		tit = ft_strdup(command);
+		ft_modify_env(env, tit, cont, 0);
 	}
+	free(tit);
 }
 	// find if command already exists
 	// find if command has += if so appends if not frees and allocs a duped version

@@ -16,11 +16,8 @@ void	ft_env(t_env *env, t_token *token)
 {
 	if (!env)
 		return;
-	if (env->content == NULL && env->title == NULL)
-	{
-		ft_printf_err("There are no envs left\n");
+	if (env->content == NULL)
 		return ;
-	}
 	if (token->next != NULL && token->next->type == FLAG)
 	{
 		ft_built_err(token, flag_err);
