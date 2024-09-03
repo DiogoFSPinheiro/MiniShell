@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute_m.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:12:08 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/30 16:00:01 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:21:50 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_execute(t_token *token, char **args, char **envs, char *str, char *command)
 {
 	struct stat buffer;
-	
+
 	(void)token;
 	if (execve(str, args, envs) == -1)
 	{ // caso eu nao consiga executar com o path(str) uso o commando diretamente caso nao de vou ver o porque de nao dar
@@ -45,7 +45,7 @@ char	**ft_make_env_arr(t_env *env)
 	temp = env;
 	i = 0;
 	if (!env)
-		return NULL;
+		return (NULL);
 	while (temp)
 	{
 		temp = temp->next;
@@ -64,17 +64,18 @@ char	**ft_make_env_arr(t_env *env)
 	return (envs);
 }
 
+//TODO dizer ao pedro que mexi aqui L 78 e L86
 char	**ft_make_arg_arr(t_token *token)
 {
 	t_token	*temp;
-	char 	**args;
+	char	**args;
 	int		i;
 
 	i = 0;
 	if (!token)
-		return NULL;
+		return (NULL);
 	temp = token;
-	while(temp && temp->type != PIPE)
+	while (temp && temp->type != R_OUT && temp->type != R_OUT2 && temp->type != R_IN && temp->type != R_IN2)
 	{
 		temp = temp->next;
 		i++;
@@ -82,7 +83,7 @@ char	**ft_make_arg_arr(t_token *token)
 	args = ft_calloc(i + 1, sizeof(char *));
 	i = 0;
 	temp = token;
-	while(temp && temp->type != PIPE)
+	while (temp && temp->type != R_OUT && temp->type != R_OUT2 && temp->type != R_IN && temp->type != R_IN2)
 	{
 		args[i] = ft_strdup(temp->data);
 		temp = temp->next;

@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:45:35 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/02 19:09:08 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/03 10:10:47 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,30 +43,6 @@ void	ft_redirect_in(t_token *token, t_env **env)
 			cur = cur->next;
 		}
 	}
-
-	pid = fork();
-	if (pid == 0) // Child process
-	{
-		dup = ft_token_dup(token);
-		if (fd != STDIN_FILENO)
-		{
-			dup2(fd, STDIN_FILENO);
-			close(fd);
-		}
-		if (ft_built_in(dup, env) == 1)
-			ft_send_to_execve(dup, *env);
-
-		free_tokens(token);
-		free_tokens(dup);
-		ft_free_env(*env);
-		exit(0);
-	}
-	else // Parent process
-	{
-		wait(NULL);
-		if (fd != STDOUT_FILENO)
-			close(fd);
-	}
 }
 
 //TODO start tomorrow
@@ -81,29 +57,6 @@ void	ft_handle_redirects(t_token *token, t_env **env)
 	fd_in = STDIN_FILENO;
 	fd_out = STDOUT_FILENO;
 
-	pid = fork();
-	if (pid == 0) // Child process
-	{
-		dup = ft_token_dup(token);
-		if (fd != STDIN_FILENO)
-		{
-			dup2(fd, STDIN_FILENO);
-			close(fd);
-		}
-		if (ft_built_in(dup, env) == 1)
-			ft_send_to_execve(dup, *env);
-
-		free_tokens(token);
-		free_tokens(dup);
-		ft_free_env(*env);
-		exit(0);
-	}
-	else // Parent process
-	{
-		wait(NULL);
-		if (fd != STDOUT_FILENO)
-			close(fd);
-	}
-}
 
 }
+

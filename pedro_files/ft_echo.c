@@ -3,59 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:23:17 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/24 15:02:19 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:14:49 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <stdbool.h>
 
-static	char	*ft_print_no_dups(char *str, char c)
-{
-	str++;
-	while (*str && str[0] != c)
-	{
-		write(1, &str[0], 1);
-		str++;
-	}
-	return str;
-}
 
 static void	ft_no_quotes(char *str)
 {
-	while (*str)
+	unsigned long	c;
+	bool			cut;
+
+	c = 0;
+	cut = false;
+	if (str[0] == '\'' || str[0] == '\"')
+		cut = true;
+	while (str[c])
 	{
-		if (str[0] == '"' && *str)
-			str = ft_print_no_dups(str, '"');
-		if (str[0] == '\'' && *str)
-			str = ft_print_no_dups(str, '\'');
-		else if ((str[0] != '"' || str[0] == '\'') && *str)
-			write(1, &str[0], 1);
-		str++;
+		if (cut)
+		{
+			if (c != 0 && c != ft_strlen(str) - 1)
+				write(1, &str[c], 1);
+		}
+		else
+			write(1, &str[c], 1);
+		c++;
 	}
+}
+
+bool	ft_see_echo_flag(t_token **token)
+{
+	if ((*token)->next->type == FLAG
+		&& ft_strcmp((*token)->next->data, "-n") == 1)
+	{
+		(*token) = (*token)->next;
+		return (true);
+	}
+	return (false);
 }
 
 void	ft_echo(t_token *token)
 {
-	t_token *temp;
+	bool	first;
+	bool	flag;
 
-	temp = token;
+	flag = false;
+	first = true;
 	if (!token->next)
 	{
 		write(1, "\n", 2);
 		return ;
 	}
-	if (token->next->type == FLAG && ft_strcmp(token->next->data, "-n") == 1)
-		temp = temp->next;
-	while (temp->next)
+	flag = ft_see_echo_flag(&token);
+	while (token->next)
 	{
-		temp = temp->next;
-		ft_no_quotes(temp->data);
-		if (temp->next)
+		token = token->next;
+		if (token->type == R_OUT2 || token->type == R_OUT)
+			token = token->next->next;
+		if (!token)
+			break ;
+		if (token->type == STR && first == false)
 			write(1, " ", 1);
+		ft_no_quotes(token->data);
+		first = false;
 	}
-	if (ft_strcmp(token->next->data, "-n") != 1)
-		write(1, "\n", 1); 
+	if (!flag)
+		write(1, "\n", 1);
 }

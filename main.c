@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/02 18:55:01 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:40:40 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ static void	client_handler(int sig)
 
 int	main(int c, char **v, char **envp)
 {
-	char			*input;
-	char			*clean_input;
-	t_token			*token;
+	char				*input;
+	char				*clean_input;
+	t_token				*token;
 	t_env				*env;
 	struct sigaction	sa;
+	int	fd_in = 0;
+	int	fd_out = 0;
 
 	(void)c;
 	(void)v;
@@ -44,6 +46,8 @@ int	main(int c, char **v, char **envp)
 	ft_create_env(envp, &env);
 	while (1)
 	{
+		dup2(fd_in, STDIN_FILENO);
+		dup2(fd_out, STDOUT_FILENO);
 		input = readline("MiniHell$> ");
 		if (input == NULL || ft_strcmp(input, "exit") == SUCCESS)
 		{
@@ -64,15 +68,8 @@ int	main(int c, char **v, char **envp)
 				free(clean_input);
 				ft_init_token(token, input);
 				ft_find_expand(&token, env);
-				
-				if (ft_see_redirect(token) == 8 || ft_see_redirect(token) == 9)
-					ft_redirect_out(token, &env);
-				else if (ft_see_redirect(token) == 6 || ft_see_redirect(token) == 7)
-					ft_redirect_in(token, &env);
-				else
-					ft_execute_in(token, &env);
-				//ft_print_info(token);
-				//commands = ft_build_commands(token);
+				//t_commands *commands = ft_build_commands(token);
+				ft_execute_in(token, &env);
 				//ft_print_cmd(commands);
 				free_tokens(token);
 				//ft_free_cmd(commands);

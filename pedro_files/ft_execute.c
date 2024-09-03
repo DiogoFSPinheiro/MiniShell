@@ -6,11 +6,13 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/02 17:21:18 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:43:39 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <sys/types.h>
+#include <unistd.h>
 
 // So estou a verificar ate ao penultimo porque o pipe nunca pode ser o ultimo
 // E isso ja tem a verificacao do parser
@@ -33,8 +35,8 @@ int	ft_see_redirect(t_token *token)
 
 void	ft_execute_in(t_token *token, t_env **env)
 {
-	int			forked;
 	t_commands	*cmd;
+	int			forked;
 
 	forked = 1;
 	cmd = NULL;
@@ -45,24 +47,18 @@ void	ft_execute_in(t_token *token, t_env **env)
 		return ;
 	}
 	ft_free_cmd(cmd);
-	// get FORKED MINIHELL    FIRST  -> prepare args and envs  <-
-	// Builtins that dont kill the program and affect it: Only if pipes 
-	//				CD, export, unset
-	// builtins that have to kill that version of the program
-	//				env, pwd, echo
-	if (ft_strcmp(token->data, "cd") || ft_strcmp(token->data, "export")
-		|| ft_strcmp(token->data, "unset"))
-		ft_built_in(token, env);
+	ft_handle_redirects(token);
+	if (ft_built_in(token, env) == SUCCESS)
+		;
 	else
 	{
 		forked = fork();
 		while (wait(NULL) > 0)
 			;
 	}
-	if (forked == 0 && ft_built_in(token, env) == 1)
-		ft_send_to_execve(token, *env);
 	if (forked == 0)
 	{
+		ft_send_to_execve(token, *env);
 		free_tokens(token);
 		ft_free_env(*env);
 		exit(0);

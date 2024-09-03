@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/02 17:49:54 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/03 12:04:45 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,11 +158,11 @@ t_commands	*ft_build_commands(t_token *token);
 
 //------------create_env.c -------
 void	ft_create_env(char **envp, t_env **env);
-//------------red_out.c -------
-void	ft_redirect_out(t_token *token, t_env **env);
+//------------redirections.c -------
+int		ft_redirect_out(t_token *token);
+int		ft_redirect_in(t_token *token);
+int		ft_handle_redirects(t_token *token);
 t_token	*ft_token_dup(t_token *token);
-//------------test.c -------
-void	ft_redirect_in(t_token *token, t_env **env);
 
 
 //---------------PEDRO-----------------
