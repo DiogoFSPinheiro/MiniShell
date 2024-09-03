@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 14:31:09 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/03 22:49:12 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/03 22:55:52 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,6 @@ void	ft_change_add_env(t_env *env, char *command)
 		ft_modify_env(env, tit, NULL, 0);
 	}
 	free(tit);
-
 }
 	// find if command already exists
 	// if command is _ Must do nothing
