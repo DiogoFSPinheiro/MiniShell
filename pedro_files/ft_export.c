@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 14:31:09 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/03 19:40:25 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/03 22:49:12 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void	ft_change_add_env(t_env *env, char *command)
 	cont = NULL;
 	c = ft_see_equal(command);
 	if ((int)ft_strlen(command) > c)
-		cont = ft_strjoin_free(cont, ft_strdup(command + c + 1));
+		cont = ft_strjoin_free(cont, ft_strdup(command + c + 1)); // cant do this here it causes the leak
 	if (ft_strnstr(command, "+=", ft_strlen(command)))
 	{
 		tit = ft_fine_strdup(command, 0, c -2);
