@@ -151,7 +151,7 @@ void	ft_change_add_env(t_env *env, char *command)
 	cont = NULL;
 	c = ft_see_equal(command);
 	if ((int)ft_strlen(command) > c)
-		cont = ft_strjoin_free(cont, ft_strdup(command + c + 1)); // cant do this here it causes the leak
+		cont = ft_strjoin_free(cont, command + c + 1); // cant do this here it causes the leak
 	if (ft_strnstr(command, "+=", ft_strlen(command)))
 	{
 		tit = ft_fine_strdup(command, 0, c -2);
@@ -174,9 +174,23 @@ void	ft_change_add_env(t_env *env, char *command)
 	// find if command has "" or '' it creates and has a Null. or space
 	// if its a new env this folowing appens
 
-int		ft_valid_identifier(char *str)
+int		ft_valid_title(char *str)
 {
-	(void)str;
+	size_t	i;
+
+	i = 0;
+	if (ft_isdigit(str[i]))
+		return 0;
+	if (str[i] == '_')
+		i++;
+	while (str[i])
+	{
+		if (str[i] == '=' && i > 0) //if 0 there is nothing behind "="
+			return (1);
+		if (ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
+		i++;
+	}
 	return 1;
 }
 
@@ -192,10 +206,10 @@ void	ft_export(t_token *token, t_env **env)
 	token = token->next;
 	while (token)
 	{
-	//	if (ft_valid_identifier(token->data))
+		if (ft_valid_title(token->data))
 			ft_change_add_env(*env, token->data);
-		//else
-	//		ft_built_err(token, invalid_identifier);
+		else
+			ft_built_err(token, invalid_identifier);
 		token = token->next;
 	}
 	return ;
