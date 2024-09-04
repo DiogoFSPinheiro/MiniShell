@@ -4,7 +4,7 @@
         "name": "(gdb) Launch",
         "type": "cppdbg",
         "request": "launch",
-        "program": "/home/pebarbos/Documents/MiniShell/minishell",
+        "program": "minishell",
         "args": [],
         "stopAtEntry": false,
         "cwd": "${fileDirname}",
