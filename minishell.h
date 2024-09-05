@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/05 14:22:02 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:20:26 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ typedef enum e_bultins
 	no_file,
 	env_err_flag,
 	file_permissions,
-	no_home
+	no_home,
+	invalid_identifier
 }	t_builins;
 
 typedef struct s_token
@@ -158,6 +159,8 @@ t_commands	*ft_build_commands(t_token *token);
 
 //------------create_env.c -------
 void	ft_create_env(char **envp, t_env **env);
+int	ft_see_equal(char *str);
+
 //------------redirections.c -------
 int		ft_redirect_out(t_token *token);
 int		ft_redirect_in(t_token *token);
