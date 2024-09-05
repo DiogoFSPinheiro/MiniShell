@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 12:06:05 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/03 15:56:14 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:21:40 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 int	ft_do_redirect(t_token *token);
 
-int	ft_handle_redirects(t_token *token)
+int	ft_handle_redirects(t_commands *cmd)
 {
-	//t_token	*token;
+	t_token	*token;
 
-	//token = cmd->tokens;
+	token = cmd->tokens;
 	while (token)
 	{
 		if (token->type == R_IN || token->type == R_OUT || token->type == R_OUT2)

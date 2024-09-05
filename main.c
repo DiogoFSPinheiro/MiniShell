@@ -6,11 +6,13 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/03 15:40:40 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:19:24 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libraries/printf/ft_printf.h"
 #include "minishell.h"
+#include <unistd.h>
 
 static void	client_handler(int sig)
 {
@@ -32,8 +34,8 @@ int	main(int c, char **v, char **envp)
 	t_token				*token;
 	t_env				*env;
 	struct sigaction	sa;
-	int	fd_in = 0;
-	int	fd_out = 0;
+	int	fd_in = dup(STDIN_FILENO);
+	int	fd_out = dup(STDOUT_FILENO);
 
 	(void)c;
 	(void)v;
@@ -68,10 +70,8 @@ int	main(int c, char **v, char **envp)
 				free(clean_input);
 				ft_init_token(token, input);
 				ft_find_expand(&token, env);
-				//t_commands *commands = ft_build_commands(token);
 				ft_execute_in(token, &env);
 				//ft_print_cmd(commands);
-				free_tokens(token);
 				//ft_free_cmd(commands);
 			}
 			free(input);
