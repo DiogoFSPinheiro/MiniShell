@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:23:17 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/05 14:17:16 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/05 18:19:29 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ static void	ft_no_quotes(char *str)
 
 	c = 0;
 	cut = false;
-	if (str[0] == '\'' || str[0] == '\"')
-		cut = true;
 	while (str[c])
 	{
 		if (cut)

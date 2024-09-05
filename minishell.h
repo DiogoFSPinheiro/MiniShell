@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/03 19:20:26 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/05 19:08:46 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	ft_data_type(t_token *token);
 //------------expand.c----------------
 void	ft_find_expand(t_token **token, t_env *env);
 int		ft_set_quotes_bool(char c, int *in_double_quote, int *in_single_quote);
+char	*ft_strdup_no_quotes(char const *src);
 
 //------------token_utils.c----------------
 int		ft_clean_size(char *str);
@@ -159,7 +160,7 @@ t_commands	*ft_build_commands(t_token *token);
 
 //------------create_env.c -------
 void	ft_create_env(char **envp, t_env **env);
-int	ft_see_equal(char *str);
+int		ft_see_equal(char *str);
 
 //------------redirections.c -------
 int		ft_redirect_out(t_token *token);
@@ -167,6 +168,8 @@ int		ft_redirect_in(t_token *token);
 int		ft_handle_redirects(t_commands *cmd);
 t_token	*ft_token_dup(t_token *token);
 
+//------------heredoc.c  -------
+void	ft_build_heredoc(t_commands **cmd, t_commands *head);
 
 //---------------PEDRO-----------------
 

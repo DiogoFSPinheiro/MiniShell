@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/05 17:22:29 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/05 19:30:07 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,6 @@ bool	ft_find_heredoc(t_token *token)
 	return (FAILURE);
 }
 
-void	ft_build_heredoc(t_commands **cmd, t_commands *head)
-{
-	t_token	*token;
-	char	*line = NULL;
-	size_t	len = 0;
-
-	token = (*cmd)->tokens;
-	while (1)
-	{
-		write(1, "> ", 2);
-		getline(&line, &len, stdin);
-
-		if (strcmp(line, "ola\n") == 0)
-		{
-			free(line);
-			break ;
-		}
-
-	}
-	(*cmd) = head;
-	ft_println("%s", (*cmd)->tokens);
-}
-
 void	ft_execute_in(t_token *token, t_env **env)
 {
 	t_commands	*cmd;
@@ -83,6 +60,7 @@ void	ft_execute_in(t_token *token, t_env **env)
 	}
 	if (ft_find_heredoc(cmd->tokens) == SUCCESS)
 		ft_build_heredoc(&cmd, cmd);
+	return ;
 	ft_handle_redirects(cmd);
 	if (ft_built_in(cmd->tokens, env) == SUCCESS)
 		;
