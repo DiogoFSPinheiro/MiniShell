@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 14:31:09 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/03 22:55:52 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/05 19:30:53 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,15 +113,28 @@ void	ft_sort_and_print(t_env *env)
 	ft_free_env(duplicated);
 }
 
-void	ft_modify_env(t_env	*env, char *tit, char *cont, int i)
+t_env	*ft_create_new(char *tit, char *cont)
 {
 	t_env	*new_node;
 
 	new_node = NULL;
+	new_node = malloc(sizeof(t_env));
+	new_node->title = ft_strdup(tit);
+	new_node->content = cont;
+	new_node->next = NULL;
+	return (new_node);
+}
+
+void	ft_modify_env(t_env	*env, char *tit, char *cont, int i)
+{
+	int	f;
+
+	f = 0;
 	while (env)
 	{
-		if (env->title && ft_strcmp(env->title, tit))
+		if (env->title && ft_strcmp(env->title, tit) && tit[0] != '_')
 		{
+			f++;
 			if (env->content && i == 1)
 			{
 				free(env->content);
@@ -135,11 +148,22 @@ void	ft_modify_env(t_env	*env, char *tit, char *cont, int i)
 			break;
 		env = env->next;
 	}
-	new_node = malloc(sizeof(t_env));
-	new_node->title = ft_strdup(tit);
-	new_node->content = cont;
-	new_node->next = NULL;
-	env->next = new_node;
+	if (f == 0)
+		env->next = ft_create_new(tit, cont);
+}
+// 	f e uma flag para ver se ja existe ou nao nas envs
+
+char	*ft_get_title(char *str, int	c)
+{
+	char	*tit;
+	
+	if (ft_strnstr(str, "+=", ft_strlen(str)))
+		tit = ft_fine_strdup(str, 0, c -2);
+	else if (ft_strnstr(str, "=", ft_strlen(str)))
+		tit = ft_fine_strdup(str, 0, c -1);
+	else
+		tit = ft_strdup(str);
+	return (tit);
 }
 
 void	ft_change_add_env(t_env *env, char *command)
@@ -148,26 +172,21 @@ void	ft_change_add_env(t_env *env, char *command)
 	char	*tit;
 	char	*cont;
 
-	cont = NULL;
 	c = ft_see_equal(command);
-	if ((int)ft_strlen(command) > c)
-		cont = ft_strjoin_free(cont, command + c + 1); // cant do this here it causes the leak
+	cont = NULL;
+	tit = ft_get_title(command, c);
+	if (ft_strnstr(command, "=", ft_strlen(command)))
+		cont = ft_fine_strdup(command, c + 1, ft_strlen(command));
+
 	if (ft_strnstr(command, "+=", ft_strlen(command)))
-	{
-		tit = ft_fine_strdup(command, 0, c -2);
 		ft_modify_env(env, tit, cont, 0);
-	}
 	else if (ft_strnstr(command, "=", ft_strlen(command)))
-	{
-		tit = ft_fine_strdup(command, 0, c -1);
 		ft_modify_env(env, tit, cont, 1);
-	}
 	else
-	{
-		tit = ft_strdup(command);
-		ft_modify_env(env, tit, NULL, 0);
-	}
+		ft_modify_env(env, tit, cont, 0);
 	free(tit);
+	if (cont != NULL)
+		free(cont);
 }
 	// find if command already exists
 	// if command is _ Must do nothing
@@ -179,14 +198,16 @@ int		ft_valid_title(char *str)
 	size_t	i;
 
 	i = 0;
-	if (ft_isdigit(str[i]))
+	if (!ft_isalpha(str[i]) && str[i] != '_')
 		return 0;
 	if (str[i] == '_')
 		i++;
 	while (str[i])
 	{
-		if (str[i] == '=' && i > 0) //if 0 there is nothing behind "="
+		if (str[i] == '+' && str[i + 1] == '=' && i > 0)
 			return (1);
+		if (str[i] == '=' && i > 0) //if 0 there is nothing behind "="
+				return (1);
 		if (ft_isalnum(str[i]) && str[i] != '_')
 			return (0);
 		i++;
