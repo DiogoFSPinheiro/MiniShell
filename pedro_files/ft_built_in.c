@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_built_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 15:06:43 by pebarbos          #+#    #+#             */
 /*   Updated: 2024/09/02 17:07:01 by pebarbos         ###   ########.fr       */
@@ -11,11 +11,11 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
+//TODO dizer ao pedro mexi aqui L31
 int		ft_built_in(t_token *token, t_env **env)
 {
 	if (!token)
-		return 0;
+		return (FAILURE);
 	else if (ft_strcmp(token->data, "env") == SUCCESS)
 		ft_env(*env, token);
 	else if (ft_strcmp(token->data, "pwd") == SUCCESS)
@@ -25,12 +25,12 @@ int		ft_built_in(t_token *token, t_env **env)
 	else if (ft_strcmp(token->data, "cd") == SUCCESS)
 		ft_cd(token, env);
 	else if (ft_strcmp(token->data, "export") == SUCCESS)
-		ft_export(token, env); 
+		ft_export(token, env);
 	else if (ft_strcmp(token->data, "unset") == SUCCESS)
 		ft_unset(env, token);
 	else
-		return 1;
-	return 0;
+		return (FAILURE);
+	return (SUCCESS);
 }
 
 /*

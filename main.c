@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
 /*   Updated: 2024/09/02 17:58:09 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libraries/printf/ft_printf.h"
 #include "minishell.h"
+#include <unistd.h>
 
 static void	client_handler(int sig)
 {
@@ -27,11 +29,13 @@ static void	client_handler(int sig)
 
 int	main(int c, char **v, char **envp)
 {
-	char			*input;
-	char			*clean_input;
-	t_token			*token;
+	char				*input;
+	char				*clean_input;
+	t_token				*token;
 	t_env				*env;
 	struct sigaction	sa;
+	int	fd_in = dup(STDIN_FILENO);
+	int	fd_out = dup(STDOUT_FILENO);
 
 	(void)c;
 	(void)v;
@@ -44,6 +48,8 @@ int	main(int c, char **v, char **envp)
 	ft_create_env(envp, &env);
 	while (1)
 	{
+		dup2(fd_in, STDIN_FILENO);
+		dup2(fd_out, STDOUT_FILENO);
 		input = readline("MiniHell$> ");
 		if (input == NULL || ft_strcmp(input, "exit") == SUCCESS)
 		{
@@ -65,10 +71,7 @@ int	main(int c, char **v, char **envp)
 				ft_init_token(token, input);
 				ft_find_expand(&token, env);
 				ft_execute_in(token, &env);
-				//ft_print_info(token);
-				//commands = ft_build_commands(token);
 				//ft_print_cmd(commands);
-				free_tokens(token);
 				//ft_free_cmd(commands);
 			}
 			free(input);

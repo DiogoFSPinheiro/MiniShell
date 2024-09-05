@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
 /*   Updated: 2024/09/03 19:20:26 by pebarbos         ###   ########.fr       */
@@ -20,11 +20,12 @@
 # include <readline/history.h>
 # include <signal.h>
 
-#include <sys/types.h>
-#include <dirent.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
-#include <errno.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <dirent.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <errno.h>
 
 typedef enum e_exit
 {
@@ -151,6 +152,7 @@ void	ft_space_helper(char *str, char **dst, int *c, int *i);
 t_env	*ft_get_content(t_env *env, char *title);
 int		ft_get_full_size(char *str, t_env *env);
 void	set_up_sigaction(struct sigaction *sa);
+int		ft_token_counter_until_redd(t_token *token);
 
 //------------build_commands.c -------
 t_commands	*ft_build_commands(t_token *token);
@@ -159,8 +161,17 @@ t_commands	*ft_build_commands(t_token *token);
 void	ft_create_env(char **envp, t_env **env);
 int	ft_see_equal(char *str);
 
+//------------redirections.c -------
+int		ft_redirect_out(t_token *token);
+int		ft_redirect_in(t_token *token);
+int		ft_handle_redirects(t_commands *cmd);
+t_token	*ft_token_dup(t_token *token);
+
 
 //---------------PEDRO-----------------
+
+//------------ft_execute.c------
+int		ft_see_redirect(t_token *token);
 
 //-----------------ft_execute_in.c------
 void	ft_execute_in(t_token *token, t_env **env);

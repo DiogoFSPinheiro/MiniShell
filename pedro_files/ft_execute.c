@@ -3,130 +3,118 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/08/30 16:27:16 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/05 17:22:29 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <sys/types.h>
+#include <unistd.h>
 
 // So estou a verificar ate ao penultimo porque o pipe nunca pode ser o ultimo
 // E isso ja tem a verificacao do parser
-int		ft_redd_or_pipes(t_token *token)
+int	ft_see_redirect(t_token *token)
 {
 	while (token->next)
 	{
-		if (token->next->type == PIPE)
-			return (PIPE);
-		else if (token->next->type == R_IN)
+		if (token->type == R_IN)
 			return (R_IN);
-		else if (token->next->type == R_IN2)
+		else if (token->type == R_IN2)
 			return (R_IN2);
-		else if (token->next->type == R_OUT)
+		else if (token->type == R_OUT)
 			return (R_OUT);
-		else if (token->next->type == R_OUT2)
+		else if (token->type == R_OUT2)
 			return (R_OUT2);
 		token = token->next;
 	}
-	return (0);
+	return (FAILURE);
 }
 
-void	ft_separate_commands(t_token *token, t_token *splited)
+bool	ft_find_heredoc(t_token *token)
 {
-    if (!token || token->type >= PIPE)
-	{
-		splited = NULL;
-        return ;
-	}
-    if (!splited)
-		return ;
-	splited->data = ft_strdup(token->data);
-    ft_data_type(splited);
-	if (token->next && token->next != NULL)
-	{
-		splited->next = malloc(sizeof(t_token));
-    	ft_separate_commands(token->next, splited->next);
-	}
-	else
-    	splited->next = NULL;
-}
-
-void	ft_piper(t_token *token, t_env *env)
-{
-	
-	//int	cmd;
-	(void)env;
-	// faz me um filho bro
-
 	while (token)
 	{
-
-		
-		if (token->type >= 5)
-			token = token->next;
-		
-			
-		ft_printf("end of command \n");
-//		if (!ft_built_in(command->token, env))
-//			ft_send_to_execve(command, env);
-		while (token && token->type < 5)
-			token = token->next;
+		if (token->type == R_IN2)
+			return (SUCCESS);
+		token = token->next;
 	}
+	return (FAILURE);
+}
+
+void	ft_build_heredoc(t_commands **cmd, t_commands *head)
+{
+	t_token	*token;
+	char	*line = NULL;
+	size_t	len = 0;
+
+	token = (*cmd)->tokens;
+	while (1)
+	{
+		write(1, "> ", 2);
+		getline(&line, &len, stdin);
+
+		if (strcmp(line, "ola\n") == 0)
+		{
+			free(line);
+			break ;
+		}
+
+	}
+	(*cmd) = head;
+	ft_println("%s", (*cmd)->tokens);
 }
 
 void	ft_execute_in(t_token *token, t_env **env)
 {
-	int	forked;
-	
+	t_commands	*cmd;
+	int			forked;
+
 	forked = 1;
-	t_commands *cmd = NULL;
+	cmd = NULL;
 	cmd = ft_build_commands(token);
+	free_tokens(token);
 	if (cmd->next)
 	{
 		ft_free_cmd(cmd);
 		return ;
 	}
-	ft_free_cmd(cmd);
-	// get FORKED MINIHELL    FIRST  -> prepare args and envs  <-
-	// Builtins that dont kill the program and affect it: Only if pipes 
-	//				CD, export, unset
-	// builtins that have to kill that version of the program
-	//				env, pwd, echo
-	if (ft_strcmp(token->data, "cd") || ft_strcmp(token->data, "export")
-	|| ft_strcmp(token->data, "unset"))
-			ft_built_in(token, env);
+	if (ft_find_heredoc(cmd->tokens) == SUCCESS)
+		ft_build_heredoc(&cmd, cmd);
+	ft_handle_redirects(cmd);
+	if (ft_built_in(cmd->tokens, env) == SUCCESS)
+		;
 	else
 	{
 		forked = fork();
-		while (wait(NULL) > 0);
+		while (wait(NULL) > 0)
+			;
 	}
-	if (forked == 0 && ft_built_in(token, env) == 1)
-		ft_send_to_execve(token, *env);
 	if (forked == 0)
 	{
-		free_tokens(token);
+		ft_send_to_execve(cmd->tokens, *env);
+		ft_free_cmd(cmd);
 		ft_free_env(*env);
 		exit(0);
 	}
+	ft_free_cmd(cmd);
 }
-
-
 
 char	*ft_path_to_executable(char **paths, char *command)
 {
-	int	i;
-	DIR		*dir;
-	struct dirent *entry;
-	
+	int				i;
+	DIR				*dir;
+	struct dirent	*entry;
+
 	i = 0;
 	while (paths[i] != NULL)
 	{
 		if (access(paths[i], F_OK) == 0)
 		{
 			if (paths[i] == NULL)
-				return NULL;
+				return (NULL);
 			dir = opendir(paths[i]);
 			while ((entry = readdir(dir)) != NULL)
 			{
@@ -141,7 +129,7 @@ char	*ft_path_to_executable(char **paths, char *command)
 }
 
 // At line 112 i know i didnt find the program in the PATHS of the env so i use pwd
-char *ft_right_path(t_token *token, t_env *env)
+char	*ft_right_path(t_token *token, t_env *env)
 {
 	char	**paths;
 	char	*found;
@@ -156,41 +144,16 @@ char *ft_right_path(t_token *token, t_env *env)
 	else if (access(token->data, R_OK))
 		found = ft_path();
 	else
-		return(token->data);
-	if (!ft_strnstr(token->data, "./", ft_strlen(token->data))) 
+		return (token->data);
+	if (!ft_strnstr(token->data, "./", ft_strlen(token->data)))
 	{
 		found = ft_strjoin_free(found, "/");
 		apended = ft_strjoin(found, token->data);
 	}
 	else
 		apended = ft_strdup(token->data);
-	if(found)
+	if (found)
 		free(found);
 	free_args(paths);
 	return (apended);
 }
-/*
-t_token *temp;
-	int		i;
-//	int		pipes_fd[2];
-
-	
-	i = fork();
-	temp = token;
-	if (temp == NULL)
-		return ;
-	//pipe(token->pipes_fd[1]);
-	if (!ft_built_in(token, env))
-		ft_send_to_execve(token, env);
-	//if (i == 0)
-	//	exit ;
-	while (temp && temp->next)
-	{
-		temp = temp->next;
-		if (temp->type == PIPE)
-			break ;
-	}
-	temp = temp->next;
-	if (temp != NULL)
-		ft_piper(temp, env);
-	return ;*/

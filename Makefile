@@ -9,7 +9,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 NAME = minishell
 
-SRCS = main.c tester.c syntax.c utils.c utils2.c utils3.c token_utils.c ft_quotes_split.c free_funcs.c type_check.c syntax2.c expand.c build_commands.c create_env.c \
+SRCS = main.c tester.c syntax.c utils.c utils2.c utils3.c token_utils.c ft_quotes_split.c free_funcs.c type_check.c syntax2.c expand.c build_commands.c create_env.c redirections.c \
 	pedro_files/ft_pwd.c pedro_files/ft_echo.c\
 	pedro_files/ft_built_in.c pedro_files/ft_cd.c\
 	pedro_files/ft_env.c pedro_files/ft_built_errors.c \

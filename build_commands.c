@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:34:42 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/29 17:14:29 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/03 10:53:16 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_commands	*ft_build_commands(t_token *token)
 	{
 		commands[i].tokens = NULL;
 		if (i < n_pipes)
-			commands[i].next = &commands[i + 1] ;
+			commands[i].next = &commands[i + 1];
 		else
 			commands[i].next = NULL;
 	}
