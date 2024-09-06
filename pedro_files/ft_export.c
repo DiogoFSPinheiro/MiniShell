@@ -37,7 +37,7 @@ void	ft_print_exported(t_env *env)
 		return;
 	while (env)
 	{
-		if (!ft_strcmp("_", env->title) && env->content != NULL) // this one env is not printed for some reason
+		if (!ft_strcmp("_", env->title) && env->content != NULL)
 			ft_printf("declare -x %s%s\"%s\"\n", env->title, "=", env->content);
 		else if (env->content == NULL)
 			ft_printf("declare -x %s\n", env->title);
@@ -117,8 +117,9 @@ t_env	*ft_create_new(char *tit, char *cont)
 {
 	t_env	*new_node;
 
-	new_node = NULL;
 	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		return (NULL);
 	new_node->title = ft_strdup(tit);
 	new_node->content = cont;
 	new_node->next = NULL;
@@ -138,7 +139,8 @@ void	ft_modify_env(t_env	*env, char *tit, char *cont, int i)
 			if (env->content && i == 1)
 			{
 				free(env->content);
-				env->content = cont;
+				env->content = NULL;
+				env->content = ft_strdup(cont);
 			}
 			else
 				env->content = ft_strjoin_free(env->content, cont);
@@ -175,9 +177,15 @@ void	ft_change_add_env(t_env *env, char *command)
 	c = ft_see_equal(command);
 	cont = NULL;
 	tit = ft_get_title(command, c);
+	if (strcmp(tit, "_") == 0)
+	{
+		free(tit);
+		return;
+	}
 	if (ft_strnstr(command, "=", ft_strlen(command)))
 		cont = ft_fine_strdup(command, c + 1, ft_strlen(command));
-
+	else if (ft_strnstr(command, "=", ft_strlen(command)))
+		cont = ft_fine_strdup(command, c + 1, ft_strlen(command));
 	if (ft_strnstr(command, "+=", ft_strlen(command)))
 		ft_modify_env(env, tit, cont, 0);
 	else if (ft_strnstr(command, "=", ft_strlen(command)))
