@@ -159,7 +159,7 @@ t_commands	*ft_build_commands(t_token *token);
 
 //------------create_env.c -------
 void	ft_create_env(char **envp, t_env **env);
-int	ft_see_equal(char *str);
+int		ft_see_equal(char *str);
 
 //------------redirections.c -------
 int		ft_redirect_out(t_token *token);

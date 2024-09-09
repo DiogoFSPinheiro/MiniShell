@@ -46,11 +46,11 @@ bool	ft_find_heredoc(t_token *token)
 
 void	ft_build_heredoc(t_commands **cmd, t_commands *head)
 {
-	t_token	*token;
+//	t_token	*token;
 	char	*line = NULL;
 	size_t	len = 0;
 
-	token = (*cmd)->tokens;
+//	token = (*cmd)->tokens;
 	while (1)
 	{
 		write(1, "> ", 2);

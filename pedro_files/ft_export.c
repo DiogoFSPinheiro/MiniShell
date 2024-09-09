@@ -3,104 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 14:31:09 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/05 19:30:53 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/07 18:15:43 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	ft_sorted(t_env *env)
-{
-	int i;
-
-	while (env && env->next)
-	{
-		i = 0;
-		if (env->title[i] > env->next->title[i])
-			return (1);
-		while (env->title[i] == env->next->title[i])
-		{	
-			if (env->title[i] > env->next->title[i])
-				return (1);
-			i++;
-		}
-		env = env->next;
-	}
-	return (0);
-}
-void	ft_print_exported(t_env *env)
-{
-	if (!env)
-		return;
-	while (env)
-	{
-		if (!ft_strcmp("_", env->title) && env->content != NULL)
-			ft_printf("declare -x %s%s\"%s\"\n", env->title, "=", env->content);
-		else if (env->content == NULL)
-			ft_printf("declare -x %s\n", env->title);
-		if (!env->next)
-			return;
-		env = env->next;
-	}
-}
-
-void	ft_duplicate_envs(t_env *env, t_env **duped)
-{
-	t_env	*new_node;
-	t_env	*cur;
-
-	cur = NULL;
-	while (env)
-	{
-		new_node = malloc(sizeof(t_env));
-		if (!new_node)
-			return ;
-		if (env->content == NULL)
-			new_node->content = NULL;
-		else
-			new_node->content = ft_strdup(env->content);
-		new_node->title = ft_strdup(env->title);
-		new_node->next = NULL;
-		if (*duped == NULL)
-			*duped = new_node;
-		else if (cur != NULL)
-			cur->next = new_node;
-		cur = new_node;
-		env = env->next;
-	}
-}
-void	ft_swap_nodes(t_env **env)
-{
-	t_env	*current;
-	t_env	*next;
-
-	current = *env;
-	next = current->next;
-	current->next = next->next;
-	next->next = current;
-	*env = next;
-}
-
-void	ft_sort(t_env **env)
-{
-	t_env	**cur;
-	
-	while (ft_sorted((*env)))
-	{
-		cur = env;
-		while ((*cur)->next)
-		{
-			if (ft_strncmp((*cur)->title, (*cur)->next->title, ft_strlen((*cur)->title)) > 0)
-			{
-				ft_swap_nodes(cur);
-			}
-			cur = &(*cur)->next;
-		}
-	}
-}
 
 void	ft_sort_and_print(t_env *env)
 {
@@ -121,7 +31,10 @@ t_env	*ft_create_new(char *tit, char *cont)
 	if (!new_node)
 		return (NULL);
 	new_node->title = ft_strdup(tit);
-	new_node->content = cont;
+	if (cont != NULL)
+		new_node->content = ft_strdup(cont);
+	else
+		new_node->content = NULL;
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -133,16 +46,16 @@ void	ft_modify_env(t_env	*env, char *tit, char *cont, int i)
 	f = 0;
 	while (env)
 	{
-		if (env->title && ft_strcmp(env->title, tit) && tit[0] != '_')
+		if (env->title && ft_strcmp(env->title, tit))
 		{
 			f++;
-			if (env->content && i == 1)
+			if (env->content && i == 1 && strcmp(tit, "_"))
 			{
 				free(env->content);
 				env->content = NULL;
 				env->content = ft_strdup(cont);
 			}
-			else
+			else if (strcmp(tit, "_"))
 				env->content = ft_strjoin_free(env->content, cont);
 			return ;
 		}
@@ -177,15 +90,13 @@ void	ft_change_add_env(t_env *env, char *command)
 	c = ft_see_equal(command);
 	cont = NULL;
 	tit = ft_get_title(command, c);
-	if (strcmp(tit, "_") == 0)
-	{
-		free(tit);
-		return;
-	}
 	if (ft_strnstr(command, "=", ft_strlen(command)))
-		cont = ft_fine_strdup(command, c + 1, ft_strlen(command));
-	else if (ft_strnstr(command, "=", ft_strlen(command)))
-		cont = ft_fine_strdup(command, c + 1, ft_strlen(command));
+	{
+		if (c == (int)ft_strlen(command))
+			cont = NULL;
+		else
+			cont = ft_fine_strdup(command, c + 1, ft_strlen(command));
+	}
 	if (ft_strnstr(command, "+=", ft_strlen(command)))
 		ft_modify_env(env, tit, cont, 0);
 	else if (ft_strnstr(command, "=", ft_strlen(command)))
