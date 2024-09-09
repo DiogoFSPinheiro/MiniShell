@@ -28,7 +28,6 @@ int	ft_handle_redirects(t_commands *cmd)
 				return (FAILURE);
 			token = token->next;
 		}
-		//else
 		token = token->next;
 	}
 	return (SUCCESS);

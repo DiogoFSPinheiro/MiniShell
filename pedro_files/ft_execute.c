@@ -53,14 +53,13 @@ void	ft_execute_in(t_token *token, t_env **env)
 	cmd = NULL;
 	cmd = ft_build_commands(token);
 	free_tokens(token);
-	if (cmd->next)
-	{
-		ft_free_cmd(cmd);
-		return ;
-	}
 	if (ft_find_heredoc(cmd->tokens) == SUCCESS)
 		ft_build_heredoc(&cmd, cmd);
-	return ;
+	if (cmd->next)
+	{
+		ft_free_cmd(cmd); //do pipes mother fcker!!!!!
+		return ;
+	}
 	ft_handle_redirects(cmd);
 	if (ft_built_in(cmd->tokens, env) == SUCCESS)
 		;
