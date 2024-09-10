@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 14:31:09 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/07 18:15:43 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:49:38 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,72 @@ char	*ft_get_title(char *str, int	c)
 	return (tit);
 }
 
+int	count_treated_len(char *cont)
+{
+	int	i;
+	int	len;
+	int	open;
+	char c;
+
+	i = 0;
+	len = 0;
+	open = 0;
+	c = '\0';
+	while (cont[i++])
+	{
+		if (open && cont[i] == c)
+			open = 0;
+		else if (!open && (cont[i] == '\'' || cont[i] == '\"'))
+		{
+			open = 1;
+			c = cont[i];
+		}
+		else
+			len++;
+	}
+	return len;
+}
+
+char	*ft_finecont_nomorequotes(char *cont, int i, int j, int open)
+{
+	char	*treated_cont;
+	char	c;
+
+	c = '\0';
+	treated_cont = (char *)malloc((count_treated_len(cont) + 1) * sizeof(char));
+	if (!treated_cont)
+		return NULL;
+	while (cont[i])
+	{
+		if (open && cont[i] == c)
+			open = 0;
+		else if (!open && (cont[i] == '\'' || cont[i] == '\"'))
+		{
+			open = 1;
+			c = cont[i];
+		}
+		else
+			treated_cont[j++] = cont[i];
+		i++;
+	}
+	treated_cont[j] = '\0';
+	free(cont);
+	return treated_cont;
+}
+
+char	*ft_norminette_sucks(char *cont)
+{
+	int	i;
+	int j;
+	int open;
+
+	i = 0;
+	j = 0;
+	open = 0;
+	cont = ft_finecont_nomorequotes(cont, i, j, open);
+	return(cont);
+}
+
 void	ft_change_add_env(t_env *env, char *command)
 {
 	int		c;
@@ -97,6 +163,7 @@ void	ft_change_add_env(t_env *env, char *command)
 		else
 			cont = ft_fine_strdup(command, c + 1, ft_strlen(command));
 	}
+	cont = ft_norminette_sucks(cont);
 	if (ft_strnstr(command, "+=", ft_strlen(command)))
 		ft_modify_env(env, tit, cont, 0);
 	else if (ft_strnstr(command, "=", ft_strlen(command)))
@@ -157,3 +224,4 @@ void	ft_export(t_token *token, t_env **env)
 	// each command is executed individualy
 	// commands cant start with special chars EXEPTIONS _
 	//find if there is a equal in each command
+	

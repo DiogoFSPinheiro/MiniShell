@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 18:12:29 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/07 18:14:32 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/10 16:06:40 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,25 @@ int	ft_sorted(t_env *env)
 }
 void	ft_print_exported(t_env *env)
 {
+	int	i;
+
+	i = 0;
 	if (!env)
 		return;
 	while (env)
 	{
 		if (!ft_strcmp("_", env->title) && env->content != NULL)
-			ft_printf("declare -x %s%s\"%s\"\n", env->title, "=", env->content);
+		{
+			ft_printf("declare -x %s%s\"", env->title, "=");
+			while (env->content[i])
+			{
+				if(env->content[i] == '\"')
+					ft_printf("\\");
+				write(1, &env->content[i++], 1);
+			}
+			i = 0;
+			ft_printf("\"\n");
+		}
 		else if (env->content == NULL)
 			ft_printf("declare -x %s\n", env->title);
 		if (!env->next)
