@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:30:09 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/02 15:28:55 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:03:28 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static void	ft_cout_size(char *str, t_env *env, int *i, int *total_length)
 
 	start = *i + 1;
 	while (str[*i + 1] != ' ' && str[*i + 1] != '\0'
-		&& str[*i + 1] != '$' && str[*i + 1] != '"' && str[*i + 1] != '\'')
+		&& str[*i + 1] != '$' && str[*i + 1] != '"' && str[*i + 1] != '\''
+		&& str[*i + 1] != '\n')
 		(*i)++;
 	var_name = ft_fine_strdup(str, start, *i);
 	content = ft_get_content(env, var_name);
