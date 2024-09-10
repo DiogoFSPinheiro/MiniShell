@@ -42,7 +42,7 @@ static void	ft_cout_size(char *str, t_env *env, int *i, int *total_length)
 	var_name = ft_fine_strdup(str, start, *i);
 	content = ft_get_content(env, var_name);
 	free(var_name);
-	if (content->content)
+	if (content && content->content)
 		*total_length += strlen(content->content);
 	else
 		*total_length += 20;
@@ -55,12 +55,12 @@ int	ft_get_full_size(char *str, t_env *env)
 
 	total_length = 0;
 	val = (t_ints){.i = 0, .j = 0, .in_single_quote = 0, .in_double_quote = 0};
-	while (str[val.i] != '\0')
+	while (str[val.i] != '\0' )
 	{
 		if (ft_set_quotes_bool(str[val.i], &val.in_double_quote,
 				&val.in_single_quote))
 			;
-		else if (str[val.i] == '$' && !val.in_single_quote)
+		else if (str[val.i] == '$' && !val.in_single_quote && str[val.i + 1] != ' ' && str[val.i + 1] != '\'' && str[val.i + 1] != '\"')
 			ft_cout_size(str, env, &val.i, &total_length);
 		else
 			total_length++;
@@ -78,7 +78,7 @@ int	ft_get_full_size2(char *str, t_env *env)
 	val = (t_ints){.i = 0, .j = 0, .in_single_quote = 0, .in_double_quote = 0};
 	while (str[val.i] != '\0')
 	{
-		if (str[val.i] == '$')
+		if (str[val.i] == '$' && str[val.i + 1] != ' ' && str[val.i + 1] != '\'' && str[val.i + 1] != '\"')
 			ft_cout_size(str, env, &val.i, &total_length);
 		else
 			total_length++;

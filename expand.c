@@ -116,7 +116,7 @@ char	*ft_expand_variables(char *str, t_env *env)
 		if (ft_set_quotes_bool(str[val.i], &val.in_double_quote,
 				&val.in_single_quote))
 			;
-		else if (str[val.i] == '$' && !val.in_single_quote)
+		else if (str[val.i] == '$' && !val.in_single_quote && str[val.i + 1] != ' ' && str[val.i + 1] != '\'' && str[val.i + 1] != '\"')
 		{
 			env_value = ft_expand_var(str, &val.i, env);
 			if (env_value)
@@ -141,7 +141,7 @@ char	*ft_expand_variables2(char *str, t_env *env)
 	result = (char *)ft_calloc(ft_get_full_size2(str, env) + 1, sizeof(char));
 	while (str[val.i] != '\0')
 	{
-		if (str[val.i] == '$')
+		if (str[val.i] == '$' && str[val.i + 1] != ' ' && str[val.i + 1] != '\'' && str[val.i + 1] != '\"')
 		{
 			env_value = ft_expand_var(str, &val.i, env);
 			if (env_value)
