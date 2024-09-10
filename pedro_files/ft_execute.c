@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/10 21:23:19 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/10 23:09:53 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,11 @@ void	ft_execute_in(t_token *token, t_env **env)
 	ft_expand_cmd(&cmd, *env);
 	if (cmd->next)
 	{
-		ft_free_cmd(cmd); //do pipes mother fcker!!!!!
+		ft_pipe_it(cmd, env); //do pipes mother fcker!!!!!
 		return ;
 	}
 	ft_handle_redirects(cmd);
-	if (ft_built_in(cmd->tokens, env) == SUCCESS)
-		;
+	if (ft_built_in(cmd->tokens, env) == SUCCESS);
 	else
 	{
 		forked = fork();

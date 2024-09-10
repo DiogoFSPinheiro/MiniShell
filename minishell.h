@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/10 13:54:03 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/10 23:32:28 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,8 @@ void	ft_duplicate_envs(t_env *env, t_env **duped);
 void	ft_print_exported(t_env *env);
 t_env	*ft_create_new(char *tit, char *cont);
 
+//------------------ft_pipes.c --------------
+void    ft_pipe_it(t_commands *cmd, t_env **env);
 
 //----------------- utils----------------
 char	*ft_path(void);
