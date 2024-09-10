@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/10 10:50:25 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:54:03 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,11 @@ char	*ft_path_to_executable(char **paths, char *command);
 
 //---------------ft_export.c-------------
 void    ft_export(t_token *token, t_env **env);
+void	ft_sort(t_env **env);
+void	ft_duplicate_envs(t_env *env, t_env **duped);
+void	ft_print_exported(t_env *env);
+t_env	*ft_create_new(char *tit, char *cont);
+
 
 //----------------- utils----------------
 char	*ft_path(void);

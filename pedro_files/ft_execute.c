@@ -56,6 +56,29 @@ bool	ft_find_heredoc(t_token *token)
 	return (FAILURE);
 }
 
+void	ft_build_heredoc(t_commands **cmd, t_commands *head)
+{
+//	t_token	*token;
+	char	*line = NULL;
+	size_t	len = 0;
+
+//	token = (*cmd)->tokens;
+	while (1)
+	{
+		write(1, "> ", 2);
+		getline(&line, &len, stdin);
+
+		if (strcmp(line, "ola\n") == 0)
+		{
+			free(line);
+			break ;
+		}
+
+	}
+	(*cmd) = head;
+	ft_println("%s", (*cmd)->tokens);
+}
+
 void	ft_execute_in(t_token *token, t_env **env)
 {
 	t_commands	*cmd;
