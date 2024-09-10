@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/05 17:22:29 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:46:10 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,18 @@ int	ft_see_redirect(t_token *token)
 		token = token->next;
 	}
 	return (FAILURE);
+}
+
+void	ft_expand_cmd(t_commands **cmd, t_env *env)
+{
+	t_commands	*copy_cmd;
+
+	copy_cmd = (*cmd);
+	while (copy_cmd)
+	{
+		ft_find_expand(&copy_cmd->tokens, env);
+		copy_cmd = copy_cmd->next;
+	}
 }
 
 bool	ft_find_heredoc(t_token *token)
@@ -76,13 +88,14 @@ void	ft_execute_in(t_token *token, t_env **env)
 	cmd = NULL;
 	cmd = ft_build_commands(token);
 	free_tokens(token);
+	if (ft_find_heredoc(cmd->tokens) == SUCCESS)
+		ft_build_heredoc(&cmd, cmd, *env);
+	ft_expand_cmd(&cmd, *env);
 	if (cmd->next)
 	{
-		ft_free_cmd(cmd);
+		ft_free_cmd(cmd); //do pipes mother fcker!!!!!
 		return ;
 	}
-	if (ft_find_heredoc(cmd->tokens) == SUCCESS)
-		ft_build_heredoc(&cmd, cmd);
 	ft_handle_redirects(cmd);
 	if (ft_built_in(cmd->tokens, env) == SUCCESS)
 		;

@@ -192,3 +192,35 @@
 * Handle signals;
 
 #
+
+### 📅 **03/09**
+
+* Handled signals;
+* Started redirs;
+
+✏️ ${{\color{lightgreen}{\textsf{TODO}}}}\$
+
+* Continue redirs;
+
+#
+
+### 📅 **05/09**
+
+* Finishd redirections;
+* Started Heredoc;
+
+✏️ ${{\color{lightgreen}{\textsf{TODO}}}}\$
+
+* Continue Heredoc;
+
+#
+
+### 📅 **09/09**
+
+* Finishd Heredocs;
+
+✏️ ${{\color{lightgreen}{\textsf{TODO}}}}\$
+
+* Test my redirects and heredoc hard with paulo-do;
+
+#
