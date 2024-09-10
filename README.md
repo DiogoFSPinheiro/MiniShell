@@ -232,6 +232,6 @@
 ✏️ ${{\color{lightgreen}{\textsf{TODO}}}}\$
 
 * Fix the God Damn " and ' on parser;
-* Clean norm on code expand and utils3;
+* Clean norm on code expand, utils3, heredoc;
 
 #

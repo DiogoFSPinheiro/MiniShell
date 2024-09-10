@@ -115,7 +115,7 @@ char	*ft_finecont_nomorequotes(char *cont, int i, int j, int open)
 	c = '\0';
 	treated_cont = (char *)malloc((count_treated_len(cont) + 1) * sizeof(char));
 	if (!treated_cont)
-		return NULL;
+		return (NULL);
 	while (cont[i])
 	{
 		if (open && cont[i] == c)
@@ -131,7 +131,7 @@ char	*ft_finecont_nomorequotes(char *cont, int i, int j, int open)
 	}
 	treated_cont[j] = '\0';
 	free(cont);
-	return treated_cont;
+	return (treated_cont);
 }
 
 char	*ft_norminette_sucks(char *cont)

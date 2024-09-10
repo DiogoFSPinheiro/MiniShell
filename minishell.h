@@ -175,6 +175,10 @@ t_token	*ft_token_dup(t_token *token);
 //------------heredoc.c  -------
 void	ft_build_heredoc(t_commands **cmd, t_commands *head, t_env *env);
 
+//------------heredoc_utils.c ----
+
+char    *ft_str_no_quotes(char *str);
+
 //---------------PEDRO-----------------
 
 //------------ft_execute.c------
@@ -212,6 +216,7 @@ void	ft_sort(t_env **env);
 void	ft_duplicate_envs(t_env *env, t_env **duped);
 void	ft_print_exported(t_env *env);
 t_env	*ft_create_new(char *tit, char *cont);
+char	*ft_finecont_nomorequotes(char *cont, int i, int j, int open);
 
 
 //----------------- utils----------------

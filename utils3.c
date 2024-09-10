@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-//TODO to maney funcs here, need to separate
+//TODO to many funcs here, need to separate
 
 t_env	*ft_get_content(t_env *env, char *title)
 {

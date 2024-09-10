@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-//TODO to maney funcs here, need to separate
+//TODO to many funcs here, need to separate
 
 static char	*ft_expand_var(char *str, int *i, t_env *env);
 static void	ft_view_data(t_token **token, t_env *env);
@@ -45,7 +45,6 @@ static void	ft_view_data(t_token **token, t_env *env) // TODO fix norm here
 			return ;
 		else
 		{
-			str = NULL;
 			str = ft_expand_variables(cur->data, env);
 			free(cur->data);
 			cur->data = ft_strdup(str);
@@ -54,15 +53,12 @@ static void	ft_view_data(t_token **token, t_env *env) // TODO fix norm here
 	}
 	else
 	{
-		if (*cur->data == '\"' || *cur->data == '\'')
-		{
-			str = ft_strdup_no_quotes(cur->data);
-			free(cur->data);
-			cur->data = ft_strdup(str);
-			free(str);
-		}
+		if (ft_strchr(cur->data, '\"') || ft_strchr(cur->data, '\''))
+			cur->data = ft_finecont_nomorequotes(cur->data, 0, 0, 0);
 	}
 }
+
+
 
 int	ft_set_quotes_bool(char c, int *in_double_quote, int *in_single_quote)
 {

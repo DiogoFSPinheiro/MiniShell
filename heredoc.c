@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libraries/printf/ft_printf.h"
 #include "minishell.h"
-#include <stdbool.h>
 
 void	ft_write_to_file(const char *filename, char *str, t_env *env, bool d);
 void	ft_change_heredoc(t_token **token, t_env *env);
@@ -50,6 +48,7 @@ void	ft_change_heredoc(t_token **token, t_env *env)
 	changer->data = ft_strdup("<");
 	changer->type = R_IN;
 	buffer = ft_calloc(1, sizeof(char));
+	char	*str = ft_str_no_quotes(changer->next->data);
 	while (1)
 	{
 		line = readline("> ");
@@ -58,7 +57,7 @@ void	ft_change_heredoc(t_token **token, t_env *env)
 			ft_println("Error: unexpected EOF");
 			break ;
 		}
-		if (strcmp(line, changer->next->data) == 0)
+		if (strcmp(line, str) == 0)
 		{
 			free(line);
 			break ;
@@ -70,10 +69,12 @@ void	ft_change_heredoc(t_token **token, t_env *env)
 	if (*changer->next->data == '\'' || *changer->next->data == '\"')
 		d = false;
 	free(changer->next->data);
+	
 	changer->next->data = ft_strdup("heredoc");
 	changer->next->type = HEREDOC;
 	ft_write_to_file(changer->next->data, buffer, env, d);
 	free(buffer);
+	free(str);
 }
 
 void	ft_write_to_file(const char *filename, char *str, t_env *env, bool d)
