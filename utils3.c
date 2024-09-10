@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:30:09 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/02 15:28:55 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:24:44 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	ft_cout_size(char *str, t_env *env, int *i, int *total_length)
 	var_name = ft_fine_strdup(str, start, *i);
 	content = ft_get_content(env, var_name);
 	free(var_name);
-	if (content)
+	if (content && content->content != NULL)
 		*total_length += strlen(content->content);
 	else
 		*total_length += 20;
