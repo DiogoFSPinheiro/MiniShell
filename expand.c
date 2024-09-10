@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:56:07 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/10 12:07:33 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:07:42 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static void	ft_view_data(t_token **token, t_env *env) // TODO fix norm here
 	char	*str;
 
 	cur = *token;
+	if (!cur->data)
+		return ;
 	str = ft_strchr(cur->data, '$');
 	if (str)
 	{

@@ -6,47 +6,44 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 19:07:30 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/10 12:56:45 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:28:12 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libraries/printf/ft_printf.h"
 #include "minishell.h"
+#include <stdbool.h>
 
-void	ft_write_to_file(const char *filename, char *str, t_env *env);
+void	ft_write_to_file(const char *filename, char *str, t_env *env, bool d);
 void	ft_change_heredoc(t_token **token, t_env *env);
 
 void	ft_build_heredoc(t_commands **cmd, t_commands *head, t_env *env)
 {
 	t_token		*token;
-	t_token		*token_head;
 	t_commands	*command;
 
-	command = (*cmd);
-	token = (*cmd)->tokens;
-	token_head = token;
+	command = *cmd;
 	while (command)
 	{
+		token = command->tokens;
 		while (token)
 		{
 			if (token->type == R_IN2)
 				ft_change_heredoc(&token, env);
 			token = token->next;
 		}
-		token = token_head;
-		(*cmd)->tokens = token_head;
 		command = command->next;
 	}
-	token = token_head;
-	(*cmd)->tokens = token_head;
-	(*cmd) = head;
+	*cmd = head;
 }
 
+//TODO fix norm
 void	ft_change_heredoc(t_token **token, t_env *env)
 {
 	t_token	*changer;
 	char	*line = NULL;
 	char	*buffer = NULL;
+	bool	d = true;
 
 	changer = (*token);
 	free(changer->data);
@@ -58,7 +55,7 @@ void	ft_change_heredoc(t_token **token, t_env *env)
 		line = readline("> ");
 		if (!line)
 		{
-			ft_printf("error");
+			ft_println("Error: unexpected EOF");
 			break ;
 		}
 		if (strcmp(line, changer->next->data) == 0)
@@ -70,23 +67,23 @@ void	ft_change_heredoc(t_token **token, t_env *env)
 		buffer = ft_strjoin_free(buffer, "\n");
 		free(line);
 	}
-	if (!line)
-	{
-		free(buffer);
-		return ;
-	}
+	if (*changer->next->data == '\'' || *changer->next->data == '\"')
+		d = false;
 	free(changer->next->data);
 	changer->next->data = ft_strdup("heredoc");
-	ft_write_to_file(changer->next->data, buffer, env);
+	changer->next->type = HEREDOC;
+	ft_write_to_file(changer->next->data, buffer, env, d);
 	free(buffer);
 }
 
-void	ft_write_to_file(const char *filename, char *str, t_env *env)
+void	ft_write_to_file(const char *filename, char *str, t_env *env, bool d)
 {
 	int		file;
 	char	*expanded;
 
-	expanded = ft_expand_variables(str, env);
+	expanded = str;
+	if (d)
+		expanded = ft_expand_variables(str, env);
 	file = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (file < 0)
 	{
@@ -98,5 +95,6 @@ void	ft_write_to_file(const char *filename, char *str, t_env *env)
 	{
 		perror("Error closing file heredoc");
 	}
-	free(expanded);
+	if (d)
+		free(expanded);
 }

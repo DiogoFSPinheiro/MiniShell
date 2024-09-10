@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:23:17 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/05 18:19:29 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:13:42 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static bool	ft_see_echo_flag(t_token **token)
 static void	ft_see_if_print(t_token **token, bool *first)
 {
 	*token = (*token)->next;
-	while (*token && ((*token)->type == R_OUT2 || (*token)->type == R_OUT))
+	while (*token && ((*token)->type > 5))
 		*token = (*token)->next->next;
 	if (!*token)
 		return ;
