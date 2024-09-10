@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 11:59:46 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/10 18:41:58 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/10 22:43:02 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static char	*ft_update_pwd(t_env *env, char *path)
+{
+	char	*pwd;
+
+	if (env->content == NULL)
+		return NULL;
+	pwd = ft_strdup(env->content);
+	free(env->content);
+	env->content = ft_strdup(path);
+	free(path);
+	return (pwd);
+}
 
 char	*ft_get_new_old(t_env *env)
 {
@@ -23,18 +36,16 @@ char	*ft_get_new_old(t_env *env)
 	{
 		if (ft_strcmp(env->title, "PWD"))
 		{
-			if (env->content == NULL)
-				return NULL;
-			pwd = ft_strdup(env->content);
-			free(env->content);
-			env->content = ft_strdup(path);
-			free(path);
+			pwd = ft_update_pwd(env, path);
 			return (pwd);
 		}
 		env = env->next;
 	}
 	if (ft_strcmp(env->title, "PWD"))
+	{
+		pwd = env->content;
 		env->content = ft_strdup(path);
+	}
 	else
 		env->next = ft_create_new("PWD", path);
 	free(path);
@@ -46,7 +57,6 @@ void	ft_change_pwd(t_env *env)
 	char	*old_pwd;
 
 	old_pwd = ft_get_new_old(env);
-	ft_printf("\n\ni have this shit -> %s\n\n", old_pwd);
 	while (env->next)
 	{
 		if (ft_strcmp(env->title, "OLDPWD"))
@@ -64,9 +74,7 @@ void	ft_change_pwd(t_env *env)
 	if (ft_strcmp(env->title, "OLDPWD"))
 		env->content = ft_strdup(old_pwd);
 	if (!ft_strcmp(env->title, "OLDPWD") && old_pwd != NULL)
-		env->next = ft_create_new("OLDPWD", ft_strdup(old_pwd));
-	else
-		env->next = ft_create_new("OLDPWD", NULL);
+		env->next = ft_create_new("OLDPWD", old_pwd);
 	free(old_pwd);
 }
 

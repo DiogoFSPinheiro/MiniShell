@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/10 12:46:10 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/10 21:23:19 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,29 +54,6 @@ bool	ft_find_heredoc(t_token *token)
 		token = token->next;
 	}
 	return (FAILURE);
-}
-
-void	ft_build_heredoc(t_commands **cmd, t_commands *head)
-{
-//	t_token	*token;
-	char	*line = NULL;
-	size_t	len = 0;
-
-//	token = (*cmd)->tokens;
-	while (1)
-	{
-		write(1, "> ", 2);
-		getline(&line, &len, stdin);
-
-		if (strcmp(line, "ola\n") == 0)
-		{
-			free(line);
-			break ;
-		}
-
-	}
-	(*cmd) = head;
-	ft_println("%s", (*cmd)->tokens);
 }
 
 void	ft_execute_in(t_token *token, t_env **env)
