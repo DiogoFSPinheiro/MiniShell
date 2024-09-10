@@ -224,3 +224,14 @@
 * Test my redirects and heredoc hard with paulo-do;
 
 #
+
+### 📅 **10/09**
+
+* Finished Heredocs, need to do many tests;
+
+✏️ ${{\color{lightgreen}{\textsf{TODO}}}}\$
+
+* Fix the God Damn " and ' on parser;
+* Clean norm on code expand and utils3;
+
+#

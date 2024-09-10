@@ -83,7 +83,7 @@ void	ft_write_to_file(const char *filename, char *str, t_env *env, bool d)
 
 	expanded = str;
 	if (d)
-		expanded = ft_expand_variables(str, env);
+		expanded = ft_expand_variables2(str, env);
 	file = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (file < 0)
 	{
