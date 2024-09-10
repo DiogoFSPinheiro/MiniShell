@@ -111,6 +111,8 @@ void	ft_data_type(t_token *token);
 //------------expand.c----------------
 void	ft_find_expand(t_token **token, t_env *env);
 int		ft_set_quotes_bool(char c, int *in_double_quote, int *in_single_quote);
+char	*ft_strdup_no_quotes(char const *src);
+char	*ft_expand_variables(char *str, t_env *env);
 
 //------------token_utils.c----------------
 int		ft_clean_size(char *str);
@@ -167,6 +169,8 @@ int		ft_redirect_in(t_token *token);
 int		ft_handle_redirects(t_commands *cmd);
 t_token	*ft_token_dup(t_token *token);
 
+//------------heredoc.c  -------
+void	ft_build_heredoc(t_commands **cmd, t_commands *head, t_env *env);
 
 //---------------PEDRO-----------------
 

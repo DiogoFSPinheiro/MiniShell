@@ -3,6 +3,9 @@
         "readline.h": "c",
         "types.h": "c",
         "dirent.h": "c",
-        "stat.h": "c"
+        "stat.h": "c",
+        "array": "c",
+        "string": "c",
+        "string_view": "c"
     }
 }

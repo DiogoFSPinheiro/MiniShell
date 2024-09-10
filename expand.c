@@ -6,15 +6,16 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:56:07 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/20 12:11:11 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:07:33 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*ft_expand_variables(char *str, t_env *env);
+
 static char	*ft_expand_var(char *str, int *i, t_env *env);
 static void	ft_view_data(t_token **token, t_env *env);
+char		*ft_strdup_no_quotes(char const *src);
 
 void	ft_find_expand(t_token **token, t_env *env)
 {
@@ -28,7 +29,7 @@ void	ft_find_expand(t_token **token, t_env *env)
 	}
 }
 
-static void	ft_view_data(t_token **token, t_env *env)
+static void	ft_view_data(t_token **token, t_env *env) // TODO fix norm here
 {
 	t_token	*cur;
 	char	*str;
@@ -43,6 +44,16 @@ static void	ft_view_data(t_token **token, t_env *env)
 		{
 			str = NULL;
 			str = ft_expand_variables(cur->data, env);
+			free(cur->data);
+			cur->data = ft_strdup(str);
+			free(str);
+		}
+	}
+	else
+	{
+		if (*cur->data == '\"' || *cur->data == '\'')
+		{
+			str = ft_strdup_no_quotes(cur->data);
 			free(cur->data);
 			cur->data = ft_strdup(str);
 			free(str);
@@ -68,6 +79,7 @@ int	ft_set_quotes_bool(char c, int *in_double_quote, int *in_single_quote)
 	return (done);
 }
 
+// o que mudar aqui, tenho que mudar no utils3 no ft_cout_size()
 static char	*ft_expand_var(char *str, int *i, t_env *env)
 {
 	int		var_start;
@@ -76,7 +88,8 @@ static char	*ft_expand_var(char *str, int *i, t_env *env)
 
 	var_start = *i + 1;
 	while (str[*i + 1] != ' ' && str[*i + 1] != '\0'
-		&& str[*i + 1] != '"' && str[*i + 1] != '\'' && str[*i + 1] != '$')
+		&& str[*i + 1] != '"' && str[*i + 1] != '\'' && str[*i + 1] != '$'
+		&& str[*i + 1] != '\n')
 		(*i)++;
 	var_name = ft_fine_strdup(str, var_start, *i);
 	if (ft_strcmp(var_name, "?") == SUCCESS)
@@ -91,7 +104,7 @@ static char	*ft_expand_var(char *str, int *i, t_env *env)
 	return (NULL);
 }
 
-static char	*ft_expand_variables(char *str, t_env *env)
+char	*ft_expand_variables(char *str, t_env *env)
 {
 	char	*result;
 	char	*env_value;
@@ -117,4 +130,33 @@ static char	*ft_expand_variables(char *str, t_env *env)
 	}
 	result[val.j] = '\0';
 	return (result);
+}
+
+char	*ft_strdup_no_quotes(char const *src)
+{
+	int		c;
+	int		size;
+	int		i;
+	char	*dest;
+
+	dest = (char *)malloc(ft_strlen(src) * sizeof(char) + 1);
+	if (!dest || ft_strlen(src) < 3)
+		return (0);
+	size = ft_strlen(src) - 1;
+	c = 0;
+	i = 0;
+	if (src[i] == '\"' || src[i] == '\'')
+		i++;
+	while (i < size)
+	{
+		dest[c] = src[i];
+		c++;
+		i++;
+	}
+	if (src[i] != '\"' && src[i] != '\'')
+		dest[c] = src[i];
+	else
+		dest[c] = '\0';
+	dest[++c] = '\0';
+	return (dest);
 }
