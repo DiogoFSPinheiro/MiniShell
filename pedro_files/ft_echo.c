@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:23:17 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/10 17:13:42 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/11 14:48:09 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,4 @@ static void	ft_see_if_print(t_token **token, bool *first)
 		write(1, " ", 1);
 	if ((*token)->type == STR)
 		ft_no_quotes((*token)->data);
-
 }

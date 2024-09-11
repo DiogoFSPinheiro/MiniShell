@@ -6,10 +6,9 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 12:06:05 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/05 14:21:40 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:38:39 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -22,7 +21,8 @@ int	ft_handle_redirects(t_commands *cmd)
 	token = cmd->tokens;
 	while (token)
 	{
-		if (token->type == R_IN || token->type == R_OUT || token->type == R_OUT2)
+		if (token->type == R_IN || token->type == R_OUT
+			|| token->type == R_OUT2)
 		{
 			if (ft_do_redirect(token) == FAILURE)
 				return (FAILURE);
@@ -78,7 +78,6 @@ int	ft_do_redirect(t_token *token)
 	}
 	return (SUCCESS);
 }
-
 
 t_token	*ft_token_dup(t_token *token)
 {

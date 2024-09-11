@@ -6,13 +6,11 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:56:07 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/10 17:07:42 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:14:01 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//TODO to many funcs here, need to separate
 
 static char	*ft_expand_var(char *str, int *i, t_env *env);
 static void	ft_view_data(t_token **token, t_env *env);
@@ -30,7 +28,7 @@ void	ft_find_expand(t_token **token, t_env *env)
 	}
 }
 
-static void	ft_view_data(t_token **token, t_env *env) // TODO fix norm here
+static void	ft_view_data(t_token **token, t_env *env)
 {
 	t_token	*cur;
 	char	*str;
@@ -58,26 +56,6 @@ static void	ft_view_data(t_token **token, t_env *env) // TODO fix norm here
 	}
 }
 
-
-
-int	ft_set_quotes_bool(char c, int *in_double_quote, int *in_single_quote)
-{
-	int	done;
-
-	done = 0;
-	if (c == '\'' && !*in_double_quote)
-	{
-		*in_single_quote = !*in_single_quote;
-		done = 1;
-	}
-	else if (c == '"' && !*in_single_quote)
-	{
-		*in_double_quote = !*in_double_quote;
-		done = 1;
-	}
-	return (done);
-}
-
 // o que mudar aqui, tenho que mudar no utils3 no ft_cout_size()
 static char	*ft_expand_var(char *str, int *i, t_env *env)
 {
@@ -103,6 +81,8 @@ static char	*ft_expand_var(char *str, int *i, t_env *env)
 	return (NULL);
 }
 
+//TODO if i have problems here i think it must be the 
+// ft_see_quotes and spaces on line 98
 char	*ft_expand_variables(char *str, t_env *env)
 {
 	char	*result;
@@ -116,7 +96,8 @@ char	*ft_expand_variables(char *str, t_env *env)
 		if (ft_set_quotes_bool(str[val.i], &val.in_double_quote,
 				&val.in_single_quote))
 			;
-		else if (str[val.i] == '$' && !val.in_single_quote && str[val.i + 1] != ' ' && str[val.i + 1] != '\'' && str[val.i + 1] != '\"')
+		else if (str[val.i] == '$' && !val.in_single_quote
+			&& ft_see_quotes_and_spaces(str[val.i + 1]) != SUCCESS)
 		{
 			env_value = ft_expand_var(str, &val.i, env);
 			if (env_value)
@@ -141,7 +122,8 @@ char	*ft_expand_variables2(char *str, t_env *env)
 	result = (char *)ft_calloc(ft_get_full_size2(str, env) + 1, sizeof(char));
 	while (str[val.i] != '\0')
 	{
-		if (str[val.i] == '$' && str[val.i + 1] != ' ' && str[val.i + 1] != '\'' && str[val.i + 1] != '\"')
+		if (str[val.i] == '$' && str[val.i + 1] != ' '
+			&& str[val.i + 1] != '\'' && str[val.i + 1] != '\"')
 		{
 			env_value = ft_expand_var(str, &val.i, env);
 			if (env_value)
@@ -154,33 +136,4 @@ char	*ft_expand_variables2(char *str, t_env *env)
 	}
 	result[val.j] = '\0';
 	return (result);
-}
-
-char	*ft_strdup_no_quotes(char const *src)
-{
-	int		c;
-	int		size;
-	int		i;
-	char	*dest;
-
-	dest = (char *)malloc(ft_strlen(src) * sizeof(char) + 1);
-	if (!dest || ft_strlen(src) < 3)
-		return (0);
-	size = ft_strlen(src) - 1;
-	c = 0;
-	i = 0;
-	if (src[i] == '\"' || src[i] == '\'')
-		i++;
-	while (i < size)
-	{
-		dest[c] = src[i];
-		c++;
-		i++;
-	}
-	if (src[i] != '\"' && src[i] != '\'')
-		dest[c] = src[i];
-	else
-		dest[c] = '\0';
-	dest[++c] = '\0';
-	return (dest);
 }

@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:00:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/02 16:01:13 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:19:30 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,6 @@ static void	ft_set_space(char *str, char **dst, int *c, int *i)
 	return ;
 }
 
-
-// TODO This does not gives the correct size bug on quotes, 
-// this way gives more than is needed.
-// Its not a problem but it stinks :/
 int	ft_clean_size(char *str)
 {
 	int	c;
@@ -83,8 +79,7 @@ int	ft_clean_size(char *str)
 			{
 				if ((str[c] == '|' || str[c] == '<' || str[c] == '>'))
 					ft_see_space(str, &c, &size);
-				c++;
-				size++;
+				ft_increment_int(&c, &size);
 			}
 		}
 		else

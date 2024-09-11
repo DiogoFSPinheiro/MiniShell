@@ -6,13 +6,11 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/10 17:04:14 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/11 14:52:03 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <sys/types.h>
-#include <unistd.h>
 
 // So estou a verificar ate ao penultimo porque o pipe nunca pode ser o ultimo
 // E isso ja tem a verificacao do parser

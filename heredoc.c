@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 19:07:30 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/10 17:28:12 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:37:33 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_write_to_file(const char *filename, char *str, t_env *env, bool d);
 void	ft_change_heredoc(t_token **token, t_env *env);
+char	*ft_read_heredoc(char *str);
 
 void	ft_build_heredoc(t_commands **cmd, t_commands *head, t_env *env)
 {
@@ -35,20 +36,36 @@ void	ft_build_heredoc(t_commands **cmd, t_commands *head, t_env *env)
 	*cmd = head;
 }
 
-//TODO fix norm
 void	ft_change_heredoc(t_token **token, t_env *env)
 {
 	t_token	*changer;
-	char	*line = NULL;
-	char	*buffer = NULL;
-	bool	d = true;
+	char	*buffer;
+	bool	d;
+	char	*str;
 
+	d = true;
 	changer = (*token);
 	free(changer->data);
 	changer->data = ft_strdup("<");
 	changer->type = R_IN;
+	str = ft_str_no_quotes(changer->next->data);
+	buffer = ft_read_heredoc(str);
+	if (*changer->next->data == '\'' || *changer->next->data == '\"')
+		d = false;
+	free(changer->next->data);
+	changer->next->data = ft_strdup("heredoc");
+	changer->next->type = HEREDOC;
+	ft_write_to_file(changer->next->data, buffer, env, d);
+	free(buffer);
+	free(str);
+}
+
+char	*ft_read_heredoc(char *str)
+{
+	char	*buffer;
+	char	*line;
+
 	buffer = ft_calloc(1, sizeof(char));
-	char	*str = ft_str_no_quotes(changer->next->data);
 	while (1)
 	{
 		line = readline("> ");
@@ -66,15 +83,7 @@ void	ft_change_heredoc(t_token **token, t_env *env)
 		buffer = ft_strjoin_free(buffer, "\n");
 		free(line);
 	}
-	if (*changer->next->data == '\'' || *changer->next->data == '\"')
-		d = false;
-	free(changer->next->data);
-	
-	changer->next->data = ft_strdup("heredoc");
-	changer->next->type = HEREDOC;
-	ft_write_to_file(changer->next->data, buffer, env, d);
-	free(buffer);
-	free(str);
+	return (buffer);
 }
 
 void	ft_write_to_file(const char *filename, char *str, t_env *env, bool d)

@@ -6,13 +6,11 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/10 12:48:43 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:34:02 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libraries/printf/ft_printf.h"
 #include "minishell.h"
-#include <unistd.h>
 
 static void	client_handler(int sig)
 {
@@ -70,8 +68,6 @@ int	main(int c, char **v, char **envp)
 				free(clean_input);
 				ft_init_token(token, input);
 				ft_execute_in(token, &env);
-				//ft_print_cmd(commands);
-				//ft_free_cmd(commands);
 			}
 			unlink("heredoc");
 			free(input);
@@ -80,7 +76,7 @@ int	main(int c, char **v, char **envp)
 	return (0);
 }
 
-void	ft_init_token(t_token *token, char *data) // data
+void	ft_init_token(t_token *token, char *data)
 {
 	char	**info;
 	char	*clean_input;

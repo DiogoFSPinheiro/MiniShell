@@ -6,13 +6,11 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:30:09 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/10 12:03:28 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/11 14:56:59 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//TODO to many funcs here, need to separate
 
 t_env	*ft_get_content(t_env *env, char *title)
 {
@@ -60,7 +58,9 @@ int	ft_get_full_size(char *str, t_env *env)
 		if (ft_set_quotes_bool(str[val.i], &val.in_double_quote,
 				&val.in_single_quote))
 			;
-		else if (str[val.i] == '$' && !val.in_single_quote && str[val.i + 1] != ' ' && str[val.i + 1] != '\'' && str[val.i + 1] != '\"')
+		else if (str[val.i] == '$' && !val.in_single_quote
+			&& str[val.i + 1] != ' ' && str[val.i + 1] != '\''
+			&& str[val.i + 1] != '\"')
 			ft_cout_size(str, env, &val.i, &total_length);
 		else
 			total_length++;
@@ -78,7 +78,8 @@ int	ft_get_full_size2(char *str, t_env *env)
 	val = (t_ints){.i = 0, .j = 0, .in_single_quote = 0, .in_double_quote = 0};
 	while (str[val.i] != '\0')
 	{
-		if (str[val.i] == '$' && str[val.i + 1] != ' ' && str[val.i + 1] != '\'' && str[val.i + 1] != '\"')
+		if (str[val.i] == '$' && str[val.i + 1] != ' '
+			&& str[val.i + 1] != '\'' && str[val.i + 1] != '\"')
 			ft_cout_size(str, env, &val.i, &total_length);
 		else
 			total_length++;
@@ -90,18 +91,4 @@ int	ft_get_full_size2(char *str, t_env *env)
 void	set_up_sigaction(struct sigaction *sa)
 {
 	sigaction(SIGINT, sa, NULL);
-}
-
-int	ft_token_counter_until_redd(t_token *token)
-{
-	int	i;
-
-	i = 0;
-	while (token && token->type != R_OUT && token->type != R_OUT2
-		&& token->type != R_IN && token->type != R_IN2)
-	{
-		i++;
-		token = token->next;
-	}
-	return (i);
 }

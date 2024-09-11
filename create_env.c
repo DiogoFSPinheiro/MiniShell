@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   create_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 13:57:14 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/02 18:53:54 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:39:53 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 int	ft_see_equal(char *str)
 {

@@ -235,3 +235,16 @@
 * Clean norm on code expand, utils3, heredoc;
 
 #
+
+### 📅 **11/09**
+
+* Fixed the God Damn " and ' on parser;
+* Cleaned norm on code expand, utils3, heredoc;
+* Did norm on most of the code;
+
+✏️ ${{\color{lightgreen}{\textsf{TODO}}}}\$
+
+* Clean main and .h;
+* Join code and test with pipes;
+
+#

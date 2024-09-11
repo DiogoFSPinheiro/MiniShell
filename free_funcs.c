@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_funcs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:34:55 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/30 11:47:00 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:37:55 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	free_cmd_tokens(t_token *stack)
 		next = current->next;
 		if (current->data)
 			free(current->data);
-		free(current);  
-		current = next;    
+		free(current);
+		current = next;
 	}
 }
 
@@ -73,7 +73,7 @@ void	ft_free_cmd(t_commands *cmd)
 	while (cur)
 	{
 		free_cmd_tokens(cur->tokens);
-		cur = cur->next; 
+		cur = cur->next;
 	}
 	free(cmd);
 }

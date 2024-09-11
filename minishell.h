@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/10 17:12:24 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:19:41 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ void	ft_data_type(t_token *token);
 
 //------------expand.c----------------
 void	ft_find_expand(t_token **token, t_env *env);
-int		ft_set_quotes_bool(char c, int *in_double_quote, int *in_single_quote);
-char	*ft_strdup_no_quotes(char const *src);
 char	*ft_expand_variables(char *str, t_env *env);
 char	*ft_expand_variables2(char *str, t_env *env);
 
@@ -157,7 +155,13 @@ t_env	*ft_get_content(t_env *env, char *title);
 int		ft_get_full_size(char *str, t_env *env);
 int		ft_get_full_size2(char *str, t_env *env);
 void	set_up_sigaction(struct sigaction *sa);
+
+//------------utils4.c -------
+int		ft_set_quotes_bool(char c, int *in_double_quote, int *in_single_quote);
 int		ft_token_counter_until_redd(t_token *token);
+bool	ft_see_quotes_and_spaces(char a);
+void	ft_increment_int(int *c, int *size);
+
 
 //------------build_commands.c -------
 t_commands	*ft_build_commands(t_token *token);
