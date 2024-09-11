@@ -16,7 +16,7 @@ int	printf_ft_putnbr_fd(int n, int fd, int c)
 {
 	if (n == -2147483648)
 	{
-		write(1, "-2147483648", 11);
+		write(fd, "-2147483648", 11);
 		c = 11;
 	}
 	else

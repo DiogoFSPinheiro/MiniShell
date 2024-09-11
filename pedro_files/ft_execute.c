@@ -78,8 +78,7 @@ void	ft_execute_in(t_token *token, t_env **env)
 	else
 	{
 		forked = fork();
-		while (wait(NULL) > 0)
-			;
+		while (wait(NULL) > 0);
 	}
 	if (forked == 0)
 	{
