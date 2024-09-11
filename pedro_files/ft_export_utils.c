@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 18:12:29 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/10 16:06:40 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/11 19:49:03 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
 int	ft_sorted(t_env *env)
 {
-	int i;
+	int	i;
 
 	while (env && env->next)
 	{
@@ -23,7 +22,7 @@ int	ft_sorted(t_env *env)
 		if (env->title[i] > env->next->title[i])
 			return (1);
 		while (env->title[i] == env->next->title[i])
-		{	
+		{
 			if (env->title[i] > env->next->title[i])
 				return (1);
 			i++;
@@ -32,13 +31,14 @@ int	ft_sorted(t_env *env)
 	}
 	return (0);
 }
+
 void	ft_print_exported(t_env *env)
 {
 	int	i;
 
 	i = 0;
 	if (!env)
-		return;
+		return ;
 	while (env)
 	{
 		if (!ft_strcmp("_", env->title) && env->content != NULL)
@@ -46,7 +46,7 @@ void	ft_print_exported(t_env *env)
 			ft_printf("declare -x %s%s\"", env->title, "=");
 			while (env->content[i])
 			{
-				if(env->content[i] == '\"')
+				if (env->content[i] == '\"')
 					ft_printf("\\");
 				write(1, &env->content[i++], 1);
 			}
@@ -56,7 +56,7 @@ void	ft_print_exported(t_env *env)
 		else if (env->content == NULL)
 			ft_printf("declare -x %s\n", env->title);
 		if (!env->next)
-			return;
+			return ;
 		env = env->next;
 	}
 }
@@ -86,6 +86,7 @@ void	ft_duplicate_envs(t_env *env, t_env **duped)
 		env = env->next;
 	}
 }
+
 void	ft_swap_nodes(t_env **env)
 {
 	t_env	*current;
@@ -101,13 +102,14 @@ void	ft_swap_nodes(t_env **env)
 void	ft_sort(t_env **env)
 {
 	t_env	**cur;
-	
+
 	while (ft_sorted((*env)))
 	{
 		cur = env;
 		while ((*cur)->next)
 		{
-			if (ft_strncmp((*cur)->title, (*cur)->next->title, ft_strlen((*cur)->title)) > 0)
+			if (ft_strncmp((*cur)->title, (*cur)->next->title,
+					ft_strlen((*cur)->title)) > 0)
 			{
 				ft_swap_nodes(cur);
 			}

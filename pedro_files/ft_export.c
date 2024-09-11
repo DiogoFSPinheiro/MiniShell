@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 14:31:09 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/10 17:02:37 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/11 19:17:21 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_sort_and_print(t_env *env)
 {
 	t_env	*duplicated;
-	
+
 	duplicated = NULL;
 	ft_duplicate_envs(env, &duplicated);
 	ft_sort(&duplicated);
@@ -60,7 +60,7 @@ void	ft_modify_env(t_env	*env, char *tit, char *cont, int i)
 			return ;
 		}
 		if (env->next == NULL)
-			break;
+			break ;
 		env = env->next;
 	}
 	if (f == 0)
@@ -68,10 +68,10 @@ void	ft_modify_env(t_env	*env, char *tit, char *cont, int i)
 }
 // 	f e uma flag para ver se ja existe ou nao nas envs
 
-char	*ft_get_title(char *str, int	c)
+char	*ft_get_title(char *str, int c)
 {
 	char	*tit;
-	
+
 	if (ft_strnstr(str, "+=", ft_strlen(str)))
 		tit = ft_fine_strdup(str, 0, c -2);
 	else if (ft_strnstr(str, "=", ft_strlen(str)))
@@ -83,10 +83,10 @@ char	*ft_get_title(char *str, int	c)
 
 int	count_treated_len(char *cont)
 {
-	int	i;
-	int	len;
-	int	open;
-	char c;
+	int		i;
+	int		len;
+	int		open;
+	char	c;
 
 	i = 0;
 	len = 0;
@@ -104,7 +104,7 @@ int	count_treated_len(char *cont)
 		else
 			len++;
 	}
-	return len;
+	return (len);
 }
 
 char	*ft_finecont_nomorequotes(char *cont, int i, int j, int open)
@@ -115,7 +115,7 @@ char	*ft_finecont_nomorequotes(char *cont, int i, int j, int open)
 	c = '\0';
 	treated_cont = (char *)malloc((count_treated_len(cont) + 1) * sizeof(char));
 	if (!treated_cont)
-		return NULL;
+		return (NULL);
 	while (cont[i])
 	{
 		if (open && cont[i] == c)
@@ -131,20 +131,20 @@ char	*ft_finecont_nomorequotes(char *cont, int i, int j, int open)
 	}
 	treated_cont[j] = '\0';
 	free(cont);
-	return treated_cont;
+	return (treated_cont);
 }
 
 char	*ft_norminette_sucks(char *cont)
 {
 	int	i;
-	int j;
-	int open;
+	int	j;
+	int	open;
 
 	i = 0;
 	j = 0;
 	open = 0;
 	cont = ft_finecont_nomorequotes(cont, i, j, open);
-	return(cont);
+	return (cont);
 }
 
 void	ft_change_add_env(t_env *env, char *command)
@@ -180,26 +180,26 @@ void	ft_change_add_env(t_env *env, char *command)
 	// find if command has "" or '' it creates and has a Null. or space
 	// if its a new env this folowing appens
 
-int		ft_valid_title(char *str)
+int	ft_valid_title(char *str)
 {
 	size_t	i;
 
 	i = 0;
 	if (!ft_isalpha(str[i]) && str[i] != '_')
-		return 0;
+		return (0);
 	if (str[i] == '_')
 		i++;
 	while (str[i])
 	{
 		if (str[i] == '+' && str[i + 1] == '=' && i > 0)
 			return (1);
-		if (str[i] == '=' && i > 0) //if 0 there is nothing behind "="
-				return (1);
+		if (str[i] == '=' && i > 0)
+			return (1);
 		if (ft_isalnum(str[i]) && str[i] != '_')
 			return (0);
 		i++;
 	}
-	return 1;
+	return (1);
 }
 
 void	ft_export(t_token *token, t_env **env)
@@ -225,4 +225,3 @@ void	ft_export(t_token *token, t_env **env)
 	// each command is executed individualy
 	// commands cant start with special chars EXEPTIONS _
 	//find if there is a equal in each command
-	

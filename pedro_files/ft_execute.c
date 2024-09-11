@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/10 23:09:53 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/11 20:06:54 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,34 +90,37 @@ void	ft_execute_in(t_token *token, t_env **env)
 	ft_free_cmd(cmd);
 }
 
-char	*ft_path_to_executable(char **paths, char *command)
+char	*ft_path_to_executable(char **paths, char *command, int using_it)
 {
-	int				i;
 	DIR				*dir;
 	struct dirent	*entry;
 
-	i = 0;
-	while (paths[i] != NULL)
+	while (paths[using_it] != NULL)
 	{
-		if (access(paths[i], F_OK) == 0)
+		if (access(paths[using_it], F_OK) == 0)
 		{
-			if (paths[i] == NULL)
+			if (paths[using_it] == NULL)
 				return (NULL);
-			dir = opendir(paths[i]);
-			while ((entry = readdir(dir)) != NULL)
+			dir = opendir(paths[using_it]);
+			if (dir == NULL)
+				return (NULL);
+			entry = readdir(dir);
+			while (entry != NULL)
 			{
 				if (strcmp(entry->d_name, command) == 0)
-					return (ft_strdup(paths[i]));
+					return (ft_strdup(paths[using_it]));
+				entry = readdir(dir);
 			}
 			closedir(dir);
 		}
-		i++;
+		using_it++;
 	}
 	return (NULL);
 }
 
-// At line 112 i know i didnt find the program in the PATHS of the env so i use pwd
-char	*ft_right_path(t_token *token, t_env *env)
+// At line 112 i know i didnt find the program in 
+//the PATHS of the env so i use pwd
+char	*ft_right_path(t_token *token, t_env *env, int iswear)
 {
 	char	**paths;
 	char	*found;
@@ -127,7 +130,7 @@ char	*ft_right_path(t_token *token, t_env *env)
 	if (ft_get_env(env, "PATH") != NULL)
 	{
 		paths = ft_split(ft_get_env(env, "PATH"), ':');
-		found = ft_path_to_executable(paths, token->data);
+		found = ft_path_to_executable(paths, token->data, iswear);
 	}
 	else if (access(token->data, R_OK))
 		found = ft_path();

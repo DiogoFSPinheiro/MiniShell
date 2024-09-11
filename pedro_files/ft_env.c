@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:12:22 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/02 17:54:11 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/11 19:45:48 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_env(t_env *env, t_token *token)
 {
 	if (!env)
-		return;
+		return ;
 	if (env->content == NULL)
 		return ;
 	if (token->next != NULL && token->next->type == FLAG)
@@ -28,7 +28,7 @@ void	ft_env(t_env *env, t_token *token)
 		if (env->content != NULL)
 			ft_printf("%s%s%s\n", env->title, "=", env->content);
 		if (!env->next)
-			return;
+			return ;
 		env = env->next;
 	}
 }

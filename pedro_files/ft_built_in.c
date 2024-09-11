@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_built_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 15:06:43 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/02 17:07:01 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/11 19:46:42 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 //TODO dizer ao pedro mexi aqui L31
-int		ft_built_in(t_token *token, t_env **env)
+int	ft_built_in(t_token *token, t_env **env)
 {
 	if (!token)
 		return (FAILURE);
@@ -50,7 +50,8 @@ void	ft_send_to_execve(t_token *token, t_env *env)
 		paths = ft_split(ft_get_env(env, "PATH"), ':');
 		found = ft_path_to_executable(paths, token->data); 
 	}
-	else // At this point i know i didnt find the program in the PATHS of the env so i use pwd
+	else // At this point i know i didnt find the program i
+	n the PATHS of the env so i use pwd
 		found = ft_path();
 	if (ft_in_there(token->data, "./") == 0)
 	{
@@ -59,7 +60,8 @@ void	ft_send_to_execve(t_token *token, t_env *env)
 	}
 	else
 		apended = token->data;
-	if (execve(apended, args_arr, env_arr) == -1)// o path leva o programa o path e lido pelas envs
+	if (execve(apended, args_arr, env_arr) == -1)// o path
+	 leva o programa o path e lido pelas envs
 		ft_printf_err("command '%s' not found\n", token->data);
 	ft_free_shit_up(env_arr, args_arr, found, apended, paths);
 }
