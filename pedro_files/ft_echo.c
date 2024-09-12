@@ -72,7 +72,7 @@ static bool	ft_see_echo_flag(t_token **token)
 static void	ft_see_if_print(t_token **token, bool *first)
 {
 	*token = (*token)->next;
-	while (*token && ((*token)->type == R_OUT2 || (*token)->type == R_OUT))
+	while (*token && ((*token)->type > 5))
 		*token = (*token)->next->next;
 	if (!*token)
 		return ;

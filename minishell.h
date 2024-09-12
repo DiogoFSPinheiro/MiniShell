@@ -27,6 +27,7 @@
 # include <sys/stat.h>
 # include <errno.h>
 
+
 typedef enum e_exit
 {
 	FAILURE,
@@ -63,6 +64,7 @@ typedef enum e_type
 	R_IN2,
 	R_OUT,
 	R_OUT2,
+	HEREDOC,
 }	t_type;
 
 typedef enum e_bultins
@@ -103,16 +105,15 @@ void	ft_print_info(t_token *token);
 void	ft_print_cmd(t_commands *cmd);
 
 //------------main.c----------------
-void	ft_init_token(t_token *token, char *data);
+void	client_handler(int sig);
 
 //------------type_check.c----------------
 void	ft_data_type(t_token *token);
 
 //------------expand.c----------------
 void	ft_find_expand(t_token **token, t_env *env);
-int		ft_set_quotes_bool(char c, int *in_double_quote, int *in_single_quote);
-char	*ft_strdup_no_quotes(char const *src);
 char	*ft_expand_variables(char *str, t_env *env);
+char	*ft_expand_variables2(char *str, t_env *env);
 
 //------------token_utils.c----------------
 int		ft_clean_size(char *str);
@@ -153,8 +154,16 @@ void	ft_space_helper(char *str, char **dst, int *c, int *i);
 //------------utils3.c -------
 t_env	*ft_get_content(t_env *env, char *title);
 int		ft_get_full_size(char *str, t_env *env);
+int		ft_get_full_size2(char *str, t_env *env);
 void	set_up_sigaction(struct sigaction *sa);
+
+//------------utils4.c -------
+int		ft_set_quotes_bool(char c, int *in_double_quote, int *in_single_quote);
 int		ft_token_counter_until_redd(t_token *token);
+bool	ft_see_q_n_s(char a);
+void	ft_increment_int(int *c, int *size);
+void	ft_copy_and_free(char *env_value, char *result, int *j);
+
 
 //------------build_commands.c -------
 t_commands	*ft_build_commands(t_token *token);
@@ -172,6 +181,12 @@ t_token	*ft_token_dup(t_token *token);
 //------------heredoc.c  -------
 void	ft_build_heredoc(t_commands **cmd, t_commands *head, t_env *env);
 
+//------------heredoc_utils.c ----
+char	*ft_str_no_quotes(char *str);
+
+//------------tokens.c  ------
+t_token	*ft_parser(char *input);
+
 //---------------PEDRO-----------------
 
 //------------ft_execute.c------
@@ -182,7 +197,6 @@ void	ft_execute_in(t_token *token, t_env **env);
 int		ft_built_in(t_token *token, t_env **env);
 void	ft_send_to_execve(t_token *token, t_env *env);
 int		ft_redd_or_pipes(t_token *token);
-
 
 //-----------------ft_env.c-----------
 void	ft_env(t_env *env, t_token *token);
@@ -204,11 +218,12 @@ void	ft_built_err(t_token *token, t_builins err_type);
 char	*ft_path_to_executable(char **paths, char *command, int using_it);
 
 //---------------ft_export.c-------------
-void    ft_export(t_token *token, t_env **env);
+void	ft_export(t_token *token, t_env **env);
 void	ft_sort(t_env **env);
 void	ft_duplicate_envs(t_env *env, t_env **duped);
 void	ft_print_exported(t_env *env);
 t_env	*ft_create_new(char *tit, char *cont);
+char	*ft_finecont_nomorequotes(char *cont, int i, int j, int open);
 
 //------------------ft_pipes.c --------------
 int		ft_pipe_it(t_commands *cmd, t_env **env);

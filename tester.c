@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 10:45:00 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/29 16:31:01 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:37:06 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_print_cmd(t_commands *cmd)
 	ft_println("-----------------------");
 	while (print)
 	{
-		ft_println("cmd%d",++c);
+		ft_println("cmd%d", ++c);
 		ft_print_info(print->tokens);
 		print = print->next;
 	}

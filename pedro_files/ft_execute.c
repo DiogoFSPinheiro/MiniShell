@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <sys/types.h>
-#include <unistd.h>
 
 // So estou a verificar ate ao penultimo porque o pipe nunca pode ser o ultimo
 // E isso ja tem a verificacao do parser

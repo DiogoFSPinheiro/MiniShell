@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-//TODO dizer ao pedro mexi aqui L31
+
 int	ft_built_in(t_token *token, t_env **env)
 {
 	if (!token)

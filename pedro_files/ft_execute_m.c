@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:12:08 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/11 20:04:49 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:16:25 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char	**ft_make_env_arr(t_env *env)
 	return (envs);
 }
 
-//TODO dizer ao pedro que mexi aqui L 78 e L86
 char	**ft_make_arg_arr(t_token *token)
 {
 	t_token	*temp;
@@ -76,7 +75,7 @@ char	**ft_make_arg_arr(t_token *token)
 	if (!token)
 		return (NULL);
 	temp = token;
-	while (temp && temp->type <= PIPE)
+	while (temp && temp->type < 5)
 	{
 		temp = temp->next;
 		i++;
@@ -84,7 +83,7 @@ char	**ft_make_arg_arr(t_token *token)
 	args = ft_calloc(i + 1, sizeof(char *));
 	i = 0;
 	temp = token;
-	while (temp && temp->type <= PIPE)
+	while (temp && temp->type < 5)
 	{
 		args[i] = ft_strdup(temp->data);
 		temp = temp->next;

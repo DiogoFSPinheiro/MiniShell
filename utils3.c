@@ -46,7 +46,30 @@ static void	ft_cout_size(char *str, t_env *env, int *i, int *total_length)
 		*total_length += 20;
 }
 
-int	ft_get_full_size(char *str, t_env *env)
+int	ft_get_full_size(char *str, t_env *env) //this has a double
+{
+	int		total_length;
+	t_ints	val;
+
+	total_length = 0;
+	val = (t_ints){.i = 0, .j = 0, .in_single_quote = 0, .in_double_quote = 0};
+	while (str[val.i] != '\0' )
+	{
+		if (ft_set_quotes_bool(str[val.i], &val.in_double_quote,
+				&val.in_single_quote))
+			;
+		else if (str[val.i] == '$' && !val.in_single_quote
+			&& str[val.i + 1] != ' ' && str[val.i + 1] != '\''
+			&& str[val.i + 1] != '\"')
+			ft_cout_size(str, env, &val.i, &total_length);
+		else
+			total_length++;
+		val.i++;
+	}
+	return (total_length);
+}
+
+int	ft_get_full_size2(char *str, t_env *env)
 {
 	int		total_length;
 	t_ints	val;
@@ -55,10 +78,8 @@ int	ft_get_full_size(char *str, t_env *env)
 	val = (t_ints){.i = 0, .j = 0, .in_single_quote = 0, .in_double_quote = 0};
 	while (str[val.i] != '\0')
 	{
-		if (ft_set_quotes_bool(str[val.i], &val.in_double_quote,
-				&val.in_single_quote))
-			;
-		else if (str[val.i] == '$' && !val.in_single_quote)
+		if (str[val.i] == '$' && str[val.i + 1] != ' '
+			&& str[val.i + 1] != '\'' && str[val.i + 1] != '\"')
 			ft_cout_size(str, env, &val.i, &total_length);
 		else
 			total_length++;
@@ -69,19 +90,7 @@ int	ft_get_full_size(char *str, t_env *env)
 
 void	set_up_sigaction(struct sigaction *sa)
 {
+	(*sa).sa_handler = client_handler;
+	(*sa).sa_flags = SA_RESTART;
 	sigaction(SIGINT, sa, NULL);
-}
-
-int	ft_token_counter_until_redd(t_token *token)
-{
-	int	i;
-
-	i = 0;
-	while (token && token->type != R_OUT && token->type != R_OUT2
-		&& token->type != R_IN && token->type != R_IN2)
-	{
-		i++;
-		token = token->next;
-	}
-	return (i);
 }

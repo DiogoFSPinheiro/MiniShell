@@ -224,3 +224,38 @@
 * Test my redirects and heredoc hard with paulo-do;
 
 #
+
+### 📅 **10/09**
+
+* Finished Heredocs, need to do many tests;
+
+✏️ ${{\color{lightgreen}{\textsf{TODO}}}}\$
+
+* Fix the God Damn " and ' on parser;
+* Clean norm on code expand, utils3, heredoc;
+
+#
+
+### 📅 **11/09**
+
+* Fixed the God Damn " and ' on parser;
+* Cleaned norm on code expand, utils3, heredoc;
+* Did norm on most of the code;
+
+✏️ ${{\color{lightgreen}{\textsf{TODO}}}}\$
+
+* Clean main and .h;
+* Join code and test with pipes;
+
+#
+
+### 📅 **11/09**
+
+* Found bug if i dont type the corret command and have a redirect out, it doest print the error on Stdout
+* Cleaned main
+
+✏️ ${{\color{lightgreen}{\textsf{TODO}}}}\$
+
+* 
+
+#
