@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-void	ft_pipe_it(t_commands *cmd, t_env **env)
+int	ft_pipe_it(t_commands *cmd, t_env **env)
 {
 	int		fd[2];
 	int		previous_fd;
@@ -51,5 +51,6 @@ void	ft_pipe_it(t_commands *cmd, t_env **env)
 		}
 	}
 	while (wait(NULL) > 0);
+	return (my_child);
 }
 

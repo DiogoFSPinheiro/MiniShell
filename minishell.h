@@ -166,7 +166,7 @@ int		ft_see_equal(char *str);
 //------------redirections.c -------
 int		ft_redirect_out(t_token *token);
 int		ft_redirect_in(t_token *token);
-int		ft_handle_redirects(t_commands *cmd);
+int		ft_handle_redirects(t_token *token);
 t_token	*ft_token_dup(t_token *token);
 
 //------------heredoc.c  -------
@@ -211,7 +211,7 @@ void	ft_print_exported(t_env *env);
 t_env	*ft_create_new(char *tit, char *cont);
 
 //------------------ft_pipes.c --------------
-void    ft_pipe_it(t_commands *cmd, t_env **env);
+int		ft_pipe_it(t_commands *cmd, t_env **env);
 
 //----------------- utils----------------
 char	*ft_path(void);

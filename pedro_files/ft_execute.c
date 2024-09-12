@@ -70,15 +70,16 @@ void	ft_execute_in(t_token *token, t_env **env)
 	ft_expand_cmd(&cmd, *env);
 	if (cmd->next)
 	{
-		ft_pipe_it(cmd, env); //do pipes mother fcker!!!!!
-		return ;
+		forked = ft_pipe_it(cmd, env);
 	}
-	ft_handle_redirects(cmd);
-	if (ft_built_in(cmd->tokens, env) == SUCCESS);
-	else
-	{
-		forked = fork();
-		while (wait(NULL) > 0);
+	else {
+		ft_handle_redirects(cmd->tokens);
+		if (ft_built_in(cmd->tokens, env) == SUCCESS);
+		else
+		{
+			forked = fork();
+			while (wait(NULL) > 0);
+		}
 	}
 	if (forked == 0)
 	{
