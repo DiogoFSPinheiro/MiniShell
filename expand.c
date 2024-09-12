@@ -6,12 +6,13 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:56:07 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/12 17:26:36 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:03:53 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+extern int g_error;
 static char	*ft_expand_var(char *str, int *i, t_env *env);
 static void	ft_view_data(t_token **token, t_env *env);
 char		*ft_strdup_no_quotes(char const *src);
@@ -72,18 +73,19 @@ static char	*ft_expand_var(char *str, int *i, t_env *env)
 	if (ft_strcmp(var_name, "?") == SUCCESS)
 	{
 		free(var_name);
-		return ("Error Code");
+		return (ft_itoa(g_error));
 	}
 	content = ft_get_content(env, var_name);
 	free(var_name);
 	if (content)
-		return (content->content);
+		return (ft_strdup(content->content));
 	return (NULL);
 }
 
 //TODO if i have problems here i think it must be the 
 // ft_see_quotes and spaces on line 98
-char	*ft_expand_variables(char *str, t_env *env) //this has a double
+//this has a double
+char	*ft_expand_variables(char *str, t_env *env)
 {
 	char	*result;
 	char	*env_value;
@@ -97,12 +99,10 @@ char	*ft_expand_variables(char *str, t_env *env) //this has a double
 				&val.in_single_quote))
 			;
 		else if (str[val.i] == '$' && !val.in_single_quote
-			&& ft_see_quotes_and_spaces(str[val.i + 1]) != SUCCESS)
+			&& ft_see_q_n_s(str[val.i + 1]) != SUCCESS)
 		{
 			env_value = ft_expand_var(str, &val.i, env);
-			if (env_value)
-				while (*env_value)
-					result[val.j++] = *env_value++;
+			ft_copy_and_free(env_value, result, &val.j);
 		}
 		else
 			result[val.j++] = str[val.i];
@@ -116,6 +116,7 @@ char	*ft_expand_variables2(char *str, t_env *env)
 {
 	char	*result;
 	char	*env_value;
+	char	*mem_free;
 	t_ints	val;
 
 	val = (t_ints){.i = 0, .j = 0, .in_single_quote = 0, .in_double_quote = 0};
@@ -126,9 +127,11 @@ char	*ft_expand_variables2(char *str, t_env *env)
 			&& str[val.i + 1] != '\'' && str[val.i + 1] != '\"')
 		{
 			env_value = ft_expand_var(str, &val.i, env);
+			mem_free = env_value;
 			if (env_value)
 				while (*env_value)
 					result[val.j++] = *env_value++;
+			free(mem_free);
 		}
 		else
 			result[val.j++] = str[val.i];

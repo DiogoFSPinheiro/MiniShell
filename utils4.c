@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:51:48 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/11 16:19:34 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/12 18:49:33 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_token_counter_until_redd(t_token *token)
 	return (i);
 }
 
-bool	ft_see_quotes_and_spaces(char a)
+bool	ft_see_q_n_s(char a)
 {
 	if (!a)
 		return (FAILURE);
@@ -58,4 +58,17 @@ void	ft_increment_int(int *c, int *size)
 {
 	(*c)++;
 	(*size)++;
+}
+
+void	ft_copy_and_free(char *env_value, char *result, int *j)
+{
+	char	*mem_free;
+
+	mem_free = env_value;
+	if (env_value)
+	{
+		while (*env_value)
+			result[(*j)++] = *env_value++;
+	}
+	free(mem_free);
 }

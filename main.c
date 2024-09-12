@@ -6,11 +6,13 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/12 17:25:18 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:05:26 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int g_error = 0;
 
 void	client_handler(int sig)
 {

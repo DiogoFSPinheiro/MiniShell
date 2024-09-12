@@ -248,3 +248,14 @@
 * Join code and test with pipes;
 
 #
+
+### 📅 **11/09**
+
+* Found bug if i dont type the corret command and have a redirect out, it doest print the error on Stdout
+* Cleaned main
+
+✏️ ${{\color{lightgreen}{\textsf{TODO}}}}\$
+
+* 
+
+#

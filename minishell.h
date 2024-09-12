@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/12 17:23:40 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:05:22 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <errno.h>
+
 
 typedef enum e_exit
 {
@@ -159,8 +160,9 @@ void	set_up_sigaction(struct sigaction *sa);
 //------------utils4.c -------
 int		ft_set_quotes_bool(char c, int *in_double_quote, int *in_single_quote);
 int		ft_token_counter_until_redd(t_token *token);
-bool	ft_see_quotes_and_spaces(char a);
+bool	ft_see_q_n_s(char a);
 void	ft_increment_int(int *c, int *size);
+void	ft_copy_and_free(char *env_value, char *result, int *j);
 
 
 //------------build_commands.c -------
