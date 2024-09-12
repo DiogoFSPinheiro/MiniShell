@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/12 19:05:26 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/12 21:08:01 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	main(int c, char **v, char **envp)
 	t_token				*token;
 	t_env				*env;
 	struct sigaction	sa;
-	int	fd_in;
-	int	fd_out;
+	int					fd_in;
+	int					fd_out;
 
 	(void)c;
 	(void)v;
