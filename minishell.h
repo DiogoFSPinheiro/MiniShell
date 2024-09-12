@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/12 19:05:22 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/11 20:07:19 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ int		ft_see_equal(char *str);
 //------------redirections.c -------
 int		ft_redirect_out(t_token *token);
 int		ft_redirect_in(t_token *token);
-int		ft_handle_redirects(t_commands *cmd);
+int		ft_handle_redirects(t_token *token);
 t_token	*ft_token_dup(t_token *token);
 
 //------------heredoc.c  -------
@@ -215,7 +215,7 @@ void	ft_unset(t_env **env, t_token *token);
 
 //---------------ft_built_err----------
 void	ft_built_err(t_token *token, t_builins err_type);
-char	*ft_path_to_executable(char **paths, char *command);
+char	*ft_path_to_executable(char **paths, char *command, int using_it);
 
 //---------------ft_export.c-------------
 void	ft_export(t_token *token, t_env **env);
@@ -225,6 +225,8 @@ void	ft_print_exported(t_env *env);
 t_env	*ft_create_new(char *tit, char *cont);
 char	*ft_finecont_nomorequotes(char *cont, int i, int j, int open);
 
+//------------------ft_pipes.c --------------
+int		ft_pipe_it(t_commands *cmd, t_env **env);
 
 //----------------- utils----------------
 char	*ft_path(void);
@@ -232,7 +234,7 @@ char	*ft_get_env(t_env *env, char *str);
 char	*ft_strjoin_free(char *s1, char *s2);
 
 
-char	*ft_right_path(t_token *token, t_env *env);
+char	*ft_right_path(t_token *token, t_env *env, int iswear);
 
 
 #endif

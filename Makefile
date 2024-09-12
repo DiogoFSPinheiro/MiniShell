@@ -17,7 +17,7 @@ SRCS = main.c tester.c syntax.c utils.c utils2.c utils3.c token_utils.c ft_quote
 	pedro_files/ft_env.c pedro_files/ft_built_errors.c \
 	pedro_files/ft_execute_m.c pedro_files/ft_execute.c \
 	pedro_files/utils.c pedro_files/ft_unset.c pedro_files/ft_export.c \
-	pedro_files/ft_export_utils.c 
+	pedro_files/ft_export_utils.c pedro_files/ft_pipes.c
 
 
 LIBFT = ./libraries/libft/libft.a

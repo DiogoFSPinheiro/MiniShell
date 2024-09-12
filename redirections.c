@@ -14,11 +14,8 @@
 
 int	ft_do_redirect(t_token *token);
 
-int	ft_handle_redirects(t_commands *cmd)
+int	ft_handle_redirects(t_token *token)
 {
-	t_token	*token;
-
-	token = cmd->tokens;
 	while (token)
 	{
 		if (token->type == R_IN || token->type == R_OUT

@@ -70,7 +70,7 @@ int	ft_printf_err(const char *format, ...)
 		if (*format == '%')
 			len += print_format(fd, *(++format), args);
 		else
-			len += write(1, format, 1);
+			len += write(2, format, 1);
 		format++;
 	}
 	va_end(args);
