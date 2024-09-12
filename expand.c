@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:56:07 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/11 16:14:01 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/12 17:26:36 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static char	*ft_expand_var(char *str, int *i, t_env *env)
 
 //TODO if i have problems here i think it must be the 
 // ft_see_quotes and spaces on line 98
-char	*ft_expand_variables(char *str, t_env *env)
+char	*ft_expand_variables(char *str, t_env *env) //this has a double
 {
 	char	*result;
 	char	*env_value;

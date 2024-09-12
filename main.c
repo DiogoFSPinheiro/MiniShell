@@ -6,13 +6,13 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/11 16:34:02 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/12 17:25:18 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	client_handler(int sig)
+void	client_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -25,29 +25,36 @@ static void	client_handler(int sig)
 		ft_println("exit");
 }
 
+void	ft_set_fds(int *in, int *out)
+{
+	*in = dup(STDIN_FILENO);
+	*out = dup(STDOUT_FILENO);
+}
+
+void	ft_refresh_fds(int *in, int *out)
+{
+	dup2(*in, STDIN_FILENO);
+	dup2(*out, STDOUT_FILENO);
+}
+
 int	main(int c, char **v, char **envp)
 {
 	char				*input;
-	char				*clean_input;
 	t_token				*token;
 	t_env				*env;
 	struct sigaction	sa;
-	int	fd_in = dup(STDIN_FILENO);
-	int	fd_out = dup(STDOUT_FILENO);
+	int	fd_in;
+	int	fd_out;
 
 	(void)c;
 	(void)v;
-	env = NULL;
-	token = NULL;
 	sigemptyset(&sa.sa_mask);
-	sa.sa_handler = client_handler;
-	sa.sa_flags = SA_RESTART;
 	set_up_sigaction(&sa);
+	ft_set_fds(&fd_in, &fd_out);
 	ft_create_env(envp, &env);
 	while (1)
 	{
-		dup2(fd_in, STDIN_FILENO);
-		dup2(fd_out, STDOUT_FILENO);
+		ft_refresh_fds(&fd_in, &fd_out);
 		input = readline("MiniHell$> ");
 		if (input == NULL || ft_strcmp(input, "exit") == SUCCESS)
 		{
@@ -56,19 +63,11 @@ int	main(int c, char **v, char **envp)
 			ft_println("exit");
 			break ;
 		}
-		if (*input)
+		else if (*input)
 		{
-			add_history(input);
-			if (ft_validation_input(input) == FAILURE)
-				ft_println("Wrong Syntax");
-			else
-			{
-				clean_input = ft_input_spliter(input);
-				token = ft_calloc(sizeof(t_token), words_quotes(clean_input, ' '));
-				free(clean_input);
-				ft_init_token(token, input);
+			token = ft_parser(input);
+			if (token)
 				ft_execute_in(token, &env);
-			}
 			unlink("heredoc");
 			free(input);
 		}
@@ -76,27 +75,4 @@ int	main(int c, char **v, char **envp)
 	return (0);
 }
 
-void	ft_init_token(t_token *token, char *data)
-{
-	char	**info;
-	char	*clean_input;
-	int		c;
-	t_token	*cur;
 
-	c = 0;
-	clean_input = ft_input_spliter(data);
-	info = ft_quotes_split(clean_input, ' ');
-	free(clean_input);
-	while (info[c])
-	{
-		cur = token + c;
-		cur->data = ft_strdup(info[c]);
-		ft_data_type(cur);
-		if (info[c + 1])
-			cur->next = cur + 1;
-		else
-			cur->next = NULL;
-		c++;
-	}
-	free_args(info);
-}

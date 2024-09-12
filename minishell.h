@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/11 16:19:41 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/12 17:23:40 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	ft_print_info(t_token *token);
 void	ft_print_cmd(t_commands *cmd);
 
 //------------main.c----------------
-void	ft_init_token(t_token *token, char *data);
+void	client_handler(int sig);
 
 //------------type_check.c----------------
 void	ft_data_type(t_token *token);
@@ -180,8 +180,10 @@ t_token	*ft_token_dup(t_token *token);
 void	ft_build_heredoc(t_commands **cmd, t_commands *head, t_env *env);
 
 //------------heredoc_utils.c ----
+char	*ft_str_no_quotes(char *str);
 
-char    *ft_str_no_quotes(char *str);
+//------------tokens.c  ------
+t_token	*ft_parser(char *input);
 
 //---------------PEDRO-----------------
 
@@ -193,7 +195,6 @@ void	ft_execute_in(t_token *token, t_env **env);
 int		ft_built_in(t_token *token, t_env **env);
 void	ft_send_to_execve(t_token *token, t_env *env);
 int		ft_redd_or_pipes(t_token *token);
-
 
 //-----------------ft_env.c-----------
 void	ft_env(t_env *env, t_token *token);
@@ -215,7 +216,7 @@ void	ft_built_err(t_token *token, t_builins err_type);
 char	*ft_path_to_executable(char **paths, char *command);
 
 //---------------ft_export.c-------------
-void    ft_export(t_token *token, t_env **env);
+void	ft_export(t_token *token, t_env **env);
 void	ft_sort(t_env **env);
 void	ft_duplicate_envs(t_env *env, t_env **duped);
 void	ft_print_exported(t_env *env);

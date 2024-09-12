@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:30:09 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/11 14:56:59 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/12 17:26:45 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	ft_cout_size(char *str, t_env *env, int *i, int *total_length)
 		*total_length += 20;
 }
 
-int	ft_get_full_size(char *str, t_env *env)
+int	ft_get_full_size(char *str, t_env *env) //this has a double
 {
 	int		total_length;
 	t_ints	val;
@@ -90,5 +90,7 @@ int	ft_get_full_size2(char *str, t_env *env)
 
 void	set_up_sigaction(struct sigaction *sa)
 {
+	(*sa).sa_handler = client_handler;
+	(*sa).sa_flags = SA_RESTART;
 	sigaction(SIGINT, sa, NULL);
 }
