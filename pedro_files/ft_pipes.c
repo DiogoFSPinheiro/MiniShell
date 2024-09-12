@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 23:07:27 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/10 23:32:04 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:21:10 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ int	ft_pipe_it(t_commands *cmd, t_env **env)
 {
 	int		fd[2];
 	int		previous_fd;
-	pid_t	my_child;
+	int		my_child;
 
+	my_child = 1;
 	previous_fd = -1;
 	while (cmd)
 	{
@@ -37,6 +38,7 @@ int	ft_pipe_it(t_commands *cmd, t_env **env)
 				dup2(fd[1], STDOUT_FILENO);
 			close(fd[0]);
 			close(fd[1]);
+			ft_handle_redirects(cmd->tokens);
 			if (!ft_built_in(cmd->tokens, env))
 				ft_send_to_execve(cmd->tokens, *env);
 			exit(EXIT_FAILURE);
