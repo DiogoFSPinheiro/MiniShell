@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 11:59:46 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/10 22:43:02 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/15 23:43:05 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,27 @@ void	ft_change_pwd(t_env *env)
 	free(old_pwd);
 }
 
+int	ft_can_change(t_token *token)
+{
+	struct stat path;
+
+	if (token->next && access(token->next->data, F_OK) == 0)
+	{
+		if (stat(token->next->data, &path) == 0 && S_ISDIR(path.st_mode))
+		{
+			if (access(token->next->data, R_OK) == 0)
+				return (1);
+			else
+			ft_built_err(token, file_permissions);
+		}
+		else
+			ft_built_err(token, no_directory);
+	}
+	else
+		ft_built_err(token, no_file);
+	return (0);
+}
+
 void	ft_cd(t_token *token, t_env **env)
 {
 	if (token->next == NULL)
@@ -90,24 +111,20 @@ void	ft_cd(t_token *token, t_env **env)
 		else
 			ft_built_err(token, no_home);
 	}
+	else if (token->next && token->next->type == FLAG)
+		ft_built_err(token, flag_err);
 	else if (token->next && token->next->next)
 		ft_built_err(token, args_err);
-	else if (token->next && access(token->next->data, F_OK) == 0)
+	else if (ft_can_change(token))
 	{
-		if (access(token->next->data, R_OK) == 0)
-		{
-			chdir(token->next->data);
-			ft_change_pwd(*env);
-		}
-		else
-			ft_built_err(token, file_permissions);
+		chdir(token->next->data);
+		ft_change_pwd(*env);
 	}
-	else
-		ft_built_err(token, no_file);
 }
 
 /*
 bash: cd: pasta/: Permission denied       cd to a folder that has no permissions 
 bash: cd: HOME not set                    try to cd after unseting HOME
 bash: cd: non_existant: No such file or directory
+bash: cd: main.c: is not a foulder
 */

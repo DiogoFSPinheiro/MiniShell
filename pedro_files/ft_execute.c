@@ -6,12 +6,13 @@
 /*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/11 20:06:54 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/16 00:23:34 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+extern int g_error;
 // So estou a verificar ate ao penultimo porque o pipe nunca pode ser o ultimo
 // E isso ja tem a verificacao do parser
 int	ft_see_redirect(t_token *token)
@@ -67,16 +68,16 @@ void	ft_execute_in(t_token *token, t_env **env)
 		ft_build_heredoc(&cmd, cmd, *env);
 	ft_expand_cmd(&cmd, *env);
 	if (cmd->next)
-	{
 		forked = ft_pipe_it(cmd, env);
-	}
 	else {
 		ft_handle_redirects(cmd->tokens);
 		if (ft_built_in(cmd->tokens, env) == SUCCESS);
 		else
 		{
 			forked = fork();
-			while (wait(NULL) > 0);
+			int status;
+			while (wait(&status) > 0);
+			g_error = WEXITSTATUS(status);
 		}
 	}
 	if (forked == 0)
@@ -84,7 +85,7 @@ void	ft_execute_in(t_token *token, t_env **env)
 		ft_send_to_execve(cmd->tokens, *env);
 		ft_free_cmd(cmd);
 		ft_free_env(*env);
-		exit(0);
+		exit(g_error);
 	}
 	ft_free_cmd(cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 14:31:09 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/11 19:17:21 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/14 18:20:54 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,10 @@ void	ft_export(t_token *token, t_env **env)
 		return ;
 	}
 	if (token && token->next && token->next->type >= FLAG)
+	{
 		ft_built_err(token, flag_err);
+		return ;
+	}
 	token = token->next;
 	while (token)
 	{
