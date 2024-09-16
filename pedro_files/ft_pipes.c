@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 23:07:27 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/12 19:21:10 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/14 12:45:13 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ int	ft_pipe_it(t_commands *cmd, t_env **env)
 			ft_handle_redirects(cmd->tokens);
 			if (!ft_built_in(cmd->tokens, env))
 				ft_send_to_execve(cmd->tokens, *env);
+			if (my_child == 0)
+			{
+				ft_free_cmd(cmd);
+				ft_free_env(*env);
+				exit(0);
+			}
 			exit(EXIT_FAILURE);
 		}
 		else

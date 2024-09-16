@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:12:22 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/11 19:45:48 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/14 18:56:26 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_env(t_env *env, t_token *token)
 		return ;
 	if (token->next != NULL && token->next->type == FLAG)
 	{
-		ft_built_err(token, flag_err);
+		ft_built_err(token, flag_err_env);
 		return ;
 	}
 	while (env)

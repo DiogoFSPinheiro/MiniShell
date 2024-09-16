@@ -75,7 +75,11 @@ typedef enum e_bultins
 	env_err_flag,
 	file_permissions,
 	no_home,
-	invalid_identifier
+	invalid_identifier,
+	cmd_not_found,
+	is_dir,
+	flag_err_env,
+	no_directory
 }	t_builins;
 
 typedef struct s_token

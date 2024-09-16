@@ -6,35 +6,34 @@
 /*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:12:08 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/10 17:16:25 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/16 00:02:03 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_execute(char **args, char **envs, char *str, char *cmd)
+void	ft_execute(char **args, char **envs, char *cmd, t_token *token)
 {
-	struct stat	buffer;
+	struct stat buffer;
 
-	if (execve(str, args, envs) == -1)
+	if (execve(cmd, args, envs) == -1)
 	{
-		// caso eu nao consiga executar com o path(str)
-		// uso o commando diretamente caso nao de vou ver o porque de nao dar
-		// Vou enviar para a funcao dos erros para melhor leitura
-		if (stat(str, &buffer) != 0 && !ft_strncmp(cmd, "./", 2))
-			ft_printf_err("minishell: %s: No such file or directory\n", cmd);
-		else if (stat(str, &buffer) != 0)
-			ft_printf_err("command '%s' not found\n", cmd);
-		else if (access(cmd, R_OK))
-			ft_printf_err("minishell: %s: Permission denied\n", cmd);
+		if (stat(token->data, &buffer) != 0)
+		{
+			if (!ft_strncmp(cmd, "./", 2))
+				ft_built_err(token, no_file);
+			else
+				ft_built_err(token, cmd_not_found);
+		}
 		else if (S_ISDIR(buffer.st_mode))
-			ft_printf_err("minishell: %s: Is a directory\n", cmd);
-		else if ((buffer.st_mode))
-			ft_printf_err("minishell: %s: Permission denied\n", cmd);
+			ft_built_err(token, is_dir);
+		else if (!(buffer.st_mode & S_IXUSR))
+			ft_built_err(token, file_permissions);
 		else
-			ft_printf_err("command '%s' No such file or directory\n", cmd);
+			ft_built_err(token, no_file);
 	}
 }
+
 
 char	**ft_make_env_arr(t_env *env)
 {
@@ -104,7 +103,7 @@ void	ft_send_to_execve(t_token *token, t_env *env)
 	env_arr = ft_make_env_arr(env);
 	args_arr = ft_make_arg_arr(token);
 	apended = ft_right_path(token, env, gona_use_this);
-	ft_execute(args_arr, env_arr, apended, token->data);
+	ft_execute(args_arr, env_arr, apended, token);
 	free_args(env_arr);
 	free_args(args_arr);
 	free(apended);
