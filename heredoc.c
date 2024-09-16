@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libraries/printf/ft_printf.h"
 #include "minishell.h"
-#include <unistd.h>
 
 void	ft_write_to_file(const char *filename, char *str, t_env *env, bool d);
 void	ft_change_heredoc(t_token **token, t_env *env);
@@ -23,7 +21,10 @@ void	ft_build_heredoc(t_commands **cmd, t_commands *head, t_env *env)
 	t_token		*token;
 	t_commands	*command;
 
-	set_heredoc_signals();
+
+	//set_heredoc_signals();
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	command = *cmd;
 	while (command)
 	{
@@ -45,21 +46,40 @@ void	ft_change_heredoc(t_token **token, t_env *env)
 	char	*buffer;
 	bool	d;
 	char	*str;
+	int		pid;
 
 	d = true;
 	changer = (*token);
+	//free(changer->data);
+	//changer->data = ft_strdup("<");
+	//changer->type = R_IN;
+	str = ft_str_no_quotes(changer->next->data);
+	pid = fork();
+	int	status;
+	while (wait(&status) > 0);
+	if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
+		buffer = ft_read_heredoc(str);
+		if (*changer->next->data == '\'' || *changer->next->data == '\"')
+			d = false;
+		free(changer->next->data);
+		changer->next->data = ft_strdup("heredoc");
+		changer->next->type = HEREDOC;
+		ft_write_to_file(changer->next->data, buffer, env, d);
+		free(buffer);
+		free(str);
+		exit(0);
+	}
 	free(changer->data);
 	changer->data = ft_strdup("<");
 	changer->type = R_IN;
-	str = ft_str_no_quotes(changer->next->data);
-	buffer = ft_read_heredoc(str);
-	if (*changer->next->data == '\'' || *changer->next->data == '\"')
-		d = false;
+
 	free(changer->next->data);
 	changer->next->data = ft_strdup("heredoc");
 	changer->next->type = HEREDOC;
-	ft_write_to_file(changer->next->data, buffer, env, d);
-	free(buffer);
+	
 	free(str);
 }
 

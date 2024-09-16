@@ -71,7 +71,12 @@ void	ft_execute_in(t_token *token, t_env **env)
 		forked = ft_pipe_it(cmd, env);
 	else
 	{
-		ft_handle_redirects(cmd->tokens);
+		if(ft_handle_redirects(cmd->tokens) == FAILURE)
+		{
+			ft_free_cmd(cmd);
+			return ;
+		}
+			
 		if (ft_built_in(cmd->tokens, env) == SUCCESS)
 			;
 		else

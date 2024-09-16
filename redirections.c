@@ -70,7 +70,7 @@ int	ft_do_redirect(t_token *token)
 		fd = ft_redirect_in(token);
 	if (fd == -1)
 	{
-		ft_printf_err("error");
+		ft_printf_err("Error redirect\n");
 		return (FAILURE);
 	}
 	return (SUCCESS);
