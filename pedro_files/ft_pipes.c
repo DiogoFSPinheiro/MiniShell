@@ -6,27 +6,29 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 23:07:27 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/12 19:21:10 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/16 19:01:52 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_pipe_it(t_commands *cmd, t_env **env)
+int     ft_pipe_it(t_commands *cmd, t_env **env)
 {
-	int		fd[2];
-	int		previous_fd;
-	int		my_child;
+	int             fd[2];
+	int             previous_fd;
+	int             my_child;
+	t_commands			*delete_me;
 
 	my_child = 1;
 	previous_fd = -1;
+	delete_me = cmd;
 	while (cmd)
 	{
 		if (pipe(fd) == -1)
-			exit(EXIT_FAILURE);
+				exit(EXIT_FAILURE);
 		my_child = fork();
 		if (my_child == -1)
-			exit(EXIT_FAILURE);
+				exit(EXIT_FAILURE);
 		if (my_child == 0)
 		{
 			if (previous_fd != -1)
@@ -39,9 +41,11 @@ int	ft_pipe_it(t_commands *cmd, t_env **env)
 			close(fd[0]);
 			close(fd[1]);
 			ft_handle_redirects(cmd->tokens);
-			if (!ft_built_in(cmd->tokens, env))
+			if (ft_built_in(cmd->tokens, env) != SUCCESS)
 				ft_send_to_execve(cmd->tokens, *env);
-			exit(EXIT_FAILURE);
+			ft_free_cmd(delete_me);
+			ft_free_env(*env);
+			exit(EXIT_SUCCESS);
 		}
 		else
 		{
@@ -52,7 +56,8 @@ int	ft_pipe_it(t_commands *cmd, t_env **env)
 			cmd = cmd->next;
 		}
 	}
-	while (wait(NULL) > 0);
+ 	while (wait(NULL) > 0);
 	return (my_child);
 }
+
 

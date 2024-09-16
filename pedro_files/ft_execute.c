@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/16 00:23:34 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/16 18:43:11 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	ft_execute_in(t_token *token, t_env **env)
 		forked = ft_pipe_it(cmd, env);
 	else {
 		ft_handle_redirects(cmd->tokens);
-		if (ft_built_in(cmd->tokens, env) == SUCCESS);
+		if (ft_built_in(cmd->tokens, env) == SUCCESS)
+			;
 		else
 		{
 			forked = fork();
