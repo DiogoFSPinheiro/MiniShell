@@ -36,6 +36,7 @@ void	ft_echo(t_token *token)
 	}
 	if (!flag)
 		write(1, "\n", 1);
+	ft_change_global_err(0);
 }
 
 static void	ft_no_quotes(char *str)
@@ -78,6 +79,6 @@ static void	ft_see_if_print(t_token **token, bool *first)
 		return ;
 	if ((*token)->type == STR && !(*first))
 		write(1, " ", 1);
-	if ((*token)->type == STR)
+	if ((*token)->type == STR || ((*token)->type == FLAG))
 		ft_no_quotes((*token)->data);
 }

@@ -28,7 +28,11 @@ void	ft_env(t_env *env, t_token *token)
 		if (env->content != NULL)
 			ft_printf("%s%s%s\n", env->title, "=", env->content);
 		if (!env->next)
+		{
+			ft_change_global_err(0);
 			return ;
+		}
 		env = env->next;
 	}
+	ft_change_global_err(0);
 }

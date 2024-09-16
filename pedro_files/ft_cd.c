@@ -101,6 +101,7 @@ int	ft_can_change(t_token *token)
 
 void	ft_cd(t_token *token, t_env **env)
 {
+	ft_change_global_err(0);
 	if (token->next == NULL)
 	{
 		if (ft_get_env(*env, "HOME") != NULL)

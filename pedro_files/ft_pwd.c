@@ -16,6 +16,7 @@ void	ft_pwd(t_token *token)
 {
 	char	cwd[256];
 
+	ft_change_global_err(0);
 	if (token->next && token->next->type == 4)
 	{
 		ft_built_err(token, flag_err);

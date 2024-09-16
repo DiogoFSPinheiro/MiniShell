@@ -54,8 +54,10 @@ void	ft_more_errors(t_token *token, t_builins err_type)
 	ft_last_errors(token, err_type);
 }
 
+// The error is set to 0 at the start to reset it, i know it will change in this func
 void	ft_built_err(t_token *token, t_builins err_type)
 {
+	ft_change_global_err(0);
 	if (err_type == flag_err_env || err_type == flag_err)
 	{
 		ft_printf_err("Minishell: %s : -%c: invalid option\n%s: "

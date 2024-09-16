@@ -34,6 +34,7 @@ void	ft_remove_env(t_env **env, char *command)
 
 void	ft_unset(t_env **env, t_token *token)
 {
+	ft_change_global_err(0);
 	if (token->next && token->next->type == FLAG)
 	{
 		ft_built_err(token, flag_err);

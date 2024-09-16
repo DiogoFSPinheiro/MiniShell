@@ -204,6 +204,7 @@ int	ft_valid_title(char *str)
 
 void	ft_export(t_token *token, t_env **env)
 {
+	ft_change_global_err(0);
 	if (!token->next)
 	{
 		ft_sort_and_print(*env);
