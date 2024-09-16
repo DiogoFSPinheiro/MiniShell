@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:30:09 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/10 18:48:37 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:40:44 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,4 @@ int	ft_get_full_size2(char *str, t_env *env)
 		val.i++;
 	}
 	return (total_length);
-}
-
-void	set_up_sigaction(struct sigaction *sa)
-{
-	(*sa).sa_handler = client_handler;
-	(*sa).sa_flags = SA_RESTART;
-	sigaction(SIGINT, sa, NULL);
 }

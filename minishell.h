@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/11 20:07:19 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:02:44 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ void	ft_space_helper(char *str, char **dst, int *c, int *i);
 t_env	*ft_get_content(t_env *env, char *title);
 int		ft_get_full_size(char *str, t_env *env);
 int		ft_get_full_size2(char *str, t_env *env);
-void	set_up_sigaction(struct sigaction *sa);
 
 //------------utils4.c -------
 int		ft_set_quotes_bool(char c, int *in_double_quote, int *in_single_quote);
@@ -168,6 +167,12 @@ bool	ft_see_q_n_s(char a);
 void	ft_increment_int(int *c, int *size);
 void	ft_copy_and_free(char *env_value, char *result, int *j);
 
+//------------ fds_signals.c -------
+void	set_inner_shell_signals(void);
+void	ft_set_fds(int *in, int *out);
+void	ft_refresh_fds(int *in, int *out);
+void	set_up_sigaction(void);
+void	set_heredoc_signals(void);
 
 //------------build_commands.c -------
 t_commands	*ft_build_commands(t_token *token);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/16 00:23:34 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:28:03 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,14 @@ void	ft_execute_in(t_token *token, t_env **env)
 	ft_expand_cmd(&cmd, *env);
 	if (cmd->next)
 		forked = ft_pipe_it(cmd, env);
-	else {
+	else
+	{
 		ft_handle_redirects(cmd->tokens);
-		if (ft_built_in(cmd->tokens, env) == SUCCESS);
+		if (ft_built_in(cmd->tokens, env) == SUCCESS)
+			;
 		else
 		{
+			set_inner_shell_signals();
 			forked = fork();
 			int status;
 			while (wait(&status) > 0);
@@ -85,8 +88,10 @@ void	ft_execute_in(t_token *token, t_env **env)
 		ft_send_to_execve(cmd->tokens, *env);
 		ft_free_cmd(cmd);
 		ft_free_env(*env);
+		set_up_sigaction();
 		exit(g_error);
 	}
+	set_up_sigaction();
 	ft_free_cmd(cmd);
 }
 

@@ -6,11 +6,13 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 19:07:30 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/11 16:37:33 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/16 18:29:40 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libraries/printf/ft_printf.h"
 #include "minishell.h"
+#include <unistd.h>
 
 void	ft_write_to_file(const char *filename, char *str, t_env *env, bool d);
 void	ft_change_heredoc(t_token **token, t_env *env);
@@ -21,6 +23,7 @@ void	ft_build_heredoc(t_commands **cmd, t_commands *head, t_env *env)
 	t_token		*token;
 	t_commands	*command;
 
+	set_heredoc_signals();
 	command = *cmd;
 	while (command)
 	{
@@ -71,10 +74,10 @@ char	*ft_read_heredoc(char *str)
 		line = readline("> ");
 		if (!line)
 		{
-			ft_println("Error: unexpected EOF");
+			ft_println("Error: unexpected EOF -> (wanted `%s')", str);
 			break ;
 		}
-		if (strcmp(line, str) == 0)
+		if (ft_strcmp(line, str) == SUCCESS)
 		{
 			free(line);
 			break ;
