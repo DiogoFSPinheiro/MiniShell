@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/17 16:01:39 by pebarbos         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/09/17 19:06:41 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 
@@ -67,14 +68,19 @@ void	ft_execute_in(t_token *token, t_env **env)
 	ft_build_heredoc(&cmd, cmd, *env);
 	ft_expand_cmd(&cmd, *env);
 	if (cmd->next)
-		ft_pipe_it(cmd, env);
+		forked = ft_pipe_it(cmd, env);
 	else
 	{
-		ft_handle_redirects(cmd->tokens);
+		if(ft_handle_redirects(cmd->tokens) == FAILURE)
+		{
+			ft_free_cmd(cmd);
+			return ;
+		}
 		if (ft_built_in(cmd->tokens, env) == SUCCESS)
 			;
 		else
 		{
+			set_inner_shell_signals();
 			forked = fork();
 			int status;
 			while (wait(&status) > 0);
@@ -86,8 +92,10 @@ void	ft_execute_in(t_token *token, t_env **env)
 		ft_send_to_execve(cmd->tokens, *env);
 		ft_free_cmd(cmd);
 		ft_free_env(*env);
+		set_up_sigaction();
 		exit(g_error);
 	}
+	set_up_sigaction();
 	ft_free_cmd(cmd);
 }
 

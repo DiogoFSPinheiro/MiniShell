@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 19:07:30 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/11 16:37:33 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:31:08 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,17 @@ void	ft_write_to_file(const char *filename, char *str, t_env *env, bool d);
 void	ft_change_heredoc(t_token **token, t_env *env);
 char	*ft_read_heredoc(char *str);
 
+int	event(void)
+{
+	return (0);
+}
+
 void	ft_build_heredoc(t_commands **cmd, t_commands *head, t_env *env)
 {
 	t_token		*token;
 	t_commands	*command;
 
+	set_heredoc_signals();
 	command = *cmd;
 	while (command)
 	{
@@ -49,15 +55,20 @@ void	ft_change_heredoc(t_token **token, t_env *env)
 	changer->data = ft_strdup("<");
 	changer->type = R_IN;
 	str = ft_str_no_quotes(changer->next->data);
+
 	buffer = ft_read_heredoc(str);
-	if (*changer->next->data == '\'' || *changer->next->data == '\"')
-		d = false;
-	free(changer->next->data);
-	changer->next->data = ft_strdup("heredoc");
-	changer->next->type = HEREDOC;
-	ft_write_to_file(changer->next->data, buffer, env, d);
-	free(buffer);
+	if (buffer)
+	{
+		if (*changer->next->data == '\'' || *changer->next->data == '\"')
+			d = false;
+		free(changer->next->data);
+		changer->next->data = ft_strdup("heredoc");
+		changer->next->type = HEREDOC;
+		ft_write_to_file(changer->next->data, buffer, env, d);
+		free(buffer);
+	}
 	free(str);
+	ft_heredoc_sig(-2);
 }
 
 char	*ft_read_heredoc(char *str)
@@ -68,10 +79,16 @@ char	*ft_read_heredoc(char *str)
 	buffer = ft_calloc(1, sizeof(char));
 	while (1)
 	{
+		rl_event_hook = event;
 		line = readline("> ");
+		if (ft_heredoc_sig(-1) == FAILURE)
+		{
+			free(buffer);
+			return (NULL);
+		}
 		if (!line)
 		{
-			ft_println("Error: unexpected EOF");
+			ft_println("Error: unexpected EOF - Should be (%s)", str);
 			break ;
 		}
 		if (strcmp(line, str) == 0)

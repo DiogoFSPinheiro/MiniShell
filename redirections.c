@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 12:06:05 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/11 16:38:39 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:07:30 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_do_redirect(t_token *token)
 		fd = ft_redirect_in(token);
 	if (fd == -1)
 	{
-		ft_printf_err("error");
+		//ft_printf_err("Error redirect\n");
 		return (FAILURE);
 	}
 	return (SUCCESS);
