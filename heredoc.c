@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 19:07:30 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/16 18:29:40 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:31:08 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,17 @@ void	ft_write_to_file(const char *filename, char *str, t_env *env, bool d);
 void	ft_change_heredoc(t_token **token, t_env *env);
 char	*ft_read_heredoc(char *str);
 
+int	event(void)
+{
+	return (0);
+}
+
 void	ft_build_heredoc(t_commands **cmd, t_commands *head, t_env *env)
 {
 	t_token		*token;
 	t_commands	*command;
 
-
-	//set_heredoc_signals();
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	set_heredoc_signals();
 	command = *cmd;
 	while (command)
 	{
@@ -46,22 +48,17 @@ void	ft_change_heredoc(t_token **token, t_env *env)
 	char	*buffer;
 	bool	d;
 	char	*str;
-	int		pid;
 
 	d = true;
 	changer = (*token);
-	//free(changer->data);
-	//changer->data = ft_strdup("<");
-	//changer->type = R_IN;
+	free(changer->data);
+	changer->data = ft_strdup("<");
+	changer->type = R_IN;
 	str = ft_str_no_quotes(changer->next->data);
-	pid = fork();
-	int	status;
-	while (wait(&status) > 0);
-	if (pid == 0)
+
+	buffer = ft_read_heredoc(str);
+	if (buffer)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_IGN);
-		buffer = ft_read_heredoc(str);
 		if (*changer->next->data == '\'' || *changer->next->data == '\"')
 			d = false;
 		free(changer->next->data);
@@ -69,18 +66,9 @@ void	ft_change_heredoc(t_token **token, t_env *env)
 		changer->next->type = HEREDOC;
 		ft_write_to_file(changer->next->data, buffer, env, d);
 		free(buffer);
-		free(str);
-		exit(0);
 	}
-	free(changer->data);
-	changer->data = ft_strdup("<");
-	changer->type = R_IN;
-
-	free(changer->next->data);
-	changer->next->data = ft_strdup("heredoc");
-	changer->next->type = HEREDOC;
-	
 	free(str);
+	ft_heredoc_sig(-2);
 }
 
 char	*ft_read_heredoc(char *str)
@@ -91,13 +79,19 @@ char	*ft_read_heredoc(char *str)
 	buffer = ft_calloc(1, sizeof(char));
 	while (1)
 	{
+		rl_event_hook = event;
 		line = readline("> ");
+		if (ft_heredoc_sig(-1) == FAILURE)
+		{
+			free(buffer);
+			return (NULL);
+		}
 		if (!line)
 		{
-			ft_println("Error: unexpected EOF -> (wanted `%s')", str);
+			ft_println("Error: unexpected EOF - Should be (%s)", str);
 			break ;
 		}
-		if (ft_strcmp(line, str) == SUCCESS)
+		if (strcmp(line, str) == 0)
 		{
 			free(line);
 			break ;

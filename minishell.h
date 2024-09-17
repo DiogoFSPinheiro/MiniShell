@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/16 16:02:44 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:00:43 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	ft_print_cmd(t_commands *cmd);
 
 //------------main.c----------------
 void	client_handler(int sig);
+void	ft_set_fds(int *in, int *out);
 
 //------------type_check.c----------------
 void	ft_data_type(t_token *token);
@@ -137,6 +138,7 @@ void	ft_skip(char **str, char i);
 void	free_tokens(t_token *stack);
 void	ft_free_env(t_env *env);
 void	ft_free_cmd(t_commands *cmd);
+void	free_cmd_tokens(t_token *stack);
 
 //------------syntax2.c -------
 int		ft_validation_input(char *input);
@@ -169,10 +171,10 @@ void	ft_copy_and_free(char *env_value, char *result, int *j);
 
 //------------ fds_signals.c -------
 void	set_inner_shell_signals(void);
-void	ft_set_fds(int *in, int *out);
 void	ft_refresh_fds(int *in, int *out);
 void	set_up_sigaction(void);
 void	set_heredoc_signals(void);
+int		ft_heredoc_sig(int sig);
 
 //------------build_commands.c -------
 t_commands	*ft_build_commands(t_token *token);
@@ -189,6 +191,7 @@ t_token	*ft_token_dup(t_token *token);
 
 //------------heredoc.c  -------
 void	ft_build_heredoc(t_commands **cmd, t_commands *head, t_env *env);
+
 
 //------------heredoc_utils.c ----
 char	*ft_str_no_quotes(char *str);

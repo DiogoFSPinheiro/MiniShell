@@ -6,13 +6,19 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/16 17:52:44 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:00:25 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int g_error = 0;
+
+void	ft_refresh_fds(int *in, int *out)
+{
+	dup2(*in, STDIN_FILENO);
+	dup2(*out, STDOUT_FILENO);
+}
 
 void	client_handler(int sig)
 {
@@ -23,8 +29,7 @@ void	client_handler(int sig)
 		rl_redisplay();
 		ft_printf("\nMiniHell$> ");
 	}
-	if (sig == SIGQUIT)
-		ft_println("exit");
+
 }
 
 void	ft_cicle(int fd_in, int fd_out, t_env **env)
@@ -36,7 +41,7 @@ void	ft_cicle(int fd_in, int fd_out, t_env **env)
 	{
 		ft_refresh_fds(&fd_in, &fd_out);
 		input = readline("MiniHell$> ");
-		if (input == NULL || ft_strcmp(input, "exit") == SUCCESS)
+		if (input == NULL)
 		{
 			free(input);
 			ft_free_env(*env);

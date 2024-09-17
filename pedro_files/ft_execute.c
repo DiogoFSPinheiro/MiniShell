@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/16 12:28:03 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:40:55 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ void	ft_execute_in(t_token *token, t_env **env)
 	cmd = NULL;
 	cmd = ft_build_commands(token);
 	free_tokens(token);
-	if (ft_find_heredoc(cmd->tokens) == SUCCESS)
-		ft_build_heredoc(&cmd, cmd, *env);
+	ft_build_heredoc(&cmd, cmd, *env);
 	ft_expand_cmd(&cmd, *env);
 	if (cmd->next)
 		forked = ft_pipe_it(cmd, env);
@@ -76,7 +75,6 @@ void	ft_execute_in(t_token *token, t_env **env)
 			ft_free_cmd(cmd);
 			return ;
 		}
-			
 		if (ft_built_in(cmd->tokens, env) == SUCCESS)
 			;
 		else
