@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 23:07:27 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/17 16:08:00 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/17 23:16:45 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@ extern int g_error;
 void	ft_execute_n_exit(t_commands *cmd, t_env **env, int *fd, t_commands *cn)
 {
 	if (cmd->next != NULL)
+	{
 		dup2(fd[1], STDOUT_FILENO);
+		g_error = 0;
+	}
 	close(fd[0]);
 	close(fd[1]);
 	ft_handle_redirects(cmd->tokens);
-	if (ft_built_in(cmd->tokens, env) != SUCCESS)
+	if (ft_built_in(cmd, env) != SUCCESS)
 		ft_send_to_execve(cmd->tokens, *env);
 	ft_free_cmd(cn);
 	ft_free_env(*env);
@@ -85,5 +88,3 @@ void	ft_pipe_it(t_commands *cmd, t_env **env)
 	}
 	ft_wait_and_get_err();
 }
-
-

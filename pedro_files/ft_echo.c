@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:23:17 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/11 19:17:39 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/17 22:55:01 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_echo(t_token *token)
 	bool	first;
 	bool	flag;
 
+	ft_change_global_err(0);
 	flag = false;
 	first = true;
 	if (!token->next)
@@ -36,7 +37,6 @@ void	ft_echo(t_token *token)
 	}
 	if (!flag)
 		write(1, "\n", 1);
-	ft_change_global_err(0);
 }
 
 static void	ft_no_quotes(char *str)

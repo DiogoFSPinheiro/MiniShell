@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/17 19:06:18 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/17 23:12:26 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ bool	ft_find_heredoc(t_token *token);
 
 //-----------------ft_execute_in.c------
 void	ft_execute_in(t_token *token, t_env **env);
-int		ft_built_in(t_token *token, t_env **env);
+int		ft_built_in(t_commands *cmd, t_env **env);
 void	ft_send_to_execve(t_token *token, t_env *env);
 int		ft_redd_or_pipes(t_token *token);
 
@@ -243,6 +243,9 @@ char	*ft_finecont_nomorequotes(char *cont, int i, int j, int open);
 
 //------------------ft_pipes.c --------------
 void		ft_pipe_it(t_commands *cmd, t_env **env);
+
+//------------------ft_exit.c----------------
+void	ft_exit(t_commands *cmd, t_env **env);
 
 //----------------- utils----------------
 char	*ft_path(void);

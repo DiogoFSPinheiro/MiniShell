@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 18:12:29 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/11 19:49:03 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/17 22:55:07 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
