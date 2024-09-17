@@ -6,12 +6,13 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 23:07:27 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/17 15:31:26 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:08:00 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+extern int g_error;
 // cn is the token for clean up renamed because line was too long
 void	ft_execute_n_exit(t_commands *cmd, t_env **env, int *fd, t_commands *cn)
 {
@@ -24,26 +25,52 @@ void	ft_execute_n_exit(t_commands *cmd, t_env **env, int *fd, t_commands *cn)
 		ft_send_to_execve(cmd->tokens, *env);
 	ft_free_cmd(cn);
 	ft_free_env(*env);
-	exit(EXIT_SUCCESS);
+	exit(g_error);
 }
 
-int	ft_pipe_it(t_commands *cmd, t_env **env)
+int	ft_create_child(void)
+{
+	int	my_child;
+	
+	my_child = fork();
+	if (my_child == -1)
+		exit(EXIT_FAILURE);
+	return (my_child);
+}
+
+t_commands	*ft_do_parent(int *previous_fd, int fd[2], t_commands *cmd)
+{
+	close(fd[1]);
+	if (*previous_fd != -1)
+		close(*previous_fd);
+	*previous_fd = fd[0];
+	cmd = cmd->next;
+	return (cmd);
+}
+
+void	ft_wait_and_get_err()
+{
+	int status;
+		
+	while (wait(&status) > 0);
+	g_error = WEXITSTATUS(status);
+	return ;
+}
+
+void	ft_pipe_it(t_commands *cmd, t_env **env)
 {
 	int			fd[2];
 	int			previous_fd;
 	int			my_child;
 	t_commands	*delete_me;
 
-	my_child = 1;
 	previous_fd = -1;
 	delete_me = cmd;
 	while (cmd)
 	{
 		if (pipe(fd) == -1)
 				exit(EXIT_FAILURE);
-		my_child = fork();
-		if (my_child == -1)
-				exit(EXIT_FAILURE);
+		my_child = ft_create_child();
 		if (my_child == 0)
 		{
 			if (previous_fd != -1)
@@ -54,16 +81,9 @@ int	ft_pipe_it(t_commands *cmd, t_env **env)
 			ft_execute_n_exit(cmd, env, fd, delete_me);
 		}
 		else
-		{
-			close(fd[1]);
-			if (previous_fd != -1)
-				close(previous_fd);
-			previous_fd = fd[0];
-			cmd = cmd->next;
-		}
+			cmd = ft_do_parent(&previous_fd, fd, cmd);
 	}
- 	while (wait(NULL) > 0);
-	return (my_child);
+	ft_wait_and_get_err();
 }
 
 

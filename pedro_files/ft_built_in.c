@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_built_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 15:06:43 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/11 19:46:42 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:57:37 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_built_in(t_token *token, t_env **env)
 	else if (ft_strcmp(token->data, "env") == SUCCESS)
 		ft_env(*env, token);
 	else if (ft_strcmp(token->data, "pwd") == SUCCESS)
-		ft_pwd(token);
+		ft_pwd(token, *env);
 	else if (ft_strcmp(token->data, "echo") == SUCCESS)
 		ft_echo(token);
 	else if (ft_strcmp(token->data, "cd") == SUCCESS)

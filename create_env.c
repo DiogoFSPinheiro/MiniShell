@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 13:57:14 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/11 16:39:53 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/17 18:45:30 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@ int	ft_see_equal(char *str)
 	return (c);
 }
 
+void	ft_create_basic_envs(t_env **env)
+{
+	t_env	*new_node;
+
+	new_node = malloc(sizeof(t_env));
+	new_node->title = ft_strdup("_");
+	new_node->content = ft_strdup("/usr/bin/env");
+	new_node->next = NULL;
+	*env = new_node;
+}
+
 void	ft_create_env(char **envp, t_env **env)
 {
 	int		c;
@@ -31,6 +42,8 @@ void	ft_create_env(char **envp, t_env **env)
 
 	i = 0;
 	*env = NULL;
+	if (envp[0] == NULL)
+		ft_create_basic_envs(env);
 	while (envp[i])
 	{
 		new_node = malloc(sizeof(t_env));

@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:06:54 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/17 14:37:24 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:01:39 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,9 @@ void	ft_execute_in(t_token *token, t_env **env)
 	ft_build_heredoc(&cmd, cmd, *env);
 	ft_expand_cmd(&cmd, *env);
 	if (cmd->next)
-		forked = ft_pipe_it(cmd, env);
-	else {
+		ft_pipe_it(cmd, env);
+	else
+	{
 		ft_handle_redirects(cmd->tokens);
 		if (ft_built_in(cmd->tokens, env) == SUCCESS)
 			;

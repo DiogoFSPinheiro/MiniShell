@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/17 14:29:42 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:55:36 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ int		ft_redd_or_pipes(t_token *token);
 void	ft_env(t_env *env, t_token *token);
 
 //----------------ft_pwd.c ----------
-void	ft_pwd(t_token *token);
+void	ft_pwd(t_token *token, t_env *env);
 
 //----------------ft_echo.c----------
 void	ft_echo(t_token *token);
@@ -233,7 +233,7 @@ t_env	*ft_create_new(char *tit, char *cont);
 char	*ft_finecont_nomorequotes(char *cont, int i, int j, int open);
 
 //------------------ft_pipes.c --------------
-int		ft_pipe_it(t_commands *cmd, t_env **env);
+void		ft_pipe_it(t_commands *cmd, t_env **env);
 
 //----------------- utils----------------
 char	*ft_path(void);
