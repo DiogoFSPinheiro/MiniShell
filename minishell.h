@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:37:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/16 18:29:04 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:29:42 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ t_token	*ft_parser(char *input);
 
 //------------ft_execute.c------
 int		ft_see_redirect(t_token *token);
+bool	ft_find_heredoc(t_token *token);
 
 //-----------------ft_execute_in.c------
 void	ft_execute_in(t_token *token, t_env **env);
