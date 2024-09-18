@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 16:08:11 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/17 17:01:13 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/18 23:36:03 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ void	ft_pwd(t_token *token, t_env *env)
 			pwd = ft_get_env(env, "PWD");
 			if (pwd != NULL)
 				ft_printf_err("Just kidding, you are at\n%s\n", pwd);
-		}	
+		}
 	}
 }

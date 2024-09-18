@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/18 17:56:41 by diogosan         ###   ########.fr       */
+/*   Created: 2024/09/18 17:56:41 by diogosan          #+#    #+#             */
+/*   Updated: 2024/09/18 23:29:01 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -28,23 +27,11 @@
 # include <sys/stat.h>
 # include <errno.h>
 
-
 typedef enum e_exit
 {
 	FAILURE,
 	SUCCESS,
 }	t_exit;
-
-/*
-	comands:
-	ECHO,
-	CD,
-	PWD,
-	EXPORT,teste
-	UNSET,
-	ENV,
-	EXIT,
-*/
 
 typedef struct s_env
 {
@@ -173,6 +160,10 @@ void	ft_copy_and_free(char *env_value, char *result, int *j);
 //------------utils5.c -------
 bool	ft_see_spe_char(char c);
 
+//-----------execute_utils.c -----
+void	ft_exec_n_cleanup(t_commands *cmd, t_env *env, int exit_code);
+void	ft_prep_cmd_struct(t_commands **cmd, t_token *token, t_env *env);
+
 //------------ fds_signals.c -------
 void	set_inner_shell_signals(void);
 void	ft_refresh_fds(int *in, int *out);
@@ -235,7 +226,6 @@ void	ft_built_err(t_token *token, t_builins err_type);
 char	*ft_path_to_executable(char **paths, char *command, int using_it);
 void	ft_change_global_err(int err);
 
-
 //---------------ft_export.c-------------
 void	ft_export(t_token *token, t_env **env);
 void	ft_sort(t_env **env);
@@ -255,8 +245,7 @@ char	*ft_path(void);
 char	*ft_get_env(t_env *env, char *str);
 char	*ft_strjoin_free(char *s1, char *s2);
 
-
+//---------------- nao sei ---------------
 char	*ft_right_path(t_token *token, t_env *env, int iswear);
-
 
 #endif

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int g_error = 0;
+int	g_error = 0;
 
 void	ft_refresh_fds(int *in, int *out)
 {
@@ -29,7 +29,6 @@ void	client_handler(int sig)
 		rl_redisplay();
 		ft_printf("\nMiniHell$> ");
 	}
-
 }
 
 void	ft_transform_t_to_s(char **str)
@@ -72,6 +71,7 @@ void	ft_cicle(int fd_in, int fd_out, t_env **env)
 			token = ft_parser(input);
 			if (token)
 				ft_execute_in(token, env);
+			set_up_sigaction();
 			unlink("heredoc");
 			free(input);
 		}
@@ -87,9 +87,9 @@ int	main(int c, char **v, char **envp)
 	(void)c;
 	(void)v;
 	set_up_sigaction();
+	ft_change_global_err(0);
 	ft_set_fds(&fd_in, &fd_out);
 	ft_create_env(envp, &env);
 	ft_cicle(fd_in, fd_out, &env);
 	return (0);
 }
-
