@@ -13,9 +13,47 @@
 #include "../minishell.h"
 
 extern int g_error;
+
+void	ft_make_temp(t_commands *cmd, t_commands *temp, t_token *tokens)
+{
+	t_token	*new;
+	t_token *current;
+
+	tokens = cmd->tokens;
+	if (!tokens)
+	{
+		temp->tokens = NULL;
+		return;
+	}
+	temp->tokens = malloc(sizeof(t_token));
+	temp->tokens->data = ft_strdup(tokens->data);
+	temp->tokens->type = tokens->type;
+	temp->tokens->next = NULL;
+	current = temp->tokens;
+	tokens = tokens->next;
+	while (tokens)
+	{
+		new = malloc(sizeof(t_token));
+		new->data = ft_strdup(tokens->data);
+		new->type = tokens->type;
+		new->next = NULL;
+		current->next = new;
+		current = new;
+		tokens = tokens->next;
+	}
+}
+
 // cn is the token for clean up renamed because line was too long
 void	ft_execute_n_exit(t_commands *cmd, t_env **env, int *fd, t_commands *cn)
 {
+	t_commands	*temp;
+	t_token		*tokens;
+
+	temp = malloc(sizeof(t_commands));
+	temp->tokens = NULL;
+	temp->next = NULL;
+	tokens = NULL;
+	ft_make_temp(cmd, temp, tokens);
 	if (cmd->next != NULL)
 	{
 		dup2(fd[1], STDOUT_FILENO);
@@ -23,10 +61,11 @@ void	ft_execute_n_exit(t_commands *cmd, t_env **env, int *fd, t_commands *cn)
 	}
 	close(fd[0]);
 	close(fd[1]);
-	ft_handle_redirects(cmd->tokens);
-	if (ft_built_in(cmd, env) != SUCCESS)
-		ft_send_to_execve(cmd->tokens, *env);
 	ft_free_cmd(cn);
+	ft_handle_redirects(temp->tokens);
+	if (ft_built_in(temp, env) != SUCCESS)
+		ft_send_to_execve(temp->tokens, *env);
+	ft_free_cmd(temp);
 	ft_free_env(*env);
 	exit(g_error);
 }

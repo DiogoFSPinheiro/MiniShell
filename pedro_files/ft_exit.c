@@ -19,6 +19,7 @@ extern int	g_error;
 void	ft_exit(t_commands *cmd, t_env **env)
 {
 	int exit_code;
+
 	if (cmd->tokens->next == NULL)
 	{
 		ft_free_cmd(cmd);
@@ -29,6 +30,7 @@ void	ft_exit(t_commands *cmd, t_env **env)
 	{
 		exit_code = ft_atoi(cmd->tokens->next->data);
 		ft_free_env(*env);
+		ft_free_cmd(cmd);
 		exit(exit_code);
 	}
 	else if (cmd->tokens->next && cmd->tokens->next->next != NULL)

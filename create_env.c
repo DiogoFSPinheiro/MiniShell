@@ -54,7 +54,7 @@ t_env	*ft_create_env_node(char *envp_entry)
 		shlvl = ft_atoi(envp_entry + c + 1);
 		shlvl++;
 		shlvel = ft_itoa(shlvl);
-		new_node->content = ft_strdup(shlvel);
+		new_node->content = shlvel;
 	}
 	else
 		new_node->content = ft_strdup(envp_entry + c + 1);
