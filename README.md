@@ -249,7 +249,7 @@
 
 #
 
-### 📅 **11/09**
+### 📅 **12/09**
 
 * Found bug if i dont type the corret command and have a redirect out, it doest print the error on Stdout
 * Cleaned main
@@ -257,5 +257,21 @@
 ✏️ ${{\color{lightgreen}{\textsf{TODO}}}}\$
 
 * 
+
+#
+
+### 📅 **18/09**
+
+* Fixed signals within many shells;
+* Fixed Heredoc with signals and clean escape;
+* Fixed Leaks on Pipes;
+* Fixed Cleaned main to deliver;
+* Done normn on all my code;
+
+
+✏️ ${{\color{lightgreen}{\textsf{TODO}}}}\$
+
+* Do hard tests with per-to-per;
+* Error on export (mys errors);
 
 #
