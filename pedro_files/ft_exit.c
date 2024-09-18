@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 22:53:01 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/17 23:50:12 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:05:37 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 extern int	g_error;
 
-// Estou com o mesmo problema de antes em que quando liberto o cmd dentro de pipes
+// Estou com o mesmo problema de antes em que quando 
+// liberto o cmd dentro de pipes
 // ja perdi o primeiro cmd 
 void	ft_exit(t_commands *cmd, t_env **env)
 {
-	int exit_code;
+	int	exit_code;
 
 	if (cmd->tokens->next == NULL)
 	{

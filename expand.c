@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:56:07 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/18 16:30:27 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:11:24 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static char	*ft_expand_var(char *str, int *i, t_env *env)
 		&& str[*i + 1] != '\n' && str[*i + 1] != '\t')
 		(*i)++;
 	var_name = ft_fine_strdup(str, var_start, *i);
-	if (ft_strcmp(var_name, "?") == SUCCESS)
+	if (ft_strcmp((var_name + 1), "?") == SUCCESS)
 	{
 		free(var_name);
 		return (ft_itoa(g_error));
