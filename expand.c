@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:56:07 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/18 18:11:24 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/18 23:43:10 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 #include "minishell.h"
 #include <stdbool.h>
 
-extern int g_error;
+extern int	g_error;
 static char	*ft_expand_var(char *str, int *i, t_env *env);
 static void	ft_view_data(t_token **token, t_env *env);
-char		*ft_strdup_no_quotes(char const *src);
 
 void	ft_find_expand(t_token **token, t_env *env)
 {
@@ -55,7 +54,7 @@ static void	ft_view_data(t_token **token, t_env *env)
 	else
 	{
 		if (ft_strchr(cur->data, '\"') || ft_strchr(cur->data, '\''))
-			cur->data = ft_finecont_nomorequotes(cur->data, 0, 0, 0); //TODO avisar o pedro para tirar esta func do export dele
+			cur->data = ft_finecont_nomorequotes(cur->data, 0, 0, 0);
 	}
 }
 

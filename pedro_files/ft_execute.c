@@ -3,47 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/17 23:11:15 by pebarbos         ###   ########.fr       */
+/*   Created: 2024/08/01 10:18:52 by pebarbos          #+#    #+#             */
+/*   Updated: 2024/09/18 23:51:28 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../minishell.h"
 
-extern int g_error;
-// So estou a verificar ate ao penultimo porque o pipe nunca pode ser o ultimo
-// E isso ja tem a verificacao do parser
-int	ft_see_redirect(t_token *token)
-{
-	while (token->next)
-	{
-		if (token->type == R_IN)
-			return (R_IN);
-		else if (token->type == R_IN2)
-			return (R_IN2);
-		else if (token->type == R_OUT)
-			return (R_OUT);
-		else if (token->type == R_OUT2)
-			return (R_OUT2);
-		token = token->next;
-	}
-	return (FAILURE);
-}
-
-void	ft_expand_cmd(t_commands **cmd, t_env *env)
-{
-	t_commands	*copy_cmd;
-
-	copy_cmd = (*cmd);
-	while (copy_cmd)
-	{
-		ft_find_expand(&copy_cmd->tokens, env);
-		copy_cmd = copy_cmd->next;
-	}
-}
+extern int	g_error;
 
 bool	ft_find_heredoc(t_token *token)
 {
@@ -56,46 +25,31 @@ bool	ft_find_heredoc(t_token *token)
 	return (FAILURE);
 }
 
+//TODO falar com o pedro por causa linha 50 
 void	ft_execute_in(t_token *token, t_env **env)
 {
 	t_commands	*cmd;
 	int			forked;
+	int			status;
 
 	forked = 1;
-	cmd = NULL;
-	cmd = ft_build_commands(token);
-	free_tokens(token);
-	ft_build_heredoc(&cmd, cmd, *env);
-	ft_expand_cmd(&cmd, *env);
+	ft_prep_cmd_struct(&cmd, token, *env);
 	if (cmd->next)
 		ft_pipe_it(cmd, env);
-	else
+	else if (ft_handle_redirects(cmd->tokens) != FAILURE
+		&& ft_built_in(cmd, env) != SUCCESS)
 	{
-		if(ft_handle_redirects(cmd->tokens) == FAILURE)
-		{
-			ft_free_cmd(cmd);
-			return ;
-		}
-		if (ft_built_in(cmd, env) == SUCCESS)
+		set_inner_shell_signals();
+		forked = fork();
+		while (wait(&status) > 0)
 			;
-		else
-		{
-			set_inner_shell_signals();
-			forked = fork();
-			int status;
-			while (wait(&status) > 0);
-			g_error = WEXITSTATUS(status);
-		}
+		g_error = WEXITSTATUS(status);
 	}
 	if (forked == 0)
 	{
-		ft_send_to_execve(cmd->tokens, *env);
-		ft_free_cmd(cmd);
-		ft_free_env(*env);
-		set_up_sigaction();
-		exit(g_error);
+		ft_change_global_err(0);
+		ft_exec_n_cleanup(cmd, *env, g_error);
 	}
-	set_up_sigaction();
 	ft_free_cmd(cmd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 19:07:30 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/18 18:11:40 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/18 23:34:18 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,7 @@ char	*ft_read_heredoc(char *str)
 		rl_event_hook = event;
 		line = readline("> ");
 		if (ft_heredoc_sig(-1) == FAILURE)
-		{
-			free(buffer);
-			ft_change_global_err(130);
-			return (NULL);
-		}
+			return (free(buffer), ft_change_global_err(130), NULL);
 		if (!line)
 		{
 			ft_println("Error: unexpected EOF - Should be (%s)", str);
