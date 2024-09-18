@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute_m.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:12:08 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/18 19:01:04 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/18 23:46:46 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_execute(char **args, char **envs, char *cmd, t_token *token)
 {
-	struct stat buffer;
+	struct stat	buffer;
 
 	if (execve(cmd, args, envs) == -1)
 	{
@@ -33,7 +33,6 @@ void	ft_execute(char **args, char **envs, char *cmd, t_token *token)
 			ft_built_err(token, no_file);
 	}
 }
-
 
 char	**ft_make_env_arr(t_env *env)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 14:31:09 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/18 17:58:54 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/18 23:28:15 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,6 @@ void	ft_change_add_env(t_env *env, char *command)
 		else
 			cont = ft_fine_strdup(command, c + 1, ft_strlen(command));
 	}
-	//if (cont != NULL)
 	if (ft_strnstr(command, "+=", ft_strlen(command)))
 		ft_modify_env(env, tit, cont, 0);
 	else if (ft_strnstr(command, "=", ft_strlen(command)))

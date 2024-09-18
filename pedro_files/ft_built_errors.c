@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:18:01 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/17 22:55:19 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/18 23:47:25 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	ft_change_global_err(int err)
 }
 
 void	ft_last_errors(t_token *token, t_builins err_type)
-{	
+{
 	if (err_type == no_directory)
 		ft_printf_err("Minishell: %s: %s: Not a directory\n",
-		token->data, token->next->data);
+			token->data, token->next->data);
 	else if (err_type == invalid_identifier)
 		ft_printf_err("Minishell: export: `%s': not a valid identifier\n",
 			token->data);
@@ -31,30 +31,30 @@ void	ft_last_errors(t_token *token, t_builins err_type)
 		ft_change_global_err(1);
 }
 
-void	ft_more_errors(t_token *token, t_builins err_type)
+void	ft_more_errors(t_token *tkn, t_builins err_type)
 {
-	if (err_type == no_file && !ft_strcmp(token->data, "cd"))
+	if (err_type == no_file && !ft_strcmp(tkn->data, "cd"))
 	{
-		ft_printf_err("Minishell: %s: No such file or directory\n", token->data);
+		ft_printf_err("Minishell: %s: No such file or directory\n", tkn->data);
 		ft_change_global_err(127);
 	}
 	else if (err_type == cmd_not_found)
 	{
-		ft_printf_err("Minishell: command '%s' not found\n", token->data);
+		ft_printf_err("Minishell: command '%s' not found\n", tkn->data);
 		ft_change_global_err(127);
 	}
 	else if (err_type == args_err)
-		ft_printf_err("Minishell: %s: too many arguments\n", token->data);
-
+		ft_printf_err("Minishell: %s: too many arguments\n", tkn->data);
 	else if (err_type == no_file)
 		ft_printf_err("Minishell: %s: %s: "
-			"No such file or directory\n", token->data, token->next->data);
+			"No such file or directory\n", tkn->data, tkn->next->data);
 	else if (err_type == no_home)
-		ft_printf_err("Minishell: %s: HOME not set\n", token->data);
-	ft_last_errors(token, err_type);
+		ft_printf_err("Minishell: %s: HOME not set\n", tkn->data);
+	ft_last_errors(tkn, err_type);
 }
 
-// The error is set to 0 at the start to reset it, i know it will change in this func
+// The error is set to 0 at the start to reset it,
+// i know it will change in this func
 void	ft_built_err(t_token *token, t_builins err_type)
 {
 	ft_change_global_err(0);

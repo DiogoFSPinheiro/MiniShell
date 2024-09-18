@@ -3,45 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 23:07:27 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/18 16:38:24 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/18 23:52:08 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-extern int g_error;
-
-void	ft_make_temp(t_commands *cmd, t_commands *temp, t_token *tokens)
-{
-	t_token	*new;
-	t_token *current;
-
-	tokens = cmd->tokens;
-	if (!tokens)
-	{
-		temp->tokens = NULL;
-		return;
-	}
-	temp->tokens = malloc(sizeof(t_token));
-	temp->tokens->data = ft_strdup(tokens->data);
-	temp->tokens->type = tokens->type;
-	temp->tokens->next = NULL;
-	current = temp->tokens;
-	tokens = tokens->next;
-	while (tokens)
-	{
-		new = malloc(sizeof(t_token));
-		new->data = ft_strdup(tokens->data);
-		new->type = tokens->type;
-		new->next = NULL;
-		current->next = new;
-		current = new;
-		tokens = tokens->next;
-	}
-}
+extern int	g_error;
 
 // cn is the token for clean up renamed because line was too long
 void	ft_execute_n_exit(t_commands *cmd, t_env **env, int *fd, t_commands *cn)
@@ -90,11 +61,12 @@ t_commands	*ft_do_parent(int *previous_fd, int fd[2], t_commands *cmd)
 	return (cmd);
 }
 
-void	ft_wait_and_get_err()
+void	ft_wait_and_get_err(void)
 {
-	int status;
-		
-	while (wait(&status) > 0);
+	int	status;
+
+	while (wait(&status) > 0)
+		;
 	g_error = WEXITSTATUS(status);
 	return ;
 }
@@ -111,7 +83,7 @@ void	ft_pipe_it(t_commands *cmd, t_env **env)
 	while (cmd)
 	{
 		if (pipe(fd) == -1)
-				exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		my_child = ft_create_child();
 		if (my_child == 0)
 		{
