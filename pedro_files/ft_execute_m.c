@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute_m.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:12:08 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/17 22:55:03 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/18 19:01:04 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ void	ft_send_to_execve(t_token *token, t_env *env)
 	char	*apended;
 	int		gona_use_this;
 
+	if (token->type >= 5)
+		return ;
 	gona_use_this = 0;
 	env_arr = ft_make_env_arr(env);
 	args_arr = ft_make_arg_arr(token);
