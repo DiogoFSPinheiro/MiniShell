@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 11:59:46 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/17 22:55:00 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/18 23:27:26 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*ft_update_pwd(t_env *env, char *path)
 	char	*pwd;
 
 	if (env->content == NULL)
-		return NULL;
+		return (NULL);
 	pwd = ft_strdup(env->content);
 	free(env->content);
 	env->content = ft_strdup(path);
@@ -80,7 +80,7 @@ void	ft_change_pwd(t_env *env)
 
 int	ft_can_change(t_token *token)
 {
-	struct stat path;
+	struct stat	path;
 
 	if (token->next && access(token->next->data, F_OK) == 0)
 	{
@@ -89,7 +89,7 @@ int	ft_can_change(t_token *token)
 			if (access(token->next->data, R_OK) == 0)
 				return (1);
 			else
-			ft_built_err(token, file_permissions);
+				ft_built_err(token, file_permissions);
 		}
 		else
 			ft_built_err(token, no_directory);

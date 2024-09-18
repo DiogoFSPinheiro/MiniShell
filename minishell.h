@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/18 17:56:41 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/18 23:36:08 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,7 @@ void	ft_exit(t_commands *cmd, t_env **env);
 char	*ft_path(void);
 char	*ft_get_env(t_env *env, char *str);
 char	*ft_strjoin_free(char *s1, char *s2);
+void	ft_make_temp(t_commands *cmd, t_commands *temp, t_token *tokens);
 
 
 char	*ft_right_path(t_token *token, t_env *env, int iswear);

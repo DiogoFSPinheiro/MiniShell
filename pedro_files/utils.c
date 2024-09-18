@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:08:36 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/17 16:12:47 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/18 23:48:25 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,33 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	if (s1)
 		free(s1);
 	return (result);
+}
+
+void	ft_make_temp(t_commands *cmd, t_commands *temp, t_token *tokens)
+{
+	t_token	*new;
+	t_token	*current;
+
+	tokens = cmd->tokens;
+	if (!tokens)
+	{
+		temp->tokens = NULL;
+		return ;
+	}
+	temp->tokens = malloc(sizeof(t_token));
+	temp->tokens->data = ft_strdup(tokens->data);
+	temp->tokens->type = tokens->type;
+	temp->tokens->next = NULL;
+	current = temp->tokens;
+	tokens = tokens->next;
+	while (tokens)
+	{
+		new = malloc(sizeof(t_token));
+		new->data = ft_strdup(tokens->data);
+		new->type = tokens->type;
+		new->next = NULL;
+		current->next = new;
+		current = new;
+		tokens = tokens->next;
+	}
 }
