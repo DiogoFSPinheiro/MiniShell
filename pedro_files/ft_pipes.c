@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 23:07:27 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/17 23:16:45 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:38:24 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_execute_n_exit(t_commands *cmd, t_env **env, int *fd, t_commands *cn)
 int	ft_create_child(void)
 {
 	int	my_child;
-	
+
 	my_child = fork();
 	if (my_child == -1)
 		exit(EXIT_FAILURE);

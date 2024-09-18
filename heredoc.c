@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 19:07:30 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/17 17:31:08 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:36:10 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,16 @@ void	ft_build_heredoc(t_commands **cmd, t_commands *head, t_env *env)
 		{
 			if (token->type == R_IN2)
 				ft_change_heredoc(&token, env);
+			if (ft_heredoc_sig(-1) == FAILURE)
+				break ;
 			token = token->next;
 		}
+		if (ft_heredoc_sig(-1) == FAILURE)
+			break ;
 		command = command->next;
 	}
 	*cmd = head;
+	ft_heredoc_sig(-2);
 }
 
 void	ft_change_heredoc(t_token **token, t_env *env)
@@ -55,7 +60,6 @@ void	ft_change_heredoc(t_token **token, t_env *env)
 	changer->data = ft_strdup("<");
 	changer->type = R_IN;
 	str = ft_str_no_quotes(changer->next->data);
-
 	buffer = ft_read_heredoc(str);
 	if (buffer)
 	{
@@ -68,7 +72,6 @@ void	ft_change_heredoc(t_token **token, t_env *env)
 		free(buffer);
 	}
 	free(str);
-	ft_heredoc_sig(-2);
 }
 
 char	*ft_read_heredoc(char *str)

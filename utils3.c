@@ -6,10 +6,11 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:30:09 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/16 10:40:44 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:28:42 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libraries/libft/libft.h"
 #include "minishell.h"
 
 t_env	*ft_get_content(t_env *env, char *title)
@@ -32,13 +33,15 @@ static void	ft_cout_size(char *str, t_env *env, int *i, int *total_length)
 	char	*var_name;
 	int		start;
 
-	start = *i + 1;
+	start = *i;
 	while (str[*i + 1] != ' ' && str[*i + 1] != '\0'
 		&& str[*i + 1] != '$' && str[*i + 1] != '"' && str[*i + 1] != '\''
-		&& str[*i + 1] != '\n')
+		&& str[*i + 1] != '\n' && str[*i + 1] != '\t')
 		(*i)++;
 	var_name = ft_fine_strdup(str, start, *i);
-	content = ft_get_content(env, var_name);
+	if (ft_see_spe_char(*(var_name + 1)) == SUCCESS)
+		*total_length += (ft_strlen(var_name) + 1);
+	content = ft_get_content(env, var_name + 1);
 	free(var_name);
 	if (content && content->content != NULL)
 		*total_length += strlen(content->content);

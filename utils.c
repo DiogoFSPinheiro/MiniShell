@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:57:32 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/12 13:57:46 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:25:26 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_space_redirect(char *input)
 	c = 0;
 	if (input[c] == '>' || input[c] == '<')
 		c++;
-	while (input[c] == ' ')
+	while (input[c] == ' ' || input[c] == '\t')
 		c++;
 	if (input[c] == '>' || input[c] == '<')
 		return (FAILURE);

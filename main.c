@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/17 19:05:39 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:02:23 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,24 @@ void	client_handler(int sig)
 
 }
 
+void	ft_transform_t_to_s(char **str)
+{
+	char	*temp;
+	int		c;
+
+	temp = *str;
+	c = 0;
+	while (temp[c])
+	{
+		if (temp[c] == '\t')
+			temp[c] = ' ';
+		else if (temp[c] == '\'' || temp[c] == '"')
+			ft_skip_quotes(temp, &c, temp[c]);
+		else if (temp[c])
+			c++;
+	}
+}
+
 void	ft_cicle(int fd_in, int fd_out, t_env **env)
 {
 	char				*input;
@@ -50,6 +68,7 @@ void	ft_cicle(int fd_in, int fd_out, t_env **env)
 		}
 		else if (*input)
 		{
+			ft_transform_t_to_s(&input);
 			token = ft_parser(input);
 			if (token)
 				ft_execute_in(token, env);

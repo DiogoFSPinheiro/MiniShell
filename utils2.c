@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:53:08 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/02 16:05:33 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:25:33 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_space_skiper(char *str, int *c)
 {
-	while (str[*c] == ' ')
+	while (str[*c] == ' ' || str[*c] == '\t')
 		(*c)++;
 }
 

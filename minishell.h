@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/09/17 23:12:26 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:27:59 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,9 @@ int		ft_token_counter_until_redd(t_token *token);
 bool	ft_see_q_n_s(char a);
 void	ft_increment_int(int *c, int *size);
 void	ft_copy_and_free(char *env_value, char *result, int *j);
+
+//------------utils5.c -------
+bool	ft_see_spe_char(char c);
 
 //------------ fds_signals.c -------
 void	set_inner_shell_signals(void);

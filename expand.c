@@ -6,11 +6,13 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:56:07 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/12 19:03:53 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:30:27 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libraries/printf/ft_printf.h"
 #include "minishell.h"
+#include <stdbool.h>
 
 extern int g_error;
 static char	*ft_expand_var(char *str, int *i, t_env *env);
@@ -53,7 +55,7 @@ static void	ft_view_data(t_token **token, t_env *env)
 	else
 	{
 		if (ft_strchr(cur->data, '\"') || ft_strchr(cur->data, '\''))
-			cur->data = ft_finecont_nomorequotes(cur->data, 0, 0, 0);
+			cur->data = ft_finecont_nomorequotes(cur->data, 0, 0, 0); //TODO avisar o pedro para tirar esta func do export dele
 	}
 }
 
@@ -64,10 +66,10 @@ static char	*ft_expand_var(char *str, int *i, t_env *env)
 	char	*var_name;
 	t_env	*content;
 
-	var_start = *i + 1;
+	var_start = *i;
 	while (str[*i + 1] != ' ' && str[*i + 1] != '\0'
 		&& str[*i + 1] != '"' && str[*i + 1] != '\'' && str[*i + 1] != '$'
-		&& str[*i + 1] != '\n')
+		&& str[*i + 1] != '\n' && str[*i + 1] != '\t')
 		(*i)++;
 	var_name = ft_fine_strdup(str, var_start, *i);
 	if (ft_strcmp(var_name, "?") == SUCCESS)
@@ -75,7 +77,9 @@ static char	*ft_expand_var(char *str, int *i, t_env *env)
 		free(var_name);
 		return (ft_itoa(g_error));
 	}
-	content = ft_get_content(env, var_name);
+	if (ft_see_spe_char(*(var_name + 1)) == SUCCESS)
+		return (var_name);
+	content = ft_get_content(env, var_name + 1);
 	free(var_name);
 	if (content)
 		return (ft_strdup(content->content));

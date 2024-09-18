@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:00:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/11 16:19:30 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:29:09 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	ft_set_space(char *str, char **dst, int *c, int *i)
 	{
 		if (str[*c + 1] == '>' || str[*c + 1] == '<')
 		{
-			if (str[*c - 1] != ' ')
+			if (*c > 0 && str[*c - 1] != ' ')
 				(*dst)[(*i)++] = ' ';
 			(*dst)[(*i)++] = str[(*c)++];
 			(*dst)[*i] = str[*c];

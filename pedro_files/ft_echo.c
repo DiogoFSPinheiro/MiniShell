@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:23:17 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/17 22:55:01 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:44:48 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,24 @@ static void	ft_no_quotes(char *str)
 	}
 }
 
+static bool	ft_see_flag_name(char *str)
+{
+	int	c;
+
+	c = 1;
+	while (str[c])
+	{
+		if (str[c] != 'n')
+			return (FAILURE);
+		c++;
+	}
+	return (SUCCESS);
+}
+
 static bool	ft_see_echo_flag(t_token **token)
 {
 	if ((*token)->next->type == FLAG
-		&& ft_strcmp((*token)->next->data, "-n") == 1)
+		&& ft_see_flag_name((*token)->next->data) == SUCCESS)
 	{
 		(*token) = (*token)->next;
 		return (true);
