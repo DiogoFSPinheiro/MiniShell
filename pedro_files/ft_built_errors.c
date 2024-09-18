@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_built_errors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:18:01 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/16 00:09:34 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/17 22:55:19 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

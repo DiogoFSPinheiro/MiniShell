@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute_m.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.co>     +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:12:08 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/16 00:02:03 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/17 22:55:03 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
