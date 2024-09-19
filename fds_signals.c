@@ -6,41 +6,32 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:39:15 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/18 14:56:34 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:28:43 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	client_handler_inner_shell(int sig)
+{
+	if (sig == SIGINT)
+		;
+	if (sig == SIGQUIT)
+	{
+		ft_println("Quit (core dumped)");
+		ft_change_global_err(131);
+	}
+}
 
 void	set_inner_shell_signals(void)
 {
 	struct sigaction	sa;
 
 	sigemptyset(&sa.sa_mask);
-	sa.sa_handler = SIG_IGN;
+	sa.sa_handler = client_handler_inner_shell;
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-int	ft_heredoc_sig(int sig)
-{
-	static bool		end;	
-
-	if (sig == SIGINT)
-	{
-		rl_done = 1;
-		end = true;
-	}
-	if (sig == -2)
-	{
-		end = false;
-		rl_event_hook = NULL;
-		rl_done = 0;
-	}
-	if (end == true)
-		return (FAILURE);
-	return (SUCCESS);
+	sigaction(SIGQUIT, &sa, NULL);
 }
 
 void	set_heredoc_signals(void)

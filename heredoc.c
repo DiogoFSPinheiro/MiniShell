@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 19:07:30 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/18 23:34:18 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 14:30:11 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	ft_build_heredoc(t_commands **cmd, t_commands *head, t_env *env)
 		command = command->next;
 	}
 	*cmd = head;
-	ft_heredoc_sig(-2);
 }
 
 void	ft_change_heredoc(t_token **token, t_env *env)
@@ -88,7 +87,7 @@ char	*ft_read_heredoc(char *str)
 			return (free(buffer), ft_change_global_err(130), NULL);
 		if (!line)
 		{
-			ft_println("Error: unexpected EOF - Should be (%s)", str);
+			ft_println("Error: unexpected EOF - Should be (wanted `%s')", str);
 			break ;
 		}
 		if (strcmp(line, str) == 0)
@@ -117,7 +116,7 @@ void	ft_write_to_file(const char *filename, char *str, t_env *env, bool d)
 		perror("Error opening file heredoc");
 		return ;
 	}
-	write(file, expanded, strlen(expanded));
+	write(file, expanded, ft_strlen(expanded));
 	if (close(file) < 0)
 	{
 		perror("Error closing file heredoc");

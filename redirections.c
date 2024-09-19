@@ -6,10 +6,11 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 12:06:05 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/17 16:07:30 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 14:26:33 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libraries/printf/ft_printf.h"
 #include "minishell.h"
 
 int	ft_do_redirect(t_token *token);
@@ -70,6 +71,11 @@ int	ft_do_redirect(t_token *token)
 		fd = ft_redirect_in(token);
 	if (fd == -1)
 	{
+		if (ft_heredoc_sig(-1) != FAILURE)
+		{
+			ft_change_global_err(2);
+			ft_printf_err("no such file or directory\n");
+		}
 		return (FAILURE);
 	}
 	return (SUCCESS);

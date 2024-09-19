@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 23:27:22 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/18 23:29:50 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 14:10:41 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,9 @@ void	ft_prep_cmd_struct(t_commands **cmd, t_token *token, t_env *env)
 	ft_expand_cmd(cmd, env);
 }
 
-void	ft_exec_n_cleanup(t_commands *cmd, t_env *env, int exit_code)
+void	ft_exec_n_cleanup(t_commands *cmd, t_env *env)
 {
 	ft_send_to_execve(cmd->tokens, env);
 	ft_free_cmd(cmd);
 	ft_free_env(env);
-	exit(exit_code);
 }

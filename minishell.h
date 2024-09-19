@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 17:56:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/18 23:56:12 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 14:10:34 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void		ft_copy_and_free(char *env_value, char *result, int *j);
 bool		ft_see_spe_char(char c);
 
 //-----------execute_utils.c -----
-void		ft_exec_n_cleanup(t_commands *cmd, t_env *env, int exit_code);
+void		ft_exec_n_cleanup(t_commands *cmd, t_env *env);
 void		ft_prep_cmd_struct(t_commands **cmd, t_token *token, t_env *env);
 
 //------------ fds_signals.c -------

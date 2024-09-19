@@ -6,13 +6,28 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:20:00 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/12 17:23:59 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 14:17:25 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdbool.h>
 
 void	ft_init_token(t_token *token, char *data);
+
+bool	ft_all_spaces(char *input)
+{
+	int	c;
+
+	c = 0;
+	while (input[c])
+	{
+		if (input[c] != ' ' )
+			return (FAILURE);
+		c++;
+	}
+	return (SUCCESS);
+}
 
 t_token	*ft_parser(char *input)
 {
@@ -20,8 +35,13 @@ t_token	*ft_parser(char *input)
 	t_token	*token;
 
 	add_history(input);
+	if (ft_all_spaces(input))
+		return (NULL);
 	if (ft_validation_input(input) == FAILURE)
+	{
 		ft_println("Wrong Syntax");
+		ft_change_global_err(2);
+	}
 	else
 	{
 		clean_input = ft_input_spliter(input);

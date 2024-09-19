@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:18:52 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/18 23:51:28 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 14:25:32 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ bool	ft_find_heredoc(t_token *token)
 	return (FAILURE);
 }
 
-//TODO falar com o pedro por causa linha 50 
 void	ft_execute_in(t_token *token, t_env **env)
 {
 	t_commands	*cmd;
@@ -48,8 +47,10 @@ void	ft_execute_in(t_token *token, t_env **env)
 	if (forked == 0)
 	{
 		ft_change_global_err(0);
-		ft_exec_n_cleanup(cmd, *env, g_error);
+		ft_exec_n_cleanup(cmd, *env);
+		exit(g_error);
 	}
+	ft_heredoc_sig(-2);
 	ft_free_cmd(cmd);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 14:31:09 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/18 23:28:15 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:50:40 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_env	*ft_create_new(char *tit, char *cont)
 	return (new_node);
 }
 
+//TODO avisar o pedro no strcmp linha 59
 void	ft_modify_env(t_env	*env, char *tit, char *cont, int i)
 {
 	int	f;

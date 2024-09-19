@@ -6,19 +6,13 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/18 16:02:23 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:29:47 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_error = 0;
-
-void	ft_refresh_fds(int *in, int *out)
-{
-	dup2(*in, STDIN_FILENO);
-	dup2(*out, STDOUT_FILENO);
-}
 
 void	client_handler(int sig)
 {
@@ -27,6 +21,7 @@ void	client_handler(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		ft_change_global_err(130);
 		ft_printf("\nMiniHell$> ");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:30:09 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/18 16:28:42 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:51:19 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	ft_cout_size(char *str, t_env *env, int *i, int *total_length)
 	content = ft_get_content(env, var_name + 1);
 	free(var_name);
 	if (content && content->content != NULL)
-		*total_length += strlen(content->content);
+		*total_length += ft_strlen(content->content);
 	else
 		*total_length += 20;
 }
