@@ -275,3 +275,15 @@
 * Error on export (mys errors);
 
 #
+
+### 📅 **18/09**
+
+* Error codes ok;
+* Fixed export;
+* Added Core dump msg;
+
+✏️ ${{\color{lightgreen}{\textsf{TODO}}}}\$
+
+* Do more of https://annacts.notion.site/minishell-fd120561c16740b18f55027befd60379 tests;
+
+#
