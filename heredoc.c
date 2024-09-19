@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 19:07:30 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/19 14:30:11 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:45:01 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*ft_read_heredoc(char *str)
 			ft_println("Error: unexpected EOF - Should be (wanted `%s')", str);
 			break ;
 		}
-		if (strcmp(line, str) == 0)
+		if (ft_strcmp(line, str) == SUCCESS)
 		{
 			free(line);
 			break ;

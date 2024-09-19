@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 14:31:09 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/19 13:50:40 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:51:54 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ void	ft_modify_env(t_env	*env, char *tit, char *cont, int i)
 		if (env->title && ft_strcmp(env->title, tit))
 		{
 			f++;
-			if (env->content && i == 1 && strcmp(tit, "_"))
+			if (env->content && i == 1 && !ft_strcmp(tit, "_"))
 			{
 				free(env->content);
 				env->content = NULL;
 				env->content = ft_strdup(cont);
 			}
-			else if (strcmp(tit, "_"))
+			else if (!ft_strcmp(tit, "_"))
 				env->content = ft_strjoin_free(env->content, cont);
 			return ;
 		}
