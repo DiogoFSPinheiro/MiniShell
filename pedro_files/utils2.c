@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:14:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/19 18:16:58 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:34:34 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_valid_title(char *str)
 			return (1);
 		if (str[i] == '=' && i > 0)
 			return (1);
-		if (ft_isalnum(str[i]) && str[i] != '_')
+		if (!ft_isalpha(str[i]) && str[i] != '_')
 			return (0);
 		i++;
 	}

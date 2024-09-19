@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 17:56:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/19 18:17:19 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:56:16 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ typedef enum e_bultins
 	cmd_not_found,
 	is_dir,
 	flag_err_env,
-	no_directory
+	no_directory,
+	alpha_on_num
 }	t_builins;
 
 typedef struct s_token

@@ -6,36 +6,54 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 22:53:01 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/18 18:05:37 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 20:11:07 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <stdbool.h>
 
 extern int	g_error;
 
-// Estou com o mesmo problema de antes em que quando 
-// liberto o cmd dentro de pipes
-// ja perdi o primeiro cmd 
+void	ft_clean_up(t_commands *cmd, t_env **env)
+{
+	ft_free_cmd(cmd);
+	ft_free_env(*env);
+}
+
+bool	is_all_number(char *str)
+{
+	int	c;
+
+	c = 0;
+	while (str[c])
+	{
+		if (!ft_isdigit(str[c]))
+			return (FAILURE);
+		c++;
+	}
+	return (SUCCESS);
+}
+
 void	ft_exit(t_commands *cmd, t_env **env)
 {
-	int	exit_code;
-
 	if (cmd->tokens->next == NULL)
 	{
-		ft_free_cmd(cmd);
-		ft_free_env(*env);
+		ft_clean_up(cmd, env);
 		exit(g_error);
 	}
-	else if (cmd->tokens->next)
+	else if (cmd->tokens->next && !cmd->tokens->next->next)
 	{
-		exit_code = ft_atoi(cmd->tokens->next->data);
-		ft_free_env(*env);
-		ft_free_cmd(cmd);
-		exit(exit_code);
+		if (is_all_number(cmd->tokens->next->data) == FAILURE)
+			ft_built_err(cmd->tokens, alpha_on_num);
+		else
+			ft_change_global_err(ft_atoi(cmd->tokens->next->data));
+		ft_clean_up(cmd, env);
+		exit(g_error);
 	}
 	else if (cmd->tokens->next && cmd->tokens->next->next != NULL)
 	{
+		ft_println("exit");
 		ft_built_err(cmd->tokens, args_err);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 10:15:33 by diogosan          #+#    #+#             */
-/*   Updated: 2024/08/20 14:08:26 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:36:55 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	ft_flag_checker(t_token *token)
 	str = token->data;
 	if (!str)
 		return (FAILURE);
-	if (str[0] == '-' || str[1] == '-')
+	if ((str[0] == '-' && str[1] == '-') || str[0] == '-')
 	{
 		if (ft_strchr_bool(str, ' ') == SUCCESS)
 			return (SUCCESS);

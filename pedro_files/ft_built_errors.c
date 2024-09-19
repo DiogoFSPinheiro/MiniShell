@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_built_errors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:18:01 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/18 23:47:25 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/19 20:11:34 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ void	ft_more_errors(t_token *tkn, t_builins err_type)
 	{
 		ft_printf_err("Minishell: command '%s' not found\n", tkn->data);
 		ft_change_global_err(127);
+	}
+	else if (err_type == alpha_on_num)
+	{
+		ft_printf_err("bash: %s: %s: numeric argument required\n",
+			tkn->data, tkn->next->data);
+		ft_change_global_err(2);
 	}
 	else if (err_type == args_err)
 		ft_printf_err("Minishell: %s: too many arguments\n", tkn->data);
