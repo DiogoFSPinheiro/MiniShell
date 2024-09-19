@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 23:07:27 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/19 17:56:27 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:08:59 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,6 @@ void	ft_pipe_it(t_commands *cmd, t_env **env)
 		}
 		else
 			cmd = ft_do_parent(&previous_fd, fd, cmd);
+		ft_wait_and_get_err();
 	}
-	ft_wait_and_get_err();
 }

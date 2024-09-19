@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:08:36 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/18 23:48:25 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:13:20 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,20 @@ void	ft_make_temp(t_commands *cmd, t_commands *temp, t_token *tokens)
 		current = new;
 		tokens = tokens->next;
 	}
+}
+
+t_env	*ft_create_new(char *tit, char *cont)
+{
+	t_env	*new_node;
+
+	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		return (NULL);
+	new_node->title = ft_strdup(tit);
+	if (cont != NULL)
+		new_node->content = ft_strdup(cont);
+	else
+		new_node->content = NULL;
+	new_node->next = NULL;
+	return (new_node);
 }

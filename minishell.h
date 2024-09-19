@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 17:56:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/19 14:10:34 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:17:19 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,6 @@ void		ft_sort(t_env **env);
 void		ft_duplicate_envs(t_env *env, t_env **duped);
 void		ft_print_exported(t_env *env);
 t_env		*ft_create_new(char *tit, char *cont);
-char		*ft_finecont_nomorequotes(char *cont, int i, int j, int open);
 
 //------------------ft_pipes.c --------------
 void		ft_pipe_it(t_commands *cmd, t_env **env);
@@ -244,6 +243,11 @@ char		*ft_path(void);
 char		*ft_get_env(t_env *env, char *str);
 char		*ft_strjoin_free(char *s1, char *s2);
 void		ft_make_temp(t_commands *cmd, t_commands *temp, t_token *tokens);
+t_env		*ft_create_new(char *tit, char *cont);
+
+//----------------- utils2----------------
+int			ft_valid_title(char *str);
+char		*ft_finecont_nomorequotes(char *cont, int i, int j, int open);
 
 //---------------- nao sei ---------------
 char		*ft_right_path(t_token *token, t_env *env, int iswear);

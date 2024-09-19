@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:18:52 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/19 14:25:32 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:10:28 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	ft_execute_in(t_token *token, t_env **env)
 	ft_free_cmd(cmd);
 }
 
+// experimentar negar o strcomp na linha 75
 char	*ft_path_to_executable(char **paths, char *command, int using_it)
 {
 	DIR				*dir;
@@ -71,7 +72,7 @@ char	*ft_path_to_executable(char **paths, char *command, int using_it)
 			entry = readdir(dir);
 			while (entry != NULL)
 			{
-				if (strcmp(entry->d_name, command) == 0)
+				if (ft_strcmp(entry->d_name, command) == SUCCESS)
 					return (ft_strdup(paths[using_it]));
 				entry = readdir(dir);
 			}

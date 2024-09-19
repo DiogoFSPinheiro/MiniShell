@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 14:31:09 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/19 17:51:54 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:19:12 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,6 @@ void	ft_sort_and_print(t_env *env)
 	ft_free_env(duplicated);
 }
 
-t_env	*ft_create_new(char *tit, char *cont)
-{
-	t_env	*new_node;
-
-	new_node = malloc(sizeof(t_env));
-	if (!new_node)
-		return (NULL);
-	new_node->title = ft_strdup(tit);
-	if (cont != NULL)
-		new_node->content = ft_strdup(cont);
-	else
-		new_node->content = NULL;
-	new_node->next = NULL;
-	return (new_node);
-}
-
-//TODO avisar o pedro no strcmp linha 59
 void	ft_modify_env(t_env	*env, char *tit, char *cont, int i)
 {
 	int	f;
@@ -67,8 +50,8 @@ void	ft_modify_env(t_env	*env, char *tit, char *cont, int i)
 	if (f == 0)
 		env->next = ft_create_new(tit, cont);
 }
-// 	f e uma flag para ver se ja existe ou nao nas envs
 
+// 	f e uma flag para ver se ja existe ou nao nas envs
 char	*ft_get_title(char *str, int c)
 {
 	char	*tit;
@@ -80,59 +63,6 @@ char	*ft_get_title(char *str, int c)
 	else
 		tit = ft_strdup(str);
 	return (tit);
-}
-
-int	count_treated_len(char *cont)
-{
-	int		i;
-	int		len;
-	int		open;
-	char	c;
-
-	i = 0;
-	len = 0;
-	open = 0;
-	c = '\0';
-	while (cont[i++])
-	{
-		if (open && cont[i] == c)
-			open = 0;
-		else if (!open && (cont[i] == '\'' || cont[i] == '\"'))
-		{
-			open = 1;
-			c = cont[i];
-		}
-		else
-			len++;
-	}
-	return (len);
-}
-
-char	*ft_finecont_nomorequotes(char *cont, int i, int j, int open)
-{
-	char	*treated_cont;
-	char	c;
-
-	c = '\0';
-	treated_cont = (char *)malloc((count_treated_len(cont) + 1) * sizeof(char));
-	if (!treated_cont)
-		return (NULL);
-	while (cont[i])
-	{
-		if (open && cont[i] == c)
-			open = 0;
-		else if (!open && (cont[i] == '\'' || cont[i] == '\"'))
-		{
-			open = 1;
-			c = cont[i];
-		}
-		else
-			treated_cont[j++] = cont[i];
-		i++;
-	}
-	treated_cont[j] = '\0';
-	free(cont);
-	return (treated_cont);
 }
 
 //if i have error maybe its the if on line 167
@@ -162,32 +92,6 @@ void	ft_change_add_env(t_env *env, char *command)
 	if (cont != NULL)
 		free(cont);
 }
-	// find if command already exists
-	// if command is _ Must do nothing
-	// find if command has "" or '' it creates and has a Null. or space
-	// if its a new env this folowing appens
-
-int	ft_valid_title(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	if (!ft_isalpha(str[i]) && str[i] != '_')
-		return (0);
-	if (str[i] == '_')
-		i++;
-	while (str[i])
-	{
-		if (str[i] == '+' && str[i + 1] == '=' && i > 0)
-			return (1);
-		if (str[i] == '=' && i > 0)
-			return (1);
-		if (ft_isalnum(str[i]) && str[i] != '_')
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 void	ft_export(t_token *token, t_env **env)
 {
@@ -213,6 +117,3 @@ void	ft_export(t_token *token, t_env **env)
 	}
 	return ;
 }
-	// each command is executed individualy
-	// commands cant start with special chars EXEPTIONS _
-	//find if there is a equal in each command
