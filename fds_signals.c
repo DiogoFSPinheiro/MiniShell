@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:39:15 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/19 17:28:43 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/20 10:35:09 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	client_handler_inner_shell(int sig)
 {
-	if (sig == SIGINT)
-		;
 	if (sig == SIGQUIT)
 	{
 		ft_println("Quit (core dumped)");
@@ -29,8 +27,8 @@ void	set_inner_shell_signals(void)
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_handler = client_handler_inner_shell;
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
+	sa.sa_flags = SA_RESTART;
+	signal(SIGINT, SIG_IGN);
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
