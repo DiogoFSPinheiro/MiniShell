@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 23:07:27 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/21 11:07:52 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/21 18:06:24 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,19 @@ t_commands	*ft_do_parent(int *previous_fd, int fd[2], t_commands *cmd)
 	return (cmd);
 }
 
-void	ft_wait_and_get_err(void)
+void	ft_wait_and_get_err(int last_pid)
 {
 	int	status;
+	int	pid;
 
-	while (wait(&status) > 0)
-		;
-	ft_change_global_err(WEXITSTATUS(status));
-	return ;
+	while (1)
+	{
+		pid = wait(&status);
+		if (pid == -1)
+			break ;
+		if (pid == last_pid)
+			ft_change_global_err(WEXITSTATUS(status));
+	}
 }
 
 void	ft_pipe_it(t_commands *cmd, t_env **env)
@@ -94,6 +99,6 @@ void	ft_pipe_it(t_commands *cmd, t_env **env)
 		}
 		else
 			cmd = ft_do_parent(&previous_fd, fd, cmd);
-		ft_wait_and_get_err();
 	}
+	ft_wait_and_get_err(my_child);
 }

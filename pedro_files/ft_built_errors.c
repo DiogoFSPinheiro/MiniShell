@@ -6,7 +6,7 @@
 /*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:18:01 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/21 11:03:38 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/21 17:27:43 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_more_errors(t_token *tkn, t_builins err_type)
 	}
 	else if (err_type == alpha_on_num)
 	{
-		ft_printf_err("bash: %s: %s: numeric argument required\n",
+		ft_printf_err("Minishell: %s: %s: numeric argument required\n",
 			tkn->data, tkn->next->data);
 		ft_change_global_err(2);
 	}
