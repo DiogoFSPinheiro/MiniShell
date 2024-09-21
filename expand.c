@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:56:07 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/18 23:43:10 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/21 11:08:55 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "minishell.h"
 #include <stdbool.h>
 
-extern int	g_error;
 static char	*ft_expand_var(char *str, int *i, t_env *env);
 static void	ft_view_data(t_token **token, t_env *env);
 
@@ -74,7 +73,7 @@ static char	*ft_expand_var(char *str, int *i, t_env *env)
 	if (ft_strcmp((var_name + 1), "?") == SUCCESS)
 	{
 		free(var_name);
-		return (ft_itoa(g_error));
+		return (ft_itoa(ft_change_global_err(-1)));
 	}
 	if (ft_see_spe_char(*(var_name + 1)) == SUCCESS)
 		return (var_name);

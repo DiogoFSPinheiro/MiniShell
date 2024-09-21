@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:18:52 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/19 18:10:28 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/21 11:05:52 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-extern int	g_error;
 
 bool	ft_find_heredoc(t_token *token)
 {
@@ -42,13 +40,13 @@ void	ft_execute_in(t_token *token, t_env **env)
 		forked = fork();
 		while (wait(&status) > 0)
 			;
-		g_error = WEXITSTATUS(status);
+		ft_change_global_err(WEXITSTATUS(status));
 	}
 	if (forked == 0)
 	{
 		ft_change_global_err(0);
 		ft_exec_n_cleanup(cmd, *env);
-		exit(g_error);
+		exit(ft_change_global_err(-1));
 	}
 	ft_heredoc_sig(-2);
 	ft_free_cmd(cmd);

@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 22:53:01 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/19 20:11:07 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/21 11:06:51 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include <stdbool.h>
-
-extern int	g_error;
 
 void	ft_clean_up(t_commands *cmd, t_env **env)
 {
@@ -40,7 +38,7 @@ void	ft_exit(t_commands *cmd, t_env **env)
 	if (cmd->tokens->next == NULL)
 	{
 		ft_clean_up(cmd, env);
-		exit(g_error);
+		exit(ft_change_global_err(-1));
 	}
 	else if (cmd->tokens->next && !cmd->tokens->next->next)
 	{
@@ -49,7 +47,7 @@ void	ft_exit(t_commands *cmd, t_env **env)
 		else
 			ft_change_global_err(ft_atoi(cmd->tokens->next->data));
 		ft_clean_up(cmd, env);
-		exit(g_error);
+		exit(ft_change_global_err(-1));
 	}
 	else if (cmd->tokens->next && cmd->tokens->next->next != NULL)
 	{

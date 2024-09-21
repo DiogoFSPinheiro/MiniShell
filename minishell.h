@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 17:56:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/19 19:56:16 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/21 11:05:21 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ void		ft_unset(t_env **env, t_token *token);
 //---------------ft_built_err----------
 void		ft_built_err(t_token *token, t_builins err_type);
 char		*ft_path_to_executable(char **paths, char *command, int using_it);
-void		ft_change_global_err(int err);
+int			ft_change_global_err(int err);
 
 //---------------ft_export.c-------------
 void		ft_export(t_token *token, t_env **env);

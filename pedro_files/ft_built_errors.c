@@ -3,20 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_built_errors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:18:01 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/19 20:11:34 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/21 11:03:38 by pebarbos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-extern int	g_error;
-
-void	ft_change_global_err(int err)
+// use -1 to get the error that is in there use any other to chage it
+int	ft_change_global_err(int err)
 {
-	g_error = err;
+	static int	error_code;
+
+	if (err == -1)
+		return (error_code);
+	error_code = err;
+	return (error_code);
 }
 
 void	ft_last_errors(t_token *token, t_builins err_type)
@@ -27,7 +31,7 @@ void	ft_last_errors(t_token *token, t_builins err_type)
 	else if (err_type == invalid_identifier)
 		ft_printf_err("Minishell: export: `%s': not a valid identifier\n",
 			token->data);
-	if (g_error == 0)
+	if (ft_change_global_err(-1) == 0)
 		ft_change_global_err(1);
 }
 
