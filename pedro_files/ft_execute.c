@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:18:52 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/21 11:05:52 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/22 11:57:26 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@ bool	ft_find_heredoc(t_token *token)
 		token = token->next;
 	}
 	return (FAILURE);
+}
+
+void	ft_update_err_code(int status)
+{
+	if (WIFSIGNALED(status))
+		ft_change_global_err(131);
+	else
+		ft_change_global_err(WEXITSTATUS(status));
 }
 
 void	ft_execute_in(t_token *token, t_env **env)
@@ -40,7 +48,7 @@ void	ft_execute_in(t_token *token, t_env **env)
 		forked = fork();
 		while (wait(&status) > 0)
 			;
-		ft_change_global_err(WEXITSTATUS(status));
+		ft_update_err_code(status);
 	}
 	if (forked == 0)
 	{

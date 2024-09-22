@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:39:15 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/20 10:35:09 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/22 11:53:33 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	set_inner_shell_signals(void)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_handler = client_handler_inner_shell;
 	sa.sa_flags = SA_RESTART;
-	signal(SIGINT, SIG_IGN);
+	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
