@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 17:56:41 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/21 11:05:21 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/23 09:58:21 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ t_token		*ft_parser(char *input);
 bool		ft_find_heredoc(t_token *token);
 
 //-----------------ft_execute_in.c------
-void		ft_execute_in(t_token *token, t_env **env);
+void		ft_execute_in(t_token *token, t_env **env, int status);
 int			ft_built_in(t_commands *cmd, t_env **env);
 void		ft_send_to_execve(t_token *token, t_env *env);
 

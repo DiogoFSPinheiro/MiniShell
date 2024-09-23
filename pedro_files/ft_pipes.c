@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 23:07:27 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/21 18:06:24 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:19:38 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ void	ft_wait_and_get_err(int last_pid)
 		if (pid == -1)
 			break ;
 		if (pid == last_pid)
+		{
 			ft_change_global_err(WEXITSTATUS(status));
+			break ;
+		}
 	}
 }
 

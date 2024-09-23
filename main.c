@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:30:03 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/22 11:52:58 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/23 09:57:34 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_cicle(int fd_in, int fd_out, t_env **env)
 			ft_transform_t_to_s(&input);
 			token = ft_parser(input);
 			if (token)
-				ft_execute_in(token, env);
+				ft_execute_in(token, env, 0);
 			set_up_sigaction();
 			unlink("heredoc");
 			free(input);

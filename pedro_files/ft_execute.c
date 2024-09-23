@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:18:52 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/22 11:57:26 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/09/23 09:57:46 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,10 @@ void	ft_update_err_code(int status)
 		ft_change_global_err(WEXITSTATUS(status));
 }
 
-void	ft_execute_in(t_token *token, t_env **env)
+void	ft_execute_in(t_token *token, t_env **env, int status)
 {
 	t_commands	*cmd;
 	int			forked;
-	int			status;
 
 	forked = 1;
 	ft_prep_cmd_struct(&cmd, token, *env);
