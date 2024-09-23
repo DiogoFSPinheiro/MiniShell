@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:23:17 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/21 10:33:12 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:04:37 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static void	ft_see_if_print(t_token **token, bool *first)
 		*token = (*token)->next->next;
 	if (!*token)
 		return ;
-	if ((*token)->type == STR && !(*first))
+	if (!(*first))
 		write(1, " ", 1);
 	if ((*token)->type == STR || ((*token)->type == FLAG))
 		ft_no_quotes((*token)->data);
