@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pebarbos <pebarbos@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:56:07 by diogosan          #+#    #+#             */
-/*   Updated: 2024/09/21 11:08:55 by pebarbos         ###   ########.fr       */
+/*   Updated: 2024/09/25 13:40:15 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static char	*ft_expand_var(char *str, int *i, t_env *env)
 		return (var_name);
 	content = ft_get_content(env, var_name + 1);
 	free(var_name);
-	if (content)
+	if (content && content->content != NULL)
 		return (ft_strdup(content->content));
 	return (NULL);
 }
