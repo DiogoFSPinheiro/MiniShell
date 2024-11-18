@@ -16,16 +16,28 @@ What the diference bettwin using this write(1,"\n",1) and write(2,"\n",1)
 https://chatgpt.com/share/2566f2fa-8f15-48b5-99ef-604c324236b8
 _
 
+https://stackoverflow.com/questions/5163144/what-are-the-special-dollar-sign-shell-variables
+https://annacts.notion.site/minishell-fd120561c16740b18f55027befd60379
 
-stuff to get on 42
+_
 
-sudo apt-get install cowsay
-sudo apt-get install fortune
+leaks readline
 
-nano ~/.bashrc
+valgrind --suppressions=readline.supp --leak-check=full ./minishell
 
-if [ -x /usr/games/cowsay -a -x /usr/games/fortune ]; then
-    fortune | cowsay -f $(ls /home/diogosan/sgoinfre/homebrew/Cellar/cowsay/3.04_1/share/cows | shuf -n1)
-fi
 
-https://www.cyberciti.biz/open-source/cbonsai-linux-bonsai-tree-generator-for-cli-lovers-for-fun/
+file name: readline.supp
+
+{ 
+    leak readline
+    Memcheck:Leak
+    ...
+    fun:readline
+}
+{
+    leak add_history
+    Memcheck:Leak
+    ...
+    fun:add_history
+}
+

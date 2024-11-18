@@ -6,7 +6,7 @@
 /*   By: diogosan <diogosan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 22:53:01 by pebarbos          #+#    #+#             */
-/*   Updated: 2024/09/23 10:22:50 by diogosan         ###   ########.fr       */
+/*   Updated: 2024/11/18 12:21:04 by diogosan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ bool	is_all_number(char *str)
 	int	c;
 
 	c = 0;
+	if (*str == '-' || *str == '+')
+		c++;
 	while (str[c])
 	{
 		if (!ft_isdigit(str[c]))
