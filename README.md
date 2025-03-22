@@ -276,7 +276,7 @@
 
 #
 
-### 📅 **18/09**
+### 📅 **19/09**
 
 * Error codes ok;
 * Fixed export;
@@ -287,3 +287,16 @@
 * Do more of https://annacts.notion.site/minishell-fd120561c16740b18f55027befd60379 tests;
 
 #
+
+### 📅 **23/09**
+
+* Hard testing with success!;
+* Cleaned some code where it was needed;
+* Added Core dump msg;
+
+✏️ ${{\color{lightgreen}{\textsf{TODO}}}}\$
+
+* Submit;
+
+### ✅ **Projected Finished!** ✅
+
